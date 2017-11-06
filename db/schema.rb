@@ -10,22 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171107040825) do
+ActiveRecord::Schema.define(version: 20171107155639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "events", force: :cascade do |t|
-    t.datetime "start_date"
-    t.datetime "end_date"
-    t.float "longitude"
-    t.float "latitude"
-    t.bigint "organisation_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["organisation_id"], name: "index_events_on_organisation_id"
-  end
-  
   create_table "contributors", force: :cascade do |t|
     t.integer "charity_id", null: false
     t.integer "user_id", null: false
@@ -34,15 +23,30 @@ ActiveRecord::Schema.define(version: 20171107040825) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "organisations", force: :cascade do |t|
-    t.string "name"
-    t.string "address"
-    t.string "city"
-    t.string "postcode"
-    t.string "description"
+  create_table "events", force: :cascade do |t|
+    t.datetime "start_date", null: false
+    t.datetime "end_date", null: false
+    t.float "longitude", null: false
+    t.float "latitude", null: false
+    t.string "name", null: false
+    t.string "address", null: false
+    t.string "city", null: false
+    t.string "postcode", null: false
+    t.bigint "organisation_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "email"
+    t.index ["organisation_id"], name: "index_events_on_organisation_id"
+  end
+
+  create_table "organisations", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "address", null: false
+    t.string "city", null: false
+    t.string "postcode", null: false
+    t.string "description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email", null: false
   end
 
   create_table "users", force: :cascade do |t|
