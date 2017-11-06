@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
-  resources :events
+  get 'relationships/follow_user'
+
+  get 'relationships/unfollow_user'
+
+  resources :follows
   resources :organisations
   root 'clearance/users#new'
+  resources :events
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
   resource :session, controller: "clearance/sessions", only: [:create]
 
@@ -16,5 +21,10 @@ Rails.application.routes.draw do
   get "/sign_up" => "clearance/users#new", as: "sign_up"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
+
+  get "/auth/:provider/callback" => "sessions#create_from_omniauth"
+
   #the routes for charity 
+
+
 end
