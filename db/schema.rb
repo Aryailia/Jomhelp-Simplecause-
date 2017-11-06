@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20171107155639) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-
   create_table "authentications", force: :cascade do |t|
     t.string "uid"
     t.string "token"
@@ -24,6 +23,7 @@ ActiveRecord::Schema.define(version: 20171107155639) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_authentications_on_user_id"
+  end
 
   create_table "contributors", force: :cascade do |t|
     t.integer "charity_id", null: false
@@ -72,6 +72,6 @@ ActiveRecord::Schema.define(version: 20171107155639) do
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
 
-  add_foreign_key "events", "organisations"
   add_foreign_key "authentications", "users"
+  add_foreign_key "events", "organisations"
 end
