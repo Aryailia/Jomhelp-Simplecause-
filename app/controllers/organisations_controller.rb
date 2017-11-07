@@ -11,6 +11,8 @@ class OrganisationsController < ApplicationController
   # GET /organisations/1.json
   def show
     @organisation = Organisation.find(params[:id])
+    if Contributors.find(current_user).admin?
+    end
   end
 
   # GET /organisations/new
