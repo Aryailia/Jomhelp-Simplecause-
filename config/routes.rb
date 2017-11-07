@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'relationships/follow_user'
+
+  get 'relationships/unfollow_user'
+
+  resources :follows
   resources :organisations
   root 'clearance/users#new'
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
@@ -16,4 +21,5 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   #the routes for charity 
+
 end
