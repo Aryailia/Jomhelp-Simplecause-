@@ -1,4 +1,0 @@
-class OrgranizationsController < ApplicationController 
-
-	
-end
