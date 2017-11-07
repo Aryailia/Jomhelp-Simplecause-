@@ -1,14 +1,12 @@
-Rails.application.routes.draw do
-  
+Rails.application.routes.draw do  
   root 'organisations#index'
 
-  get 'relationships/follow_user'
-
-  get 'relationships/unfollow_user'
-
+  # User actions with organisations
   resources :follows
-  resources :events
-
+  get 'relationships/follow_user'  
+  get 'relationships/unfollow_user'
+  
+  # For sessions
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
   resource :session, controller: "clearance/sessions", only: [:create]
 
@@ -25,10 +23,8 @@ Rails.application.routes.draw do
 
 
   #the routes for organisations 
-    resources :organisations
-
+  resources :organisations
+  resources :events
+    
   get "/auth/:provider/callback" => "sessions#create_from_omniauth"
-
-
-
 end
