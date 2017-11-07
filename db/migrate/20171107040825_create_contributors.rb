@@ -5,7 +5,7 @@ class CreateContributors < ActiveRecord::Migration[5.1]
     	t.integer :user_id, null: false
     	t.integer :role, default: 0
 
-		t.timestamps
+		  t.timestamps
     end
   end
 end
