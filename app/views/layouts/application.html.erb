@@ -7,13 +7,14 @@
 </head>
 <body>
   <header>
+    <% navbar_id = 'navbarNav' # To conlidate the id %>
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#<%= navbar_id %>" aria-controls="<%= navbar_id %>" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <%= link_to('Jomhelp', root_path, class: 'navbar-brand') %>
 
-      <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="collapse navbar-collapse" id="<%= navbar_id %>">
         <ul class="navbar-nav mr-auto">
           <% {Home: root_path, Profile: '#', Organisation: '#', Blah: sign_in_path}.each do |body, link| %>
             <% isCurrent = current_page?(link) %>
