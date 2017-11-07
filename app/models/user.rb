@@ -1,11 +1,8 @@
 class User < ApplicationRecord
-	has_many :following
-	has_many :followers 
-	
   include Clearance::User
-
-
-  has_many :authentications, dependent: :destroy
+	has_many :follows
+	has_many :events, through: :attendees
+	has_many :authentications, dependent: :destroy
 
     def self.create_with_auth_and_hash(authentication, auth_hash)
 	      user = self.create!(
