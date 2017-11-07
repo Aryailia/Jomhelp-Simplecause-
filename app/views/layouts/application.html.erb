@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   <%= stylesheet_link_tag 'application' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tag %>
@@ -9,18 +14,20 @@
   <header>
     <% navbar_id = 'navbarNav' # To conlidate the id %>
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#<%= navbar_id %>" aria-controls="<%= navbar_id %>" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
       <%= link_to('Jomhelp', root_path, class: 'navbar-brand') %>
 
       <div class="collapse navbar-collapse" id="<%= navbar_id %>">
         <ul class="navbar-nav mr-auto">
-          <% {Home: root_path, Profile: '#', Organisation: '#', Blah: sign_in_path}.each do |body, link| %>
+          <% {
+            Profile: '#',
+            Events: events_path,
+            Organisations: organisations_path,
+          }.each do |body, link|
+          %>
             <% isCurrent = current_page?(link) %>
             <li class="<%= (isCurrent) ? 'nav-link active' : 'nav-link' %>">
               <%= link_to(link, class: 'nav-link') do -%>
-                <%= raw body %><% if isCurrent %> <span class="sronly">(current)</span><% end %>
+                <%= raw body %><% if isCurrent %> <span class="sr-only">(current)</span><% end %>
               <% end %>
             </li>
           <% end %>
@@ -30,14 +37,16 @@
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>
+      <div class="navbar-nav">
+      <% if signed_in? -%>
+        <%= button_to t(".sign_out"), sign_out_path, method: :delete, class: 'btn btn-warning' %>
+      <% elsif !current_page?(sign_in_path) -%>
+        <%= button_to t(".sign_in"), sign_in_path, method: :get, class: 'btn btn-info' %>
+      <% end -%>
+      </div>
     </nav>
 
     <nav id="header">
-      <% if signed_in? -%>
-        <%= button_to t(".sign_out"), sign_out_path, method: :delete %>
-      <% else -%>
-        <%= link_to t(".sign_in"), sign_in_path %>
-      <% end -%>
     </nav>
 
     <div id="flash">
