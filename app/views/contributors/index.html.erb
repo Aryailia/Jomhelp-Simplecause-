@@ -1,0 +1,30 @@
+<%= link_to "Organisation Home", organisation_path(params[:organisation_id]) %>
+
+<div class = "container">
+	<table class="table">
+	  <thead>
+	    <tr>
+	      <th>First name</th>
+	      <th>Last name</th>
+	      <th>Email</th>
+	      <th>Role</th>
+	    </tr>
+	  </thead>
+		
+		<tbody>
+		  <% @contributors.each do |t| %>
+		  	<% @contributor = t%>
+		  	<% user = @contributor.user %>
+		    <tr>
+		      <td><%= user.first_name %></td>
+		      <td><%= user.last_name %></td>
+		      <td><%= user.email %></td>
+		      <td><%= t.role %></td>
+		      <td></td>
+		      <td><%= button_to "Delete Contributor", organisation_contributor_path(@contributor.organisation_id, @contributor.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		    </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+</div>
+
