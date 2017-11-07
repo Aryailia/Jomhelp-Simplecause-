@@ -29,6 +29,8 @@ class OrganisationsController < ApplicationController
 
     respond_to do |format|
       if @organisation.save
+        a = Contributor.new(organisation_id: @organisation.id, user_id: current_user.id, role: 2)
+        a.save
         format.html { redirect_to @organisation, notice: 'Organisation was successfully created.' }
         format.json { render :show, status: :created, location: @organisation }
       else
@@ -65,7 +67,6 @@ class OrganisationsController < ApplicationController
   private
     def organisation_params
       params.require(:organisation).permit(:email, :name, :address, :city, :postcode, :description)
-      
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_organisation

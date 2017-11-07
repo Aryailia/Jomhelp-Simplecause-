@@ -16,22 +16,24 @@ ActiveRecord::Schema.define(version: 20171107040825) do
   enable_extension "plpgsql"
 
   create_table "contributors", force: :cascade do |t|
-    t.integer "charity_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "organisation_id"
+    t.bigint "user_id"
     t.integer "role", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["organisation_id"], name: "index_contributors_on_organisation_id"
+    t.index ["user_id"], name: "index_contributors_on_user_id"
   end
 
   create_table "organisations", force: :cascade do |t|
-    t.string "name"
-    t.string "address"
-    t.string "city"
-    t.string "postcode"
-    t.string "description"
+    t.string "name", null: false
+    t.string "address", null: false
+    t.string "city", null: false
+    t.string "postcode", null: false
+    t.string "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "email"
+    t.string "email", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -45,4 +47,6 @@ ActiveRecord::Schema.define(version: 20171107040825) do
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
 
+  add_foreign_key "contributors", "organisations"
+  add_foreign_key "contributors", "users"
 end
