@@ -74,11 +74,9 @@ ActiveRecord::Schema.define(version: 20171107155639) do
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
 
-<<<<<<< HEAD
   add_foreign_key "contributors", "organisations"
   add_foreign_key "contributors", "users"
-=======
   add_foreign_key "authentications", "users"
   add_foreign_key "events", "organisations"
->>>>>>> master
+
 end
