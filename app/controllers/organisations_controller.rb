@@ -10,11 +10,12 @@ class OrganisationsController < ApplicationController
   # GET /organisations/1
   # GET /organisations/1.json
   def show
+    @organisation = Organisation.find(params[:id])
   end
 
   # GET /organisations/new
   def new
-    @organisation = Organisation.new(organisation_params)
+    @organisation = Organisation.new
   end
 
   # GET /organisations/1/edit
@@ -72,7 +73,7 @@ class OrganisationsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def organisation_params
-      params.fetch(:organisation, {})
-    end
+    # def organisation_params
+    #   params.fetch(:organisation, {})
+    # end
 end
