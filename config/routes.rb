@@ -1,12 +1,15 @@
 Rails.application.routes.draw do
+
+  
+  root 'organisations#index'
+
   get 'relationships/follow_user'
 
   get 'relationships/unfollow_user'
 
   resources :follows
-  resources :organisations
-  root 'clearance/users#new'
   resources :events
+
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
   resource :session, controller: "clearance/sessions", only: [:create]
 
@@ -22,9 +25,11 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
 
+  #the routes for organisations 
+    resources :organisations
+
   get "/auth/:provider/callback" => "sessions#create_from_omniauth"
 
-  #the routes for charity 
 
 
 end

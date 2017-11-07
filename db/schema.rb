@@ -26,11 +26,13 @@ ActiveRecord::Schema.define(version: 20171107155639) do
   end
 
   create_table "contributors", force: :cascade do |t|
-    t.integer "charity_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "organisation_id"
+    t.bigint "user_id"
     t.integer "role", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["organisation_id"], name: "index_contributors_on_organisation_id"
+    t.index ["user_id"], name: "index_contributors_on_user_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -72,6 +74,9 @@ ActiveRecord::Schema.define(version: 20171107155639) do
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
 
+  add_foreign_key "contributors", "organisations"
+  add_foreign_key "contributors", "users"
   add_foreign_key "authentications", "users"
   add_foreign_key "events", "organisations"
+
 end
