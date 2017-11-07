@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
+
   
   root 'organisations#index'
+
+  get 'relationships/follow_user'
+
+  get 'relationships/unfollow_user'
+
+  resources :follows
+  resources :events
+
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
   resource :session, controller: "clearance/sessions", only: [:create]
 
@@ -15,6 +24,12 @@ Rails.application.routes.draw do
   get "/sign_up" => "clearance/users#new", as: "sign_up"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
+
   #the routes for organisations 
     resources :organisations
+
+  get "/auth/:provider/callback" => "sessions#create_from_omniauth"
+
+
+
 end

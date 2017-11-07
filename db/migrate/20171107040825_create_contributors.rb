@@ -5,7 +5,7 @@ class CreateContributors < ActiveRecord::Migration[5.1]
     	t.references :user, foreign_key: true
     	t.integer :role, default: 0
 
-		t.timestamps
+		  t.timestamps
     end
   end
 end

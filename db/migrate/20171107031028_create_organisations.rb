@@ -6,9 +6,9 @@ class CreateOrganisations < ActiveRecord::Migration[5.1]
     	t.string :address,     null: false
     	t.string :city,        null: false
     	t.string :postcode,    null: false
-    	t.string :description, null: false
-
-		t.timestamps
+			t.string :description, null: false
+			
+			t.timestamps
     end
   end
 end
