@@ -23,15 +23,25 @@ ActiveRecord::Schema.define(version: 20171107040825) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "organisations", force: :cascade do |t|
-    t.string "name"
-    t.string "address"
-    t.string "city"
-    t.string "postcode"
-    t.string "description"
+  create_table "follows", id: :serial, force: :cascade do |t|
+    t.integer "organisation_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "email"
+    t.index ["organisation_id", "user_id"], name: "index_follows_on_organisation_id_and_user_id", unique: true
+    t.index ["organisation_id"], name: "index_follows_on_organisation_id"
+    t.index ["user_id"], name: "index_follows_on_user_id"
+  end
+
+  create_table "organisations", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "address", null: false
+    t.string "city", null: false
+    t.string "postcode", null: false
+    t.string "description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -45,4 +55,6 @@ ActiveRecord::Schema.define(version: 20171107040825) do
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
 
+  add_foreign_key "follows", "organisations"
+  add_foreign_key "follows", "users"
 end
