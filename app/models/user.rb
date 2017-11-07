@@ -1,5 +1,9 @@
 class User < ApplicationRecord
+	has_many :following
+	has_many :followers 
+	
   include Clearance::User
+
 
   has_many :authentications, dependent: :destroy
 
@@ -21,5 +25,6 @@ class User < ApplicationRecord
       x = self.authentications.find_by(provider: 'facebook')
       return x.token unless x.nil?
     end
+
 
 end
