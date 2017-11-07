@@ -1,8 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <h1><%= @organisation.name %></h1>
+<h1><%= @organisation.description %></h1>
 
-
-<%= link_to 'Edit', edit_organisation_path(@organisation) %> |
+<% if current_user.admin?%>
+	<%= link_to 'Edit', edit_organisation_path(@organisation) %> 
+	<%= link_to 'Destroy', @organisation, method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>
 <%= link_to 'Back', organisations_path %>
-<%= link_to 'Destroy', @organisation, method: :delete, data: { confirm: 'Are you sure?' } %>
+	
