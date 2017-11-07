@@ -36,11 +36,13 @@ ActiveRecord::Schema.define(version: 20171107155640) do
   end
 
   create_table "contributors", force: :cascade do |t|
-    t.integer "charity_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "organisation_id"
+    t.bigint "user_id"
     t.integer "role", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["organisation_id"], name: "index_contributors_on_organisation_id"
+    t.index ["user_id"], name: "index_contributors_on_user_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -74,29 +76,30 @@ ActiveRecord::Schema.define(version: 20171107155640) do
     t.string "city", null: false
     t.string "postcode", null: false
     t.string "description", null: false
+    t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "email", null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
     t.string "email", null: false
     t.string "encrypted_password", limit: 128
     t.string "confirmation_token", limit: 128
     t.string "remember_token", limit: 128, null: false
-    t.string "first_name"
-    t.string "last_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
 
+  add_foreign_key "attendees", "events"
+  add_foreign_key "attendees", "users"
   add_foreign_key "authentications", "users"
   add_foreign_key "contributors", "organisations"
   add_foreign_key "contributors", "users"
   add_foreign_key "events", "organisations"
   add_foreign_key "follows", "organisations"
   add_foreign_key "follows", "users"
-
 end
