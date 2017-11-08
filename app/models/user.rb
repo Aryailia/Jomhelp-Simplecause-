@@ -1,6 +1,7 @@
 class User < ApplicationRecord
 	has_many :following
-	has_many :followers 
+	has_many :followers
+	has_many :organisations, through: :contributors 
 	
   include Clearance::User
 
