@@ -98,4 +98,5 @@ ActiveRecord::Schema.define(version: 20171107155640) do
   add_foreign_key "events", "organisations"
   add_foreign_key "follows", "organisations"
   add_foreign_key "follows", "users"
+
 end

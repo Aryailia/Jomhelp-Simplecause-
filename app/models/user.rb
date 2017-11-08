@@ -2,6 +2,7 @@ class User < ApplicationRecord
   include Clearance::User
 	has_many :follows
 	has_many :events, through: :attendees
+	has_many :organisations, through: :contributors 
   has_many :organisations, through: :follows
 	has_many :authentications, dependent: :destroy
 

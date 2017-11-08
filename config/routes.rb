@@ -20,7 +20,10 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback" => "sessions#create_from_omniauth"
 
   #the routes for organisations 
-  resources :organisations
+  resources :organisations do 
+    resources :contributors
+  end
+  #routes for contributors
   resources :events
   
   # User actions with organisations
