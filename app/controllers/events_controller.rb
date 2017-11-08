@@ -15,6 +15,16 @@ class EventsController < ApplicationController
   # GET /events/new
   def new
     @event = Event.new
+    begin
+      errorIfCannotMakeEvent(params[:organisation_id])
+      
+    rescue ErrorWithRedirect => err
+      redirect_to(err.path)
+      flash[:error] = err.message
+    rescue Exception => err
+      redirect_to(root_path)
+      flash[:error] = err.message
+    end
   end
 
   # GET /events/1/edit
@@ -26,14 +36,24 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
 
-    respond_to do |format|
-      if @event.save
-        format.html { redirect_to @event, notice: 'Event was successfully created.' }
-        format.json { render :show, status: :created, location: @event }
-      else
-        format.html { render :new }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
+    begin 
+      errorIfCannotMakeEvent(params[:organisation_id])
+      respond_to do |format|
+        if @event.save
+          format.html { redirect_to @event, notice: 'Event was successfully created.' }
+          format.json { render :show, status: :created, location: @event }
+        else
+          format.html { render :new }
+          format.json { render json: @event.errors, status: :unprocessable_entity }
+        end
       end
+      
+    rescue ErrorWithRedirect => err
+      redirect_to(err.path)
+      flash[:error] = err.message
+    rescue Exception => err
+      redirect_to(root_path)
+      flash[:error] = err.message
     end
   end
 
@@ -67,8 +87,15 @@ class EventsController < ApplicationController
       @event = Event.find(params[:id])
     end
 
+    def errorIfCannotMakeEvent(organisation_id)
+      org = Organisation.find(organisation_id)
+      raise(ErrorWithRedirect.new('Not a contributor for this organisation',
+        root_path)) if !contributor?(org)
+      raise(ErrorWithRedirect.new('Not an admin',root_path)) if !@contributor.admin?
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:start_date, :end_date, :longitude, :latitude, :organisation_id)
+      params.require(:event).permit(:name, :start_date, :end_date, :address, :city, :postcode, :longitude, :latitude, :organisation_id)
     end
 end
