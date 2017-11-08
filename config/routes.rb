@@ -29,6 +29,11 @@ Rails.application.routes.draw do
 
   get "/auth/:provider/callback" => "sessions#create_from_omniauth"
 
+  #route to direct to users index(page with all the users)
+  get "/users/index" => "users#index", as: "users_index"
 
+  #route to direct to users profile
+  get "/users/:id" => "users#show", as: "users_show"
 
+  post "/friendships/:id" => "friendships#create", as: "create_friendships"
 end

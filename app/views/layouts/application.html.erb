@@ -11,6 +11,8 @@
     <% else -%>
       <%= link_to t(".sign_in"), sign_in_path %>
     <% end -%>
+
+    <%= button_to "Browse all Users", users_index_path, method: :get %>
   </div>
 
   <div id="flash">

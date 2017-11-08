@@ -1,0 +1,13 @@
+<h1> User Profile </h1>
+<% x = User.find_by(id: params[:id]) %>
+
+<%= link_to "Add Friend", create_friendships_path(x), :method => :post  %>
+
+<h2>Friends</h2>
+<% if !(x.friendships == nil) %>
+	<% x.friendship.friend.each do |z| %>
+		Name: <%= z.first_name %> <%= z.last_name %>
+	<% end %>
+<%else%>
+	This User has no friends
+<% end -%>

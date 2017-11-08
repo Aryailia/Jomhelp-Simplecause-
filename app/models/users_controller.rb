@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+before_action :require_login, only:[:show]
+
 def follow(user_id)
     following_relationships.create(following_id: user_id)
   end
@@ -9,3 +11,7 @@ def follow(user_id)
   end
 
 end 
+
+def show
+
+end
