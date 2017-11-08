@@ -1,8 +1,19 @@
-<p id="notice"><%= notice %></p>
-
 <h1><%= @organisation.name %></h1>
 
 
 <%= link_to 'Edit', edit_organisation_path(@organisation) %> |
 <%= link_to 'Back', organisations_path %>
 <%= link_to 'Destroy', @organisation, method: :delete, data: { confirm: 'Are you sure?' } %>
+<br>
+<br>
+
+<% if current_user.organisations.find_by(id: @organisation.id).nil? %>
+	<%= button_to 'Follow', organisation_follow_path(@organisation.id) %>
+<% else %>
+	<%= button_to 'Unfollow', organisation_unfollow_path(@organisation.id)%>
+<% end %>
+<!-- 
+ <form align="left" class="follow_button" method="get" action="follow/new">
+    <button type="submit">follow</button>
+</form>
+ -->

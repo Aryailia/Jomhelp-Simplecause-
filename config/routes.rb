@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   get 'relationships/unfollow_user'
 
-  resources :follows
+ 
   resources :events
 
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
@@ -23,10 +23,16 @@ Rails.application.routes.draw do
   delete "/sign_out" => "clearance/sessions#destroy", as: "sign_out"
   get "/sign_up" => "clearance/users#new", as: "sign_up"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
+ #the routes for follow
 
   #the routes for organisations 
-    resources :organisations
+ resources :organisations
+ resources :follows
+
+ # get "/organisations/follow/new" => "follows#new"
+
+  post '/organisations/:id/follow' => 'follows#create', as: :organisation_follow
+  post '/organisations/:id/unfollow' => 'follows#destroy', as: :organisation_unfollow
 
   get "/auth/:provider/callback" => "sessions#create_from_omniauth"
 
