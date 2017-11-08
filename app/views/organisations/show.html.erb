@@ -19,5 +19,5 @@
 <% if current_user.organisations.find_by(id: @organisation.id).nil? %>
 	<%= button_to 'Follow', organisation_follow_path(@organisation.id) %>
 <% else %>
-	<%= button_to 'Unfollow', organisation_unfollow_path(@organisation.id)%>
+	<%= button_to 'Unfollow', organisation_unfollow_path(@organisation.id), method: :delete %>
 <% end %>
