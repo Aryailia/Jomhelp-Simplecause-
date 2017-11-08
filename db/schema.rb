@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171107155639) do
+ActiveRecord::Schema.define(version: 20171107155640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "attendees", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.bigint "user_id", null: false
+    t.boolean "showed_up", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_attendees_on_event_id"
+    t.index ["user_id"], name: "index_attendees_on_user_id"
+  end
 
   create_table "authentications", force: :cascade do |t|
     t.string "uid"
@@ -26,13 +36,11 @@ ActiveRecord::Schema.define(version: 20171107155639) do
   end
 
   create_table "contributors", force: :cascade do |t|
-    t.bigint "organisation_id"
-    t.bigint "user_id"
+    t.integer "charity_id", null: false
+    t.integer "user_id", null: false
     t.integer "role", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["organisation_id"], name: "index_contributors_on_organisation_id"
-    t.index ["user_id"], name: "index_contributors_on_user_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -74,9 +82,8 @@ ActiveRecord::Schema.define(version: 20171107155639) do
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
 
-  add_foreign_key "contributors", "organisations"
-  add_foreign_key "contributors", "users"
+  add_foreign_key "attendees", "events"
+  add_foreign_key "attendees", "users"
   add_foreign_key "authentications", "users"
   add_foreign_key "events", "organisations"
-
 end
