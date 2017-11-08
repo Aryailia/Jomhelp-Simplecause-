@@ -4,7 +4,7 @@ class User < ApplicationRecord
 	has_many :follows
 	has_many :contributors
 	has_many :organisations, through: :contributors 
-  has_many :organisations, through: :follows
+  has_many :follow_organisations, through: :follows, source: :organisation
 	has_many :authentications, dependent: :destroy
 
   def self.create_with_auth_and_hash(authentication, auth_hash)
