@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
   resource :session, controller: "clearance/sessions", only: [:create]
 
-  resources :users, controller: "clearance/users", only: [:create] do
+  resources :users, controller: "users", only: [:create] do
     resource :password,
       controller: "clearance/passwords",
       only: [:create, :edit, :update]
@@ -35,5 +35,5 @@ Rails.application.routes.draw do
   #route to direct to users profile
   get "/users/:id" => "users#show", as: "users_show"
 
-  post "/friendships/:id" => "friendships#create", as: "create_friendships"
+  post "/friendships/:friend_id" => "friendships#create", as: "create_friendships"
 end

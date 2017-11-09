@@ -5,6 +5,10 @@ class UsersController < Clearance::UsersController
 
   end
 
+  def profile
+
+  end
+
   def user_from_params
     email = user_params.delete(:email)
     password = user_params.delete(:password)
@@ -17,7 +21,7 @@ class UsersController < Clearance::UsersController
       user.email = email
       user.password = password
       user.first_name = first_name
-      user.role = "customer"
+      user.last_name = last_name
       
     end
   end
