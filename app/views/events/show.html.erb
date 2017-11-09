@@ -1,12 +1,13 @@
 <p id="notice"><%= notice %></p>
 
 <!-- Put any carousel stuff here -->
-  <% @event.photos.each do |photo| %>
+<!--
+  <%# <% @event.photos.each do |photo| %> %>
     <div>
-      <%= image_tag photo %>
+      <%#= image_tag photo %>
     </div>
-  <% end %>
-
+  <%# <% end %> %>
+-->
 
 <p>
   <strong>Name:</strong>
@@ -44,6 +45,18 @@
   <strong>Latitude:</strong>
   <%= @event.latitude %>
 </p>
+
+<div id="map"></div>
+<script>
+  var map;
+  function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: -34.397, lng: 150.644},
+      zoom: 8
+    });
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&libraries=places&callback=initMap" async defer></script>
 
 <div>
   <% if signed_in? %>

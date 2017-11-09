@@ -16,11 +16,9 @@ class PostsController < ApplicationController
 
   def update
   	@post = Post.find(params[:id])
-  	
 	  if @post.update(content: posts_params[:content])
-
      	redirect_to organisation_path(@post.organisation_id)
-        else 
+		else 
     	flash[:danger] = 'Error updating status'
     	render :edit
     end
@@ -32,11 +30,10 @@ class PostsController < ApplicationController
     redirect_to organisation_path(@post.organisation_id)
   end
 
-	private 
 
-  def posts_params
-    params.require(:post).permit(:content, :organisation_id)
-
- 	end 
-
+	
+	private
+	def posts_params
+		params.require(:post).permit(:content, :organisation_id)
+	end
 end 

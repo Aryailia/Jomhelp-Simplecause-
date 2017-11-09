@@ -16,7 +16,7 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     begin
-      errorIfCannotMakeEvent(params[:organisation_id])
+      errorIfNoPermission(params[:organisation_id])
       
     rescue ErrorWithRedirect => err
       redirect_to(err.path)
@@ -37,7 +37,7 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
 
     begin 
-      errorIfCannotMakeEvent(params[:organisation_id])
+      errorIfNoPermission(params[:organisation_id])
       respond_to do |format|
         if @event.save
           format.html { redirect_to @event, notice: 'Event was successfully created.' }
@@ -49,8 +49,7 @@ class EventsController < ApplicationController
       end
       
     rescue ErrorWithRedirect => err
-      redirect_to(err.path)
-      flash[:error] = err.message
+      ErrorWithRedirect.defaultHandler(err)
     rescue Exception => err
       redirect_to(root_path)
       flash[:error] = err.message
@@ -60,24 +59,36 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1
   # PATCH/PUT /events/1.json
   def update
-    respond_to do |format|
-      if @event.update(event_params)
-        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
-        format.json { render :show, status: :ok, location: @event }
-      else
-        format.html { render :edit }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
+
+    begin
+      errorIfNoPermission(@event.organisation_id)
+      respond_to do |format|
+        if @event.update(event_params)
+          format.html { redirect_to @event, notice: 'Event was successfully updated.' }
+          format.json { render :show, status: :ok, location: @event }
+        else
+          format.html { render :edit }
+          format.json { render json: @event.errors, status: :unprocessable_entity }
+        end
       end
+      
+    rescue ErrorWithRedirect => err
+      ErrorWithRedirect.defaultHandler(err, @event)
     end
   end
 
   # DELETE /events/1
   # DELETE /events/1.json
   def destroy
-    @event.destroy
-    respond_to do |format|
-      format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
-      format.json { head :no_content }
+    begin
+      errorIfNoPermission(params[:organisation_id])
+      @event.destroy
+      respond_to do |format|
+        format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    rescue ErrorWithRedirect => err
+      ErrorWithRedirect.defaultHandler(err)
     end
   end
 
@@ -87,8 +98,8 @@ class EventsController < ApplicationController
       @event = Event.find(params[:id])
     end
 
-    def errorIfCannotMakeEvent(organisation_id)
-      org = Organisation.find(organisation_id)
+    def errorIfNoPermission(organisation_id)
+      org = Organisation.find_by(id: organisation_id)
       raise(ErrorWithRedirect.new('Not a contributor for this organisation',
         root_path)) if !contributor?(org)
       raise(ErrorWithRedirect.new('Not an admin',root_path)) if !@contributor.admin?
@@ -96,6 +107,6 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:name, :start_date, :end_date, :address, :city, :postcode, :longitude, :latitude, :organisation_id, :photos [])
+      params.require(:event).permit(:name, :start_date, :end_date, :address, :city, :postcode, :longitude, :latitude, :organisation_id)
     end
 end

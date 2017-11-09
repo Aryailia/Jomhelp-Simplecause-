@@ -11,5 +11,10 @@
       super(message)
       self.path = path
     end
+
+    def self.defaultHandler(err)
+      redirect_to(redirect_to(err.path))
+      flash[:error] = err.message
+    end
   end  
 end
