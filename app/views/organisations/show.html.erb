@@ -1,26 +1,36 @@
-<h1><%= @organisation.name %></h1>
-<h1><%= @organisation.description %></h1>
-<% if contributor?(@organisation) %>
-	<% if true || @contributor.member? -%>
-		<div>
-			<%= link_to('Create Event', new_organisation_event_path(@organisation)) %>
-		</div>
-	<% end -%>
+<div class = "container">
+	<h1><%= @organisation.name %></h1>
+	<h1><%= @organisation.description %></h1>
+	<h1><%= params[:notice] %></h1>
+	<% if signed_in? %>
+		<% if Organisation.find(params[:id]).contributors.find_by(user_id: current_user.id).nil? %>
+			<%= button_to "Contribute", organisation_contributors_path(params[:id]), method: :post %>
+		<% elsif Organisation.find(params[:id]).contributors.find_by(user_id: current_user.id).admin? %>
+			<h1> You are Admin </h1>
+		<% else %>
+			<% @destroy_contributor = Contributor.where(organisation_id: params[:id]). find_by(user_id: current_user.id) %>
+			<%= button_to "Contribute", uncontribute_path(@destroy_contributor), method: :delete, class: "btn btn-success" %>
+		<% end %> 
 
-	<% if @contributor.admin?%>
-		<%= link_to 'Edit', edit_organisation_path(@organisation) %> 
-		<%= link_to 'Destroy', @organisation, method: :delete, data: { confirm: 'Are you sure?' } %>
-		<%= link_to 'View Contributors', organisation_contributors_path(@organisation) %>
+		<% if contributor?(@organisation) %>
+			<% if true || @contributor.member? -%>
+				<div>
+					<%= link_to('Create Event', new_organisation_event_path(@organisation)) %>
+				</div>
+			<% end -%>
+			<%= link_to "Admin Dashboard", admin_dashboard_path(@organisation) %>
+		<% end %>
 	<% end %>
-<% end %>
 
-<%= link_to 'Back', organisations_path %>
+	<%= link_to 'All Organisation', organisations_path %>
 
-<% if !current_user.follow_organisations.exists?(@organisation.id) %>
-	<%= button_to 'Follow', organisation_follow_path(@organisation.id) %>
-<% else %>
-		<%= button_to 'Unfollow', organisation_unfollow_path(@organisation.id), method: :delete %>
-<% end %>
+	<% if signed_in? %>
+		<% if !current_user.follow_organisations.exists?(@organisation.id) %>
+			<%= button_to 'Follow', organisation_follow_path(@organisation.id) %>
+		<% else %>
+			<%= button_to 'Unfollow', organisation_unfollow_path(@organisation.id), method: :delete %>
+		<% end %>
+	<% end %>
 
 <%= form_for @post, url: [@organisation, @post] do |f| %>
 	post post_path
@@ -37,3 +47,6 @@
 		
 	<% end %>
 <% end %>
+	
+</div>
+

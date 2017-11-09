@@ -21,8 +21,19 @@ Rails.application.routes.draw do
 
   #the routes for organisations 
   resources :organisations do 
-    resources :contributors
+    resources :contributors, only: [:create, :destroy, :index]
+  end
 
+  get "/organisations/:id/admin_dashboard" => "organisations#admin_dashboard", as: :admin_dashboard 
+
+  get "/organisations/:organisation_id/unapproved_contributors" => "contributors#unapproved_contributors", as: :unapproved_contributors
+
+  post "/organisations/:organisation_id/approve_contributor/:id" => "contributors#approve_contributor", as: :approve_contributor
+
+  delete "/uncontribute/:id" => "contributors#uncontribute", as: :uncontribute
+
+  #routes for events
+  resources :organisations, only: [] do 
     # For creating events and listing them only, creation is dependent on organisation
     resources :events, only: [:index, :create, :new]
 
@@ -34,9 +45,11 @@ Rails.application.routes.draw do
   # Other stuff related to events
   resources :events, only: [:index, :show, :edit, :update, :destroy]
   resources :attendees, only: [:create, :destroy]
+
   
   # User actions with organisations
 
   # resources :follows
+
 end
 
