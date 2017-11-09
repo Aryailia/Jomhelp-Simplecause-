@@ -1,0 +1,35 @@
+
+<br>
+<% x = User.find_by(id: params[:id]) %>
+<br>
+<% if x.photos.file.nil? == false %>
+	<%= image_tag x.photos.url%>
+<% end %>
+<br>
+<h3><%= x.first_name %> <%= x.last_name %>'s Profile</h3>
+Email: <%= x.email %>
+<hr>
+<hr>
+
+
+<% if (current_user.friendships.find_by(friend_id: x.id).nil?) %>
+	<%= link_to "Add Friend", create_friendships_path(x), method: :post  %>
+<%elsif current_user.friendships.find_by(friend_id: x.id).approved == false%>
+	Your friend request has been sent
+<%elsif current_user.approved_friendships.find_by(friend_id: x.id).includes(x)%>
+	You are already friends with this person
+	<!-- Put the remove friend link heer -->
+<% end %>
+<hr>
+<hr>
+
+
+<h4>Friends</h4>
+<% if !x.friends.empty? %>
+	<% x.friends.each do |friend| %>
+		Name: <%= friend.first_name %> <%= friend.last_name %>
+		<br>
+	<% end %>
+<%else%>
+	This User has no friends
+<% end -%>

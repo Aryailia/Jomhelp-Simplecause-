@@ -1,0 +1,13 @@
+<h1>All Users</h1>
+
+<% User.where("id != ?", current_user.id).order(created_at: :desc).each do |x| %>
+
+
+	<h2><%= x.first_name %> <%= x.last_name %></h2>
+	<h4><%= x.email %></h4>
+
+	<%= button_to "See More", users_show_path(x.id), method: :get %>
+
+<br>
+<hr>
+<% end -%>

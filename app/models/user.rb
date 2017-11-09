@@ -7,6 +7,18 @@ class User < ApplicationRecord
   has_many :follow_organisations, through: :follows, source: :organisation
 	has_many :authentications, dependent: :destroy
 
+  
+  has_many :friendships, dependent: :destroy
+  has_many :approved_friendships, -> { where(approved: true) }, dependent: :destroy, class_name: 'Friendship'
+  has_many :friends, through: :approved_friendships
+
+
+
+  has_many :inverse_friendships, dependent: :destroy, class_name: "Friendship", foreign_key: "friend_id"
+  has_many :inverse_friends, through: :inverse_friendships, source: :user
+
+  mount_uploader :photos, PhotoUploader
+
   def self.create_with_auth_and_hash(authentication, auth_hash)
     user = self.create!(
       first_name: auth_hash["extra"]["raw_info"]["first_name"],
