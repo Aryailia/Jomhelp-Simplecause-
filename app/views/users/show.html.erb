@@ -2,6 +2,10 @@
 <br>
 <% x = User.find_by(id: params[:id]) %>
 <br>
+<% if x.photos.file.nil? == false %>
+	<%= image_tag x.photos.url%>
+<% end %>
+<br>
 <h3><%= x.first_name %> <%= x.last_name %>'s Profile</h3>
 Email: <%= x.email %>
 <hr>
