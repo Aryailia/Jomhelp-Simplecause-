@@ -5,7 +5,9 @@ class User < ApplicationRecord
 	has_many :organisations, through: :contributors 
   has_many :organisations, through: :follows
 	has_many :authentications, dependent: :destroy
-
+	has_many :posts 
+	# has_many :post ,through: :organisations
+ 
   def self.create_with_auth_and_hash(authentication, auth_hash)
     user = self.create!(
       first_name: auth_hash["extra"]["raw_info"]["first_name"],

@@ -22,15 +22,14 @@ Rails.application.routes.draw do
   #the routes for organisations 
   resources :organisations do 
     resources :contributors
+    resources :posts, only: [:create, :new]
+    post 'follow' => 'follows#create'
+    post 'unfollow' => 'follows#destroy'
   end
   #routes for contributors
   resources :events
   
   # User actions with organisations
   resources :follows
-  get 'relationships/follow_user'  
-  get 'relationships/unfollow_user'
-  # get "/organisations/follow/new" => "follows#new"
-  post '/organisations/:id/follow' => 'follows#create', as: :organisation_follow
-  post '/organisations/:id/unfollow' => 'follows#destroy', as: :organisation_unfollow
-end
+  resources :posts
+end 

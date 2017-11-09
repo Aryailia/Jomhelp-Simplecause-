@@ -16,9 +16,18 @@
 <% else %>
 	<%= button_to 'Unfollow', organisation_unfollow_path(@organisation.id)%>
 <% end %>
-<!-- 
- <form align="left" class="follow_button" method="get" action="follow/new">
-    <button type="submit">follow</button>
-</form>
- -->
 
+<%= form_for @post, url: [@organisation, @post] do |f| %>
+	post post_path
+ 	<h4>Status:</h4>
+ 	<%= f.text_area :content %><br>
+ 	<br>
+	<br>
+	<%= f.submit %></br>
+
+<% byebug %>
+<% @organisation.posts each do |o| %>
+
+<%= o.content %>
+<% end %>
+ <% end %>

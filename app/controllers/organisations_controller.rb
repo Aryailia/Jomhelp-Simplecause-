@@ -10,6 +10,7 @@ class OrganisationsController < ApplicationController
   # GET /organisations/1
   # GET /organisations/1.json
   def show
+    @post = Post.new
      @organisation  = Organisation.find(params[:id])
     if contributor?(@organisation) 
       @contributors = @organisation.contributors.find_by(user_id: current_user.id)

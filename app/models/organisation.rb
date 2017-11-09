@@ -4,4 +4,5 @@ class Organisation < ApplicationRecord
 	has_many :events
 	has_many :follows
 	has_many :users, through: :follows
-end
+	has_many :posts, through: :users
+end 
