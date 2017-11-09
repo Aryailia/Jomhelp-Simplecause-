@@ -1,8 +1,23 @@
-<p id="notice"><%= notice %></p>
-
 <h1><%= @organisation.name %></h1>
+<h1><%= @organisation.description %></h1>
+<% if contributor?(@organisation) %>
+	<% if true || @contributor.member? -%>
+		<div>
+			<%= link_to('Create Event', new_organisation_event_path(@organisation)) %>
+		</div>
+	<% end -%>
 
+	<% if @contributor.admin?%>
+		<%= link_to 'Edit', edit_organisation_path(@organisation) %> 
+		<%= link_to 'Destroy', @organisation, method: :delete, data: { confirm: 'Are you sure?' } %>
+		<%= link_to 'View Contributors', organisation_contributors_path(@organisation) %>
+	<% end %>
+<% end %>
 
-<%= link_to 'Edit', edit_organisation_path(@organisation) %> |
 <%= link_to 'Back', organisations_path %>
-<%= link_to 'Destroy', @organisation, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+<% if !current_user.follow_organisations.exists?(@organisation.id) %>
+	<%= button_to 'Follow', organisation_follow_path(@organisation.id) %>
+<% else %>
+	<%= button_to 'Unfollow', organisation_unfollow_path(@organisation.id), method: :delete %>
+<% end %>

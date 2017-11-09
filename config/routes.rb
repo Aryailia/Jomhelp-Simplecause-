@@ -1,14 +1,7 @@
-Rails.application.routes.draw do
-  
+Rails.application.routes.draw do  
   root 'organisations#index'
 
-  get 'relationships/follow_user'
-
-  get 'relationships/unfollow_user'
-
-  resources :follows
-  resources :events
-
+  # For sessions
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
   resource :session, controller: "clearance/sessions", only: [:create]
 
@@ -22,12 +15,11 @@ Rails.application.routes.draw do
   delete "/sign_out" => "clearance/sessions#destroy", as: "sign_out"
   get "/sign_up" => "clearance/users#new", as: "sign_up"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
-
-  #the routes for organisations 
-    resources :organisations
-
+ #the routes for follow
+  
   get "/auth/:provider/callback" => "sessions#create_from_omniauth"
+
+
 
   #route to direct to users index(page with all the users)
   get "/users/index" => "users#index", as: "users_index"
@@ -36,4 +28,26 @@ Rails.application.routes.draw do
   get "/users/:id" => "users#show", as: "users_show"
 
   post "/friendships/:friend_id" => "friendships#create", as: "create_friendships"
+
+
+
+
+  #the routes for organisations 
+  resources :organisations do 
+    resources :contributors
+
+    # For creating events and listing them only, creation is dependent on organisation
+    resources :events, only: [:index, :create, :new]
+
+    # For Follows
+    post 'follow' => 'follows#create'
+    delete 'unfollow' => 'follows#destroy'
+  end
+
+  # Other stuff related to events
+  resources :events, only: [:index, :show, :edit, :update, :destroy]
+  resources :attendees, only: [:create, :destroy]
+  
+  # User actions with organisations
+  # resources :follows
 end

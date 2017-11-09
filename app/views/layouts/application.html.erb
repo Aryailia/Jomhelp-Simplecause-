@@ -1,31 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <%= stylesheet_link_tag 'application' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tag %>
 </head>
 <body>
-  <div id="header">
-    <% if signed_in? -%>
-      Logged in as <%= current_user.first_name %> <%= current_user.last_name %>
-      <%= button_to t(".sign_out"), sign_out_path, method: :delete %>
-    <% else -%>
-      <%= link_to t(".sign_in"), sign_in_path %>  
-      <%= link_to t(".sign_up"), sign_up_path %>
-    <% end -%>
+  <header>
+    <% navbar_id = 'navbarNav' # To conlidate the id %>
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+      <%= link_to('Jomhelp', root_path, class: 'navbar-brand') %>
 
-    <%= button_to "Browse all Users", users_index_path, method: :get %>
+      <div class="collapse navbar-collapse" id="<%= navbar_id %>">
+        <ul class="navbar-nav mr-auto">
+          <% {
+            Profile: '#',
+            Events: events_path,
+            Organisations: organisations_path,
+          }.each do |body, link|
+          %>
+            <% isCurrent = current_page?(link) %>
+            <li class="<%= (isCurrent) ? 'nav-link active' : 'nav-link' %>">
+              <%= link_to(link, class: 'nav-link') do -%>
+                <%= raw body %><% if isCurrent %> <span class="sr-only">(current)</span><% end %>
+              <% end %>
+            </li>
+          <% end %>
+          <li class="nav-link">
+              <%= button_to "Browse all Users", users_index_path, method: :get %>
+          </li>
+          <li class="nav-link">
+            <%= button_to "Your Profile", profile_path, method: :get %>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+      <div class="navbar-nav">
+      <% if signed_in? -%>
+        Logged in as <%= current_user.first_name %> <%= current_user.last_name %>
+        <%= button_to t(".sign_out"), sign_out_path, method: :delete, class: 'btn btn-warning' %>
+      <% elsif !current_page?(sign_in_path) -%>
+        <%= button_to t(".sign_in"), sign_in_path, method: :get, class: 'btn btn-info' %>
+        <%= link_to t(".sign_up"), sign_up_path %>
+      <% end -%>
+      </div>
+    </nav>
 
-    <%= button_to "Your Profile", profile_path, method: :get %>
-  </div>
-
-  <div id="flash">
-    <% flash.each do |key, value| -%>
-      <div id="flash_<%= key %>"><%=h value %></div>
-    <% end %>
-  </div>
-
-  <%= yield %>
+    <div id="flash">
+      <% flash.each do |key, value| -%>
+        <div id="flash_<%= key %>"><%=h value %></div>
+      <% end %>
+    </div>
+  </header>
+  
+  <section>
+    <%= yield %>
+  </section>
 </body>
 </html>
  
