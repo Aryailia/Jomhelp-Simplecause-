@@ -22,14 +22,21 @@ Rails.application.routes.draw do
   #the routes for organisations 
   resources :organisations do 
     resources :contributors
-    resources :posts, only: [:create, :new]
+
+    # For creating events and listing them only, creation is dependent on organisation
+    resources :events, only: [:index, :create, :new]
+
+    # For Follows
     post 'follow' => 'follows#create'
-    post 'unfollow' => 'follows#destroy'
+    delete 'unfollow' => 'follows#destroy'
   end
-  #routes for contributors
-  resources :events
+
+  # Other stuff related to events
+  resources :events, only: [:index, :show, :edit, :update, :destroy]
+  resources :attendees, only: [:create, :destroy]
   
   # User actions with organisations
-  resources :follows
-  resources :posts
-end 
+
+  # resources :follows
+end
+

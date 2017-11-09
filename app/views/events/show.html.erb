@@ -1,6 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Name:</strong>
+  <%= @event.name %>
+</p>
+<p>
   <strong>Start date:</strong>
   <%= @event.start_date %>
 </p>
@@ -8,6 +12,19 @@
 <p>
   <strong>End date:</strong>
   <%= @event.end_date %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @event.address %>
+</p>
+<p>
+  <strong>City:</strong>
+  <%= @event.city %>
+</p>
+<p>
+  <strong>Postal Code:</strong>
+  <%= @event.postcode %>
 </p>
 
 <p>
@@ -20,10 +37,22 @@
   <%= @event.latitude %>
 </p>
 
-<p>
-  <strong>Organisation:</strong>
-  <%= @event.organisation %>
-</p>
-
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+<div>
+  <% if signed_in? %>
+    <% if @event.attendees.exists?(user_id: current_user.id) %>
+      <%= form_with(model: Attendee, method: :delete, url: attendee_path ) do |form| %>
+        <%= form.hidden_field(:event_id, :value => @event.id) %>
+        <%= form.hidden_field(:user_id, :value => current_user.id) %>
+        <%= form.submit('Leave') %>
+      <% end %>    
+    <% else %>
+      <%= form_with(model: Attendee) do |form| %>
+        <%= form.hidden_field(:event_id, :value => @event.id) %>
+        <%= form.hidden_field(:user_id, :value => current_user.id) %>
+        <%= form.submit('Attend') %>
+      <% end %>
+    <% end %>  
+  <% end %>
+  Maybe include way to view events
+</div>
+<%= link_to('Edit', edit_event_path(@event)) %> | <%= link_to('Back', events_path) %>
