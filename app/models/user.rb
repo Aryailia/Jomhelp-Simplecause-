@@ -7,6 +7,10 @@ class User < ApplicationRecord
   has_many :follow_organisations, through: :follows, source: :organisation
 	has_many :authentications, dependent: :destroy
 
+	has_many :posts 
+	# has_many :post ,through: :organisations
+ 
+
   
   has_many :friendships, dependent: :destroy
   has_many :approved_friendships, -> { where(approved: true) }, dependent: :destroy, class_name: 'Friendship'

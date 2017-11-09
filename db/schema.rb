@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171109093710) do
+
+ActiveRecord::Schema.define(version: 20171109043832) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,10 +20,9 @@ ActiveRecord::Schema.define(version: 20171109093710) do
   create_table "attendees", force: :cascade do |t|
     t.bigint "event_id", null: false
     t.bigint "user_id", null: false
-    t.boolean "showed_up", default: false, null: false
+    t.boolean "showed_up", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["event_id", "user_id"], name: "index_attendees_on_event_id_and_user_id", unique: true
     t.index ["event_id"], name: "index_attendees_on_event_id"
     t.index ["user_id"], name: "index_attendees_on_user_id"
   end
@@ -91,6 +92,14 @@ ActiveRecord::Schema.define(version: 20171109093710) do
     t.string "email", null: false
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.bigint "organisation_id"
+    t.bigint "user_id"
+    t.string "content"
+    t.index ["organisation_id"], name: "index_posts_on_organisation_id"
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -100,6 +109,7 @@ ActiveRecord::Schema.define(version: 20171109093710) do
     t.string "remember_token", limit: 128, null: false
     t.string "first_name"
     t.string "last_name"
+
     t.json "photos"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
