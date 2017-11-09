@@ -14,6 +14,7 @@ class UsersController < Clearance::UsersController
     password = user_params.delete(:password)
     first_name = user_params.delete(:first_name)
     last_name = user_params.delete(:last_name)
+    photos = user_params.delete(:photos)
     
 
 
@@ -22,6 +23,7 @@ class UsersController < Clearance::UsersController
       user.password = password
       user.first_name = first_name
       user.last_name = last_name
+      user.photos = photos
       
     end
   end

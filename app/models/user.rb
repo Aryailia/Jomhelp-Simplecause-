@@ -17,6 +17,7 @@ class User < ApplicationRecord
   has_many :inverse_friendships, dependent: :destroy, class_name: "Friendship", foreign_key: "friend_id"
   has_many :inverse_friends, through: :inverse_friendships, source: :user
 
+  mount_uploader :photos, PhotoUploader
 
   def self.create_with_auth_and_hash(authentication, auth_hash)
     user = self.create!(
