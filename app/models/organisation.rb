@@ -5,4 +5,5 @@ class Organisation < ApplicationRecord
 	has_many  :follows
 	has_many  :users, through: :follows
 	validates :email, uniqueness: true
+	mount_uploader :photos, PhotoUploader
 end

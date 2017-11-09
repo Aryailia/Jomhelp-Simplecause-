@@ -37,6 +37,11 @@
       <%= form.text_field :description, type: "text" %>
     </div>
 
+    <div class="photos-field">
+      <%= form.label :photos %>
+      <%= form.file_field :photos, multiple: true %>
+    </div>
+    
     <%= form.submit %>
   </div>
 <% end %>
