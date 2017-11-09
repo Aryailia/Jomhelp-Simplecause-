@@ -1,5 +1,5 @@
 class OrganisationsController < ApplicationController
-  before_action :set_organisation, only: [:show, :edit, :update, :destroy]
+  before_action :set_organisation, only: [:show, :edit, :update, :destroy, :admin_dashboard]
 
   # GET /organisations
   # GET /organisations.json
@@ -20,7 +20,11 @@ class OrganisationsController < ApplicationController
 
   # GET /organisations/new
   def new
-    @organisation = Organisation.new
+    if signed_in?
+      @organisation = Organisation.new
+    else
+      redirect_to sign_up_path
+    end
   end
 
   # GET /organisations/1/edit
@@ -30,18 +34,23 @@ class OrganisationsController < ApplicationController
   # POST /organisations
   # POST /organisations.json
   def create
-    @organisation = Organisation.new(organisation_params)
+    if signed_in?
+      @organisation = Organisation.new(organisation_params)
+      @organisation.email = current_user.email
 
-    respond_to do |format|
-      if @organisation.save
-        a = Contributor.new(organisation_id: @organisation.id, user_id: current_user.id, role: 2)
-        a.save
-        format.html { redirect_to @organisation, notice: 'Organisation was successfully created.' }
-        format.json { render :show, status: :created, location: @organisation }
-      else
-        format.html { render :new }
-        format.json { render json: @organisation.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @organisation.save
+          a = Contributor.new(organisation_id: @organisation.id, user_id: current_user.id, role: 2, approval_request: true)
+          a.save
+          format.html { redirect_to @organisation, notice: 'Organisation was successfully created.' }
+          format.json { render :show, status: :created, location: @organisation }
+        else
+          format.html { render :new }
+          format.json { render json: @organisation.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to sign_up_path
     end
   end
 
@@ -66,6 +75,12 @@ class OrganisationsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to organisations_url, notice: 'Organisation was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def admin_dashboard
+    if !contributor?(@organisation)
+      redirect_to organisation_path(@organisation)
     end
   end
 

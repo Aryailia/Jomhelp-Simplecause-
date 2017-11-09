@@ -21,9 +21,18 @@ Rails.application.routes.draw do
 
   #the routes for organisations 
   resources :organisations do 
-    resources :contributors
+    resources :contributors, only: [:create, :destroy, :index]
   end
-  #routes for contributors
+
+  get "/organisations/:id/admin_dashboard" => "organisations#admin_dashboard", as: :admin_dashboard 
+
+  get "/organisations/:organisation_id/unapproved_contributors" => "contributors#unapproved_contributors", as: :unapproved_contributors
+
+  post "/organisations/:organisation_id/approve_contributor/:id" => "contributors#approve_contributor", as: :approve_contributor
+
+  delete "/uncontribute/:id" => "contributors#uncontribute", as: :uncontribute
+
+  #routes for events
   resources :events
   
   # User actions with organisations

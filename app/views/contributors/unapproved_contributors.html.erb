@@ -1,0 +1,31 @@
+<div class = "container" >
+	<%= link_to "Organisation Home Page",organisation_path(params[:organisation_id]) %>
+	<% if @unapproved_contributors.length == 0 %>
+		<h3>You have no requests</h3>
+	<% else%>
+		<table class="table">
+		  <thead>
+		    <tr>
+		      <th>First name</th>
+		      <th>Last name</th>
+		      <th>Email</th>
+		    </tr>
+		  </thead>
+			
+			<tbody>
+			  <% @unapproved_contributors.each do |t| %>
+  	  	<% user = t.user %>
+			    <tr>
+			      <td><%= user.first_name %></td>
+			      <td><%= user.last_name %></td>
+			      <td><%= user.email %></td>
+			      <td><%= t.role %></td>
+			      <td><%= button_to "approve", approve_contributor_path(params[:organisation_id], t) %></td>
+			    </tr>
+		    <% end %>
+		  </tbody>
+		</table>
+
+	<% end %>
+</div>
+
