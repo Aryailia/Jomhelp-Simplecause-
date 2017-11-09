@@ -1,0 +1,10 @@
+<div class = "container" >	
+	
+	<% if @contributor.admin?%>
+		<%= link_to 'Edit', edit_organisation_path(@organisation) %> 
+		<%= link_to 'Destroy', @organisation, method: :delete, data: { confirm: 'Are you sure? You are deleting the whole organisation page' } %>
+		<%= link_to 'View Contributors', organisation_contributors_path(@organisation) %>
+	<% end %>
+	
+</div>
+	

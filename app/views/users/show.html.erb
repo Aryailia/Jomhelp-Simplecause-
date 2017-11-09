@@ -6,7 +6,7 @@
 Email: <%= x.email %>
 <hr>
 <hr>
-<!-- ############################################# -->
+
 
 <% if (current_user.friendships.find_by(friend_id: x.id).nil?) %>
 	<%= link_to "Add Friend", create_friendships_path(x), method: :post  %>
@@ -18,7 +18,7 @@ Email: <%= x.email %>
 <% end %>
 <hr>
 <hr>
-<!-- ############################################# -->
+
 
 <h4>Friends</h4>
 <% if !x.friends.empty? %>
