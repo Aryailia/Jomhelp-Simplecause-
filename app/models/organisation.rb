@@ -6,7 +6,7 @@ class Organisation < ApplicationRecord
 	has_many  :follows
 	has_many  :users, through: :follows
 	validates :email, uniqueness: true
-	has_many :posts, through: :users
+	has_many  :posts
 	
 end
 

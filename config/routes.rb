@@ -24,6 +24,8 @@ Rails.application.routes.draw do
     resources :contributors, only: [:create, :destroy, :index]
   end
 
+  resources :posts
+
   get "/organisations/:id/admin_dashboard" => "organisations#admin_dashboard", as: :admin_dashboard 
 
   get "/organisations/:organisation_id/unapproved_contributors" => "contributors#unapproved_contributors", as: :unapproved_contributors
