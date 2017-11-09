@@ -22,9 +22,10 @@ Rails.application.routes.draw do
   #the routes for organisations 
   resources :organisations do 
     resources :contributors
+    resources :events, only: [:index, :create, :new]
   end
-  #routes for contributors
-  resources :events
+  resources :events, only: [:index, :show, :edit, :update, :destroy]
+  resources :attendees, only: [:create, :destroy]
   
   # User actions with organisations
   resources :follows

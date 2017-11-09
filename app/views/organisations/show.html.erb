@@ -1,6 +1,11 @@
 <h1><%= @organisation.name %></h1>
 <h1><%= @organisation.description %></h1>
 <% if contributor?(@organisation) %>
+	<% if true || @contributor.member? -%>
+		<div>
+			<%= link_to('Create Event', new_organisation_event_path(@organisation)) %>
+		</div>
+	<% end -%>
 
 	<% if @contributor.admin?%>
 		<%= link_to 'Edit', edit_organisation_path(@organisation) %> 
@@ -16,9 +21,3 @@
 <% else %>
 	<%= button_to 'Unfollow', organisation_unfollow_path(@organisation.id)%>
 <% end %>
-<!-- 
- <form align="left" class="follow_button" method="get" action="follow/new">
-    <button type="submit">follow</button>
-</form>
- -->
-

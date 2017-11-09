@@ -18,9 +18,10 @@ ActiveRecord::Schema.define(version: 20171107155640) do
   create_table "attendees", force: :cascade do |t|
     t.bigint "event_id", null: false
     t.bigint "user_id", null: false
-    t.boolean "showed_up", null: false
+    t.boolean "showed_up", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["event_id", "user_id"], name: "index_attendees_on_event_id_and_user_id", unique: true
     t.index ["event_id"], name: "index_attendees_on_event_id"
     t.index ["user_id"], name: "index_attendees_on_user_id"
   end
@@ -48,9 +49,9 @@ ActiveRecord::Schema.define(version: 20171107155640) do
   create_table "events", force: :cascade do |t|
     t.datetime "start_date", null: false
     t.datetime "end_date", null: false
-    t.float "longitude", null: false
-    t.float "latitude", null: false
     t.string "name", null: false
+    t.float "longitude"
+    t.float "latitude"
     t.string "address", null: false
     t.string "city", null: false
     t.string "postcode", null: false
