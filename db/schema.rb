@@ -11,15 +11,17 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20171109222628) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "attendees", force: :cascade do |t|
     t.bigint "event_id", null: false
     t.bigint "user_id", null: false
-    t.boolean "showed_up", null: false
+    t.boolean "showed_up", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["event_id", "user_id"], name: "index_attendees_on_event_id_and_user_id", unique: true
     t.index ["event_id"], name: "index_attendees_on_event_id"
     t.index ["user_id"], name: "index_attendees_on_user_id"
   end
@@ -48,9 +50,9 @@ ActiveRecord::Schema.define(version: 20171109222628) do
   create_table "events", force: :cascade do |t|
     t.datetime "start_date", null: false
     t.datetime "end_date", null: false
-    t.float "longitude", null: false
-    t.float "latitude", null: false
     t.string "name", null: false
+    t.float "longitude"
+    t.float "latitude"
     t.string "address", null: false
     t.string "city", null: false
     t.string "postcode", null: false
@@ -85,30 +87,31 @@ ActiveRecord::Schema.define(version: 20171109222628) do
     t.string "city", null: false
     t.string "postcode", null: false
     t.string "description", null: false
+    t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "email", null: false
     t.json "photos"
   end
 
   create_table "posts", force: :cascade do |t|
-    t.bigint "organisation_id"
-    t.bigint "user_id"
+    t.bigint "organisation_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "content"
     t.index ["organisation_id"], name: "index_posts_on_organisation_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
     t.string "email", null: false
     t.string "encrypted_password", limit: 128
     t.string "confirmation_token", limit: 128
     t.string "remember_token", limit: 128, null: false
-    t.string "first_name"
-    t.string "last_name"
-
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.json "photos"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
@@ -122,4 +125,6 @@ ActiveRecord::Schema.define(version: 20171109222628) do
   add_foreign_key "events", "organisations"
   add_foreign_key "follows", "organisations"
   add_foreign_key "follows", "users"
+  add_foreign_key "posts", "organisations"
+  add_foreign_key "posts", "users"
 end
