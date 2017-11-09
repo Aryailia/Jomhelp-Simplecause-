@@ -2,8 +2,11 @@
 Name: <%= current_user.first_name %> <%= current_user.last_name %>
 Email: <%= current_user.email %>
 
-
+<hr>
+<hr>
 <!-- ############################################# -->
+<br>
+<br>
 <h4>Be-Friend Requests</h4>
 
 <% if !current_user.inverse_friends.empty? %>
@@ -16,7 +19,7 @@ Email: <%= current_user.email %>
 		
 	<% end %>
 <% else %>
-	No one wants to be friends with this user
+	No one wants to be friends with you
 <% end %>
 <hr>
 <hr>
