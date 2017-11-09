@@ -33,13 +33,16 @@ Rails.application.routes.draw do
   delete "/uncontribute/:id" => "contributors#uncontribute", as: :uncontribute
 
   #routes for events
-  resources :events
-  
-  # User actions with organisations
-  resources :follows
-  get 'relationships/follow_user'  
-  get 'relationships/unfollow_user'
-  # get "/organisations/follow/new" => "follows#new"
-  post '/organisations/:id/follow' => 'follows#create', as: :organisation_follow
-  post '/organisations/:id/unfollow' => 'follows#destroy', as: :organisation_unfollow
+  resources :organisations, only: [] do 
+    # For creating events and listing them only, creation is dependent on organisation
+    resources :events, only: [:index, :create, :new]
+
+    # For Follows
+    post 'follow' => 'follows#create'
+    delete 'unfollow' => 'follows#destroy'
+  end
+
+  # Other stuff related to events
+  resources :events, only: [:index, :show, :edit, :update, :destroy]
+  resources :attendees, only: [:create, :destroy]
 end

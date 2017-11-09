@@ -11,23 +11,24 @@
 			<% @destroy_contributor = Contributor.where(organisation_id: params[:id]). find_by(user_id: current_user.id) %>
 			<%= button_to "Contribute", uncontribute_path(@destroy_contributor), method: :delete, class: "btn btn-success" %>
 		<% end %> 
-	<% end %>
 
-	<% if contributor?(@organisation) %>
-		<%= link_to "Admin Dashboard", admin_dashboard_path(@organisation) %>
+		<% if contributor?(@organisation) %>
+			<% if true || @contributor.member? -%>
+				<div>
+					<%= link_to('Create Event', new_organisation_event_path(@organisation)) %>
+				</div>
+			<% end -%>
+			<%= link_to "Admin Dashboard", admin_dashboard_path(@organisation) %>
+		<% end %>
 	<% end %>
 
 	<%= link_to 'All Organisation', organisations_path %>
 
-	<% if current_user.organisations.find_by(id: @organisation.id).nil? %>
-		<%= button_to 'Follow', organisation_follow_path(@organisation.id) %>
-	<% else %>
-		<%= button_to 'Unfollow', organisation_unfollow_path(@organisation.id)%>
+	<% if signed_in? %>
+		<% if !current_user.follow_organisations.exists?(@organisation.id) %>
+			<%= button_to 'Follow', organisation_follow_path(@organisation.id) %>
+		<% else %>
+			<%= button_to 'Unfollow', organisation_unfollow_path(@organisation.id), method: :delete %>
+		<% end %>
 	<% end %>
 </div>
-<!-- 
- <form align="left" class="follow_button" method="get" action="follow/new">
-    <button type="submit">follow</button>
-</form>
- -->
-
