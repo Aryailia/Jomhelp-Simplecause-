@@ -6,6 +6,8 @@ class AttendeesController < ApplicationController
       # raise ErrorWithRedirect.new('You must be logged and be admin', refresh) if signed_in? && current_user.admin?
       raise ErrorWithRedirect.new('You must be logged in as that user', refresh) if !signed_in? || current_user.id != attendee.user_id
       if attendee.save
+        current_user.posts.create(content: "#{current_user.name} has joined #{attendee.event.name}", organisation_id: attendee.event.organisation_id, event_join: true)
+
         respond_to do |format|
           format.html { redirect_to(event_path(attendee.event), notice: 'Signed up for event.') }
           format.json { render(:show, status: :created, location: attendee.event) }
