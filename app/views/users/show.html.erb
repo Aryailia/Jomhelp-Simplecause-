@@ -16,9 +16,8 @@ Email: <%= x.email %>
 	<%= link_to "Add Friend", create_friendships_path(x), method: :post  %>
 <%elsif current_user.friendships.find_by(friend_id: x.id).approved == false%>
 	Your friend request has been sent
-<%elsif current_user.approved_friendships.find_by(friend_id: x.id).includes(x)%>
+<%elsif current_user.friends.includes(x)%>
 	You are already friends with this person
-	<!-- Put the remove friend link heer -->
 <% end %>
 <hr>
 <hr>
