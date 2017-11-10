@@ -50,9 +50,9 @@ ActiveRecord::Schema.define(version: 20171109222628) do
   create_table "events", force: :cascade do |t|
     t.datetime "start_date", null: false
     t.datetime "end_date", null: false
-    t.float "longitude", null: false
-    t.float "latitude", null: false
     t.string "name", null: false
+    t.float "longitude"
+    t.float "latitude"
     t.string "address", null: false
     t.string "city", null: false
     t.string "postcode", null: false
@@ -87,21 +87,21 @@ ActiveRecord::Schema.define(version: 20171109222628) do
     t.string "city", null: false
     t.string "postcode", null: false
     t.string "description", null: false
+    t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "email", null: false
     t.json "photos"
   end
 
   create_table "users", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
     t.string "email", null: false
     t.string "encrypted_password", limit: 128
     t.string "confirmation_token", limit: 128
     t.string "remember_token", limit: 128, null: false
-    t.string "first_name"
-    t.string "last_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.json "photos"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
