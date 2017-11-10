@@ -45,15 +45,17 @@
   <strong>Latitude:</strong>
   <%= @event.latitude %>
 </p>
-
-<div id="map"></div>
+<div id="map" style="width: 500px; height: 500px;"></div>
 <script>
-  var map;
   function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: -34.397, lng: 150.644},
-      zoom: 8
-    });
+    new google.maps.Map(document.getElementById('map'),
+      { center:
+        { lat: <%= @event.latitude.nil? ? '-34.42' : "#{@event.longitude}" %>
+        , lng: <%= @event.longitude.nil? ? '150.9' : "#{@event.longitude}" %>
+        }
+      , zoom: 17
+      }
+    );
   }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&libraries=places&callback=initMap" async defer></script>
