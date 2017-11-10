@@ -13,16 +13,12 @@ Email: <%= current_user.email %>
 <br>
 <br>
 <h4>Friends</h4>
-
 <% if !current_user.friends.empty? %>
 	<% current_user.friends.each do |x| %>
 		<strong>Name:</strong> <%= x.first_name %> <%= x.last_name %>
 	<% end %>		
 <% end %>
 	<br>
-
-
-
 
 <hr>
 <hr>
@@ -75,12 +71,6 @@ Email: <%= current_user.email %>
 
 
 <%end%>
-
-
-
-
-
-
 
 <hr>
 <hr>
