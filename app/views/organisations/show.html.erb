@@ -21,37 +21,40 @@
 	<div class="row">
 	  <div class="col-2">
 			<h1><%= params[:notice] %></h1>
-			<% if signed_in? %>
-				<% if Organisation.find(params[:id]).contributors.find_by(user_id: current_user.id).nil? %>
-					<%= button_to "Contribute", organisation_contributors_path(params[:id]), method: :post %>
-				<% elsif Organisation.find(params[:id]).contributors.find_by(user_id: current_user.id).admin? %>
-					<h1> You are Admin </h1>
-				<% else %>
-					<% @destroy_contributor = Contributor.where(organisation_id: params[:id]). find_by(user_id: current_user.id) %>
-					<%= button_to "Contribute", uncontribute_path(@destroy_contributor), method: :delete, class: "btn btn-success" %>
-				<% end %> 
+			
+			<div class="btn-group-vertical">
+				<%= link_to 'All Organisation', organisations_path %>
 
-				<% if contributor?(@organisation) %>
-					<% if true || @contributor.member? -%>
-						<div>
-							<%= link_to('Create Event', new_organisation_event_path(@organisation)) %>
-						</div>
-					<% end -%>
-					<%= link_to "Admin Dashboard", admin_dashboard_path(@organisation) %>
-				<% end %>
-			<% end %>
+				<%= link_to 'Organisation Events', display_organisation_events_path(@organisation) %>
 
-			<%= link_to 'All Organisation', organisations_path %>
+				<% if signed_in? %>
+					<% if !contributor?(@organisation) %>
+						<% if !current_user.follow_organisations.exists?(@organisation.id) %>
+							<%= button_to 'Follow', organisation_follow_path(@organisation.id) %>
+						<% else %>
+							<%= button_to 'Unfollow', organisation_unfollow_path(@organisation.id), method: :delete %>
+						<% end %>
+					<% end %>
 
-			<% if signed_in? %>
-				<% if !contributor?(@organisation) %>
-					<% if !current_user.follow_organisations.exists?(@organisation.id) %>
-						<%= button_to 'Follow', organisation_follow_path(@organisation.id) %>
+					<% if Organisation.find(params[:id]).contributors.find_by(user_id: current_user.id).nil? %>
+						<%= button_to "Contribute", organisation_contributors_path(params[:id]), method: :post %>
+					<% elsif Organisation.find(params[:id]).contributors.find_by(user_id: current_user.id).admin? %>
 					<% else %>
-						<%= button_to 'Unfollow', organisation_unfollow_path(@organisation.id), method: :delete %>
+						<% @destroy_contributor = Contributor.where(organisation_id: params[:id]). find_by(user_id: current_user.id) %>
+						<%= button_to "Contribute", uncontribute_path(@destroy_contributor), method: :delete, class: "btn btn-success" %>
+					<% end %> 
+
+					<% if contributor?(@organisation) %>
+						<%= link_to('Create Event', new_organisation_event_path(@organisation)) %>
+						<% if @contributor.admin? %>
+							<%= link_to "Admin Dashboard", admin_dashboard_path(@organisation) %>
+						<% end %>
 					<% end %>
 				<% end %>
-			<% end %>
+
+			</div>
+
+			
 	  </div>
 
 	  <div class="col-10">
