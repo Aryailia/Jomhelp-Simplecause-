@@ -4,13 +4,14 @@ class OrganisationsController < ApplicationController
   # GET /organisations
   # GET /organisations.json
   def index
-    @organisations = Organisation.all
+    @organisations = Organisation.all.paginate(:page => params[:page], :per_page => 6)
   end
 
   # GET /organisations/1
   # GET /organisations/1.json
   def show
     @post = Post.new
+    @posts= Post.where(organisation_id: @organisation.id).order('created_at DESC').paginate(:page => params[:page], :per_page => 5)
     @admin = Organisation.find(params[:id])
      @organisation  = Organisation.find(params[:id])
     if signed_in?
