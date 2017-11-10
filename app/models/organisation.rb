@@ -5,8 +5,9 @@ class Organisation < ApplicationRecord
 	has_many  :events
 	has_many  :follows
 	has_many  :users, through: :follows
-	
-	mount_uploader :photos, PhotoUploader
+
+	mount_uploaders :photos, PhotoUploader
+
 	has_many  :posts
 
 	validates :name, presence: true
