@@ -6,6 +6,7 @@ class User < ApplicationRecord
 	has_many :organisations, through: :contributors 
   has_many :follow_organisations, through: :follows, source: :organisation
 	has_many :authentications, dependent: :destroy
+
 	has_many :posts 
 	# has_many :post ,through: :organisations
   

@@ -37,6 +37,11 @@
       <%= form.text_field :description, type: "text" %>
     </div>
 
-    <%= form.submit %>
+    <div class="photos-field">
+      <%= form.label :photos %>
+      <%= form.file_field :photos, multiple: true %>
+    </div>
+
+    <%= form.submit 'Update Orgnisation Profile', :class => "btn btn-outline-success" %>
   </div>
 <% end %>

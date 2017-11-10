@@ -1,6 +1,6 @@
 class ContributorsController < ApplicationController
-	before_action :check_contributor, only: [ :index,  :upapproved_contributor, :approve_contributor ]
-	before_action :check_admin, only: [ :upapproved_contributor ]
+	before_action :check_contributor, only: [ :index,  :unapproved_contributors, :approve_contributor ]
+	# before_action :check_admin, only: [ :unapproved_contributors ]
 	before_action :disable_admin_deletion, only: [ :uncontribute ]
 
 	def index
@@ -26,6 +26,7 @@ class ContributorsController < ApplicationController
 	end
 
 	def unapproved_contributors
+
 		@unapproved_contributors = Contributor.where(organisation_id: params[:organisation_id
 			]).where( approval_request: false )
 	end
@@ -37,6 +38,8 @@ class ContributorsController < ApplicationController
 		@approve_contributor.approval_request = true
 		@approve_contributor.save
 		redirect_to unapproved_contributors_path(@organisation)
+		@follow = Follow.new(user_id: current_user.id, organisation_id: params[:organisation_id])
+		@follow.save
 	end
 
 	private

@@ -32,6 +32,17 @@ Rails.application.routes.draw do
   get "/profile" => "users#profile", as: "profile"
 
 
+
+
+  post "/friendships/approve_friendship/:friend_id" => "friendships#approve", as: :approve_friendship
+
+
+  post "/friendships/destroy_friendship/:friend_id" => "friendships#destroy", as: :destroy_friendship
+
+
+
+
+
   #the routes for organisations 
   resources :organisations do 
     resources :contributors, only: [:create, :destroy, :index]

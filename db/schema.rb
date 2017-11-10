@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 20171110071501) do
     t.bigint "organisation_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.json "photos"
     t.index ["organisation_id"], name: "index_events_on_organisation_id"
   end
 
@@ -88,6 +89,7 @@ ActiveRecord::Schema.define(version: 20171110071501) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email", null: false
+    t.json "photos"
   end
 
   create_table "posts", force: :cascade do |t|

@@ -27,6 +27,7 @@ class UsersController < Clearance::UsersController
       
     end
   end
+<<<<<<< HEAD
 
   def feed
 
@@ -34,4 +35,6 @@ class UsersController < Clearance::UsersController
         redirect_to Clearance.configuration.redirect_url
       end 
    end 
+=======
+>>>>>>> master
 end
