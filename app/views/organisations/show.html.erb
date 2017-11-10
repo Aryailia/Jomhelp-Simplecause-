@@ -1,4 +1,23 @@
 <div class = "container">
+	<div class="jumbotron jumbotron-fluid">
+	  <div class="container">
+	    <h1 class="display-3">Fluid jumbotron</h1>
+	    <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+	  </div>
+	</div>
+	
+	<h3>Past Events</h3>
+	<div class = "row">
+		<div class="card" style="width: 20rem;">
+		  <img class="card-img-top" src="..." alt="Card image cap">
+		  <div class="card-block">
+		    <h4 class="card-title">Card title</h4>
+		    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+		    <a href="#" class="btn btn-primary">Go somewhere</a>
+		  </div>
+		</div>
+	</div>
+
 	<h1><%= @organisation.name %></h1>
 	<h1><%= @organisation.description %></h1>
 	<h1><%= params[:notice] %></h1>
@@ -25,12 +44,15 @@
 	<%= link_to 'All Organisation', organisations_path %>
 
 	<% if signed_in? %>
-		<% if !current_user.follow_organisations.exists?(@organisation.id) %>
-			<%= button_to 'Follow', organisation_follow_path(@organisation.id) %>
-		<% else %>
-			<%= button_to 'Unfollow', organisation_unfollow_path(@organisation.id), method: :delete %>
+		<% if !contributor?(@organisation) %>
+			<% if !current_user.follow_organisations.exists?(@organisation.id) %>
+				<%= button_to 'Follow', organisation_follow_path(@organisation.id) %>
+			<% else %>
+				<%= button_to 'Unfollow', organisation_unfollow_path(@organisation.id), method: :delete %>
+			<% end %>
 		<% end %>
 	<% end %>
+
 
 	<%= form_for @post do |f| %>
 		<!-- post post_path -->

@@ -1,10 +1,27 @@
+
+<ul class="nav nav-tabs">
+	<li class="nav-item">
+    <%= link_to 'Home Page', organisation_path(@organisation), :class => "nav-link" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Admin Dashboard', admin_dashboard_path(@organisation), :class => "nav-link active" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Contributors Request', unapproved_contributors_path(@organisation), :class => "nav-link" %> 
+  </li>
+  <% if @contributor.admin?%>
+	  <li class="nav-item">
+	    <%= link_to 'Edit', edit_organisation_path(@organisation), :class => "nav-link" %> 
+	  </li>
+	  <li class="nav-item">
+	    <%= link_to 'View Contributors', organisation_contributors_path(@organisation), :class => "nav-link" %>
+	  </li>
+  <% end %>
+</ul>
+
 <div class = "container" >	
-	
-	<% if @contributor.admin?%>
-		<%= link_to 'Edit', edit_organisation_path(@organisation) %> 
-		<%= link_to 'Destroy', @organisation, method: :delete, data: { confirm: 'Are you sure? You are deleting the whole organisation page' } %>
-		<%= link_to 'View Contributors', organisation_contributors_path(@organisation) %>
-	<% end %>
-	
+	<h1> There are no events yet </h1>
+	<h1> Insert Number of Followers </h1>
+	<h1> Insert Posts and number of posts </h1>
 </div>
 	
