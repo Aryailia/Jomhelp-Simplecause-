@@ -1,5 +1,13 @@
 <p id="notice"><%= notice %></p>
 
+<!-- Put any carousel stuff here -->
+  <% @event.photos.each do |photo| %>
+    <div>
+      <%= image_tag photo %>
+    </div>
+  <% end %>
+
+
 <p>
   <strong>Name:</strong>
   <%= @event.name %>

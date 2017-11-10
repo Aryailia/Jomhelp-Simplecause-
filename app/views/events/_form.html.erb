@@ -41,6 +41,11 @@
     <%= form.datetime_select :end_date, id: :event_end_date %>
   </div>
 
+  <div class="photos-field">
+    <%= form.label :photos %>
+    <%= form.file_field :photos, multiple: true %>
+  </div>
+
   <!--<div class="field">
     <%= form.label :longitude %>
     <%= form.text_field :longitude, id: :event_longitude %>
