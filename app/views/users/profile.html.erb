@@ -1,0 +1,67 @@
+<h3>Saya Profile</h3>
+<% if current_user.photos.file.nil? == false %>
+	<%= image_tag current_user.photos.thumb.url%>
+<% end %>
+<br>
+Name: <%= current_user.first_name %> <%= current_user.last_name %>
+<br>
+Email: <%= current_user.email %>
+
+<hr>
+<hr>
+<br>
+<br>
+<h4>Friends</h4>
+<% current_user.friendships.each do |x| %>
+
+	<% if x.approved == true %>
+		<% a = User.find_by(id: x.friend_id) %>
+		Name: <%= a.first_name %> <%= a.last_name %>		
+	<% end %>
+	<br>
+
+<% end %>
+
+<hr>
+<hr>
+
+
+<br>
+<br>
+<h4>Pending Friend Requests</h4>
+
+<% current_user.friendships.each do |x| %>
+
+	<% if x.approved == false %>
+		<% a = User.find_by(id: x.friend_id) %>
+		Name: <%= a.first_name %> <%= a.last_name %>		
+	<% end %>
+	<br>
+
+<% end %>
+ 
+<hr>
+<hr>
+
+
+<br>
+<br>
+<h4>Be-Friend Requests</h4>
+
+<% if !current_user.inverse_friends.empty? %>
+
+	<% current_user.inverse_friends.each do |inverse_friend| %>
+		Name: <%= inverse_friend.first_name %> <%= inverse_friend.last_name %>
+		<br>
+		Requested on: <%= inverse_friend.created_at.to_date %>
+		<br>
+		<%= link_to "Approve Friendship", method: :post %>		
+	<% end %>
+
+<% else %>
+
+	No one wants to be friends with you
+
+<% end %>
+<hr>
+<hr>

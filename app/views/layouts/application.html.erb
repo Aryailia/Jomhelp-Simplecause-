@@ -31,6 +31,12 @@
               <% end %>
             </li>
           <% end %>
+          <li class="nav-link">
+              <%= button_to "Browse all Users", users_index_path, method: :get %>
+          </li>
+          <li class="nav-link">
+            <%= button_to "Your Profile", profile_path, method: :get %>
+          </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="text" placeholder="Search">
@@ -39,9 +45,11 @@
       </div>
       <div class="navbar-nav">
       <% if signed_in? -%>
+        Logged in as <%= current_user.first_name %> <%= current_user.last_name %>
         <%= button_to t(".sign_out"), sign_out_path, method: :delete, class: 'btn btn-warning' %>
       <% elsif !current_page?(sign_in_path) -%>
         <%= button_to t(".sign_in"), sign_in_path, method: :get, class: 'btn btn-info' %>
+        <%= link_to t(".sign_up"), sign_up_path %>
       <% end -%>
       </div>
     </nav>

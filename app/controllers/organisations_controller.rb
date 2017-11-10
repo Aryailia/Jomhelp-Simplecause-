@@ -10,6 +10,8 @@ class OrganisationsController < ApplicationController
   # GET /organisations/1
   # GET /organisations/1.json
   def show
+    @post = Post.new
+    @admin = Organisation.find(params[:id])
      @organisation  = Organisation.find(params[:id])
     if signed_in?
       if contributor?(@organisation) 
@@ -96,7 +98,7 @@ class OrganisationsController < ApplicationController
 
   private
     def organisation_params
-      params.require(:organisation).permit(:email, :name, :address, :city, :postcode, :description)
+      params.require(:organisation).permit(:email, :name, :address, :city, :postcode, :description, :photos [])
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_organisation
