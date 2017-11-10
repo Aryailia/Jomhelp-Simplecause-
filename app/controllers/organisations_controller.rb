@@ -98,7 +98,7 @@ class OrganisationsController < ApplicationController
 
   private
     def organisation_params
-      params.require(:organisation).permit(:email, :name, :address, :city, :postcode, :description, :photos [])
+      params.require(:organisation).permit(:email, :name, :address, :city, :postcode, :description, {photos: []})
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_organisation
