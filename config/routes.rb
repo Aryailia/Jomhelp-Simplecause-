@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
   resource :session, controller: "clearance/sessions", only: [:create]
 
-  resources :users, controller: "clearance/users", only: [:create] do
+  resources :users, controller: "users", only: [:create] do
     resource :password,
       controller: "clearance/passwords",
       only: [:create, :edit, :update]
@@ -18,6 +18,19 @@ Rails.application.routes.draw do
  #the routes for follow
   
   get "/auth/:provider/callback" => "sessions#create_from_omniauth"
+
+
+
+  #route to direct to users index(page with all the users)
+  get "/users/index" => "users#index", as: "users_index"
+
+  #route to direct to users profile
+  get "/users/:id" => "users#show", as: "users_show"
+
+  post "/friendships/:friend_id" => "friendships#create", as: "create_friendships"
+
+  get "/profile" => "users#profile", as: "profile"
+
 
   #the routes for organisations 
   resources :organisations do 
