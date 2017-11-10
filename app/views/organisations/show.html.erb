@@ -31,4 +31,29 @@
 			<%= button_to 'Unfollow', organisation_unfollow_path(@organisation.id), method: :delete %>
 		<% end %>
 	<% end %>
+
+	<%= form_for @post do |f| %>
+		<!-- post post_path -->
+	 	<h4>Status:</h4>
+	 	<%= f.text_area :content %><br>
+	 	<%= f.hidden_field :organisation_id, value: @organisation.id %>
+	 	<br>
+		<br>
+		<%= f.submit %></br>
+
+		<% @organisation.posts.each do |o| %>
+			<%= o.content %>
+
+			<% if contributor?(@organisation) %>
+
+				<%= link_to "Delete post", post_path(o), method: :delete , data: { confirm: 'Sure ah?'}  %>
+				<%= link_to "Edit post", [:edit, o] %>
+					<% end %>
+				<br>	
+
+
+			<% end %>
+	<% end %>
+	
 </div>
+
