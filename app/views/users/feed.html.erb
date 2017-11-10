@@ -3,19 +3,44 @@
 <h2 align="center"> Your News feed </h2>
 <br>
 <br>
+
  <div id="container">
 
 	<% posts = Post.where('organisation_id IN (?) OR user_id IN (?)', current_user.follows.pluck(:organisation_id), current_user.friends.pluck(:id)).order(created_at: :desc)%>
 
 	<% posts.each do |p| %>
 
-<%#if p.content = event_created%>
+<% if p.organisation_post == true %>
+ <strong> <% p.user.first_name %><% p.user.last_name %> </strong> posted  <%= p.content %> in <strong> <%= link_to p.organisation.name, p.organisation%> </strong>
+<br>
+<br>
 
+<!-- --> 
+
+ <%if p.event_created == true %>
+ <strong> <% p.user.first_name %><% p.user.last_name %> </strong> 
+has created an event that you might be interested called
+<%= link_to p.organisation.events.name, p.organisation.events %>
+in 
+  <strong> <%= link_to p.organisation.name , p.organisation%> </strong> 
+<br>
+<br>
+<!-- --> 
+
+ <%if p.event_join == true %>
+ <strong> <% p.user.first_name %><% p.user.last_name %> </strong> 
+has joined an event that you might be interested called
+<%= link_to p.organisation.events.name, p.organisation.events %>
+in
+ <strong> <%= link_to p.organisation.name , p.organisation %> </strong>
  
-		<%= p.content %>
-		<br>
-		<br>
-	<% end %>
+<br>
+<br>
+
+<% end %>
+<% end %>
+<% end %>
+<% end %>
 
  </div>
 

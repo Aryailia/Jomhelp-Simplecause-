@@ -38,9 +38,8 @@ Rails.application.routes.draw do
 
 
   post "/friendships/destroy_friendship/:friend_id" => "friendships#destroy", as: :destroy_friendship
-
-
-
+  
+ 
 
 
   #the routes for organisations 
