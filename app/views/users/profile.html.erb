@@ -1,6 +1,6 @@
 <h3>Saya Profile</h3>
 <% if current_user.photos.file.nil? == false %>
-	<%= image_tag current_user.photos.url%>
+	<%= image_tag current_user.photos.thumb.url%>
 <% end %>
 <br>
 Name: <%= current_user.first_name %> <%= current_user.last_name %>
