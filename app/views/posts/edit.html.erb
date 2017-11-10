@@ -1,0 +1,8 @@
+	<h2> Edit your info </h2> 
+<br>
+<br>
+ 	<%= form_for @post do |p| %>
+		<%= p.text_area :content, row: 3, maxlength: 200, cols: 60 %>
+  	<%= p.submit %></br>
+	<%end%>	
+

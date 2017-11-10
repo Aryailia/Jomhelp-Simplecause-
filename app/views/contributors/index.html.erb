@@ -1,3 +1,23 @@
+<ul class="nav nav-tabs">
+	<li class="nav-item">
+    <%= link_to 'Home Page', organisation_path(@organisation), :class => "nav-link" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Admin Dashboard', admin_dashboard_path(@organisation), :class => "nav-link" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Contributors Request', unapproved_contributors_path(@organisation), :class => "nav-link" %> 
+  </li>
+  <% if @contributor.admin?%>
+	  <li class="nav-item">
+	    <%= link_to 'Edit', edit_organisation_path(@organisation), :class => "nav-link" %> 
+	  </li>
+	  <li class="nav-item">
+	    <%= link_to 'View Contributors', organisation_contributors_path(@organisation), :class => "nav-link active" %>
+	  </li>
+  <% end %>
+</ul>
+
 <%= link_to "Organisation Home", organisation_path(params[:organisation_id]) %>
 <%= link_to "unapproved_contributors", unapproved_contributors_path(params[:organisation_id]) %>
 
