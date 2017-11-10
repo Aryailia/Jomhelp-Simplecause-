@@ -40,6 +40,9 @@ class EventsController < ApplicationController
       errorIfNoPermission(params[:organisation_id])
       respond_to do |format|
         if @event.save
+
+          @post = current_user.posts.create(content: "#{current_user.name} have created an event that you might want to join" , organisation_id: params[:organisation_id], event_created: true)
+
           format.html { redirect_to @event, notice: 'Event was successfully created.' }
           format.json { render :show, status: :created, location: @event }
         else
@@ -107,7 +110,6 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      byebug
-      params.require(:event).permit(:name, :start_date, :end_date, :address, :city, :postcode, :longitude, :latitude, :organisation_id)
+      params.require(:event).permit(:name, :start_date, :end_date, :address, :city, :postcode, :longitude, :latitude, :organisation_id, {photos: []})
     end
 end

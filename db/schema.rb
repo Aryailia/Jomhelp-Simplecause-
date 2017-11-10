@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171109222628) do
+ActiveRecord::Schema.define(version: 20171110104905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,9 +96,14 @@ ActiveRecord::Schema.define(version: 20171109222628) do
   create_table "posts", force: :cascade do |t|
     t.bigint "organisation_id", null: false
     t.bigint "user_id", null: false
-    t.string "content", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "content"
+    t.boolean "event_created", default: false
+    t.boolean "event_join", default: false
+    t.boolean "organisation_post", default: false
+    t.bigint "events_id"
+    t.index ["events_id"], name: "index_posts_on_events_id"
     t.index ["organisation_id"], name: "index_posts_on_organisation_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
@@ -125,6 +130,7 @@ ActiveRecord::Schema.define(version: 20171109222628) do
   add_foreign_key "events", "organisations"
   add_foreign_key "follows", "organisations"
   add_foreign_key "follows", "users"
+  add_foreign_key "posts", "events", column: "events_id"
   add_foreign_key "posts", "organisations"
   add_foreign_key "posts", "users"
 end

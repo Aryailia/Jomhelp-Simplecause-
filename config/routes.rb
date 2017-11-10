@@ -1,5 +1,5 @@
 Rails.application.routes.draw do  
-  root 'organisations#index'
+  root 'users#feed'
 
   # For sessions
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
@@ -30,6 +30,16 @@ Rails.application.routes.draw do
   post "/friendships/:friend_id" => "friendships#create", as: "create_friendships"
 
   get "/profile" => "users#profile", as: "profile"
+
+
+
+
+  post "/friendships/approve_friendship/:friend_id" => "friendships#approve", as: :approve_friendship
+
+
+  post "/friendships/destroy_friendship/:friend_id" => "friendships#destroy", as: :destroy_friendship
+  
+ 
 
 
   #the routes for organisations 

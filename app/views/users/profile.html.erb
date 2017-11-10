@@ -1,4 +1,5 @@
-<h3>Saya Profile</h3>
+<h2>My Profile</h2>
+<br>
 <% if current_user.photos.file.nil? == false %>
 	<%= image_tag current_user.photos.thumb.url%>
 <% end %>
@@ -12,15 +13,12 @@ Email: <%= current_user.email %>
 <br>
 <br>
 <h4>Friends</h4>
-<% current_user.friendships.each do |x| %>
-
-	<% if x.approved == true %>
-		<% a = User.find_by(id: x.friend_id) %>
-		Name: <%= a.first_name %> <%= a.last_name %>		
-	<% end %>
-	<br>
-
+<% if !current_user.friends.empty? %>
+	<% current_user.friends.each do |x| %>
+		<strong>Name:</strong> <%= x.first_name %> <%= x.last_name %>
+	<% end %>		
 <% end %>
+	<br>
 
 <hr>
 <hr>
@@ -34,7 +32,9 @@ Email: <%= current_user.email %>
 
 	<% if x.approved == false %>
 		<% a = User.find_by(id: x.friend_id) %>
-		Name: <%= a.first_name %> <%= a.last_name %>		
+		<strong>Name:</strong> <%= a.first_name %> <%= a.last_name %>
+		<br>
+		Request sent at: <%= a.created_at.to_date %>	
 	<% end %>
 	<br>
 
@@ -48,20 +48,29 @@ Email: <%= current_user.email %>
 <br>
 <h4>Be-Friend Requests</h4>
 
-<% if !current_user.inverse_friends.empty? %>
+<% if !current_user.inverse_friendships.empty? %>
 
-	<% current_user.inverse_friends.each do |inverse_friend| %>
-		Name: <%= inverse_friend.first_name %> <%= inverse_friend.last_name %>
-		<br>
-		Requested on: <%= inverse_friend.created_at.to_date %>
-		<br>
-		<%= link_to "Approve Friendship", method: :post %>		
-	<% end %>
+		<% current_user.inverse_friendships.each do |t| %>
+			<% if t.approved == false%>
+			<% @c = current_user.inverse_friends.find_by(id: t.user_id) %>
+			<%= @c.first_name %> <%= @c.last_name %>
+			<br>
+			Requested on: <%= @c.created_at.to_date %>
+
+			<br>
+			<%= link_to "Approve Friendship", approve_friendship_path(@c.id), method: :post %>
+			<br>	
+			<%= link_to "Deny Friendship", destroy_friendship_path(@c.id), method: :post %>
+		<%end%>
+
+	<%end%>
 
 <% else %>
 
-	No one wants to be friends with you
+	No one new wants to be friends with you
 
-<% end %>
+
+<%end%>
+
 <hr>
 <hr>

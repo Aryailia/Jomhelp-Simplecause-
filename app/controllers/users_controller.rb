@@ -27,4 +27,13 @@ class UsersController < Clearance::UsersController
       
     end
   end
+
+
+  def feed
+
+      if !signed_in?
+        redirect_to Clearance.configuration.redirect_url
+      end 
+   end 
+
 end
