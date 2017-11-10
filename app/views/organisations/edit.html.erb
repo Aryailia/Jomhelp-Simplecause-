@@ -1,6 +1,27 @@
-<h1>Editing Organisation</h1>
+<ul class="nav nav-tabs">
+	<li class="nav-item">
+    <%= link_to 'Home Page', organisation_path(@organisation), :class => "nav-link" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Admin Dashboard', admin_dashboard_path(@organisation), :class => "nav-link" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Contributors Request', unapproved_contributors_path(@organisation), :class => "nav-link" %> 
+  </li>
+  <% if @contributor.admin?%>
+	  <li class="nav-item">
+	    <%= link_to 'Edit', edit_organisation_path(@organisation), :class => "nav-link active" %> 
+	  </li>
+	  <li class="nav-item">
+	    <%= link_to 'View Contributors', organisation_contributors_path(@organisation), :class => "nav-link" %>
+	  </li>
+  <% end %>
+</ul>
 
-<%= render 'form', organisation: @organisation %>
+<div class = "container">
+  <h1>Editing Organisation</h1>
 
-<%= link_to 'Show', @organisation %> |
-<%= link_to 'Back', organisations_path %>
+  <%= render 'form', organisation: @organisation %>
+  <br>
+  <%= button_to 'Dissolve the Organisation', @organisation, method: :delete, data: { confirm: 'Are you sure? You are deleting the whole organisation' }, :class => "btn btn-outline-success" %>
+</div>
