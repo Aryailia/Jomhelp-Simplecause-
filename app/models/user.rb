@@ -9,14 +9,10 @@ class User < ApplicationRecord
 
 	has_many :posts 
 	# has_many :post ,through: :organisations
- 
-
   
   has_many :friendships, dependent: :destroy
   has_many :approved_friendships, -> { where(approved: true) }, dependent: :destroy, class_name: 'Friendship'
   has_many :friends, through: :approved_friendships
-
-
 
   has_many :inverse_friendships, dependent: :destroy, class_name: "Friendship", foreign_key: "friend_id"
   has_many :inverse_friends, through: :inverse_friendships, source: :user

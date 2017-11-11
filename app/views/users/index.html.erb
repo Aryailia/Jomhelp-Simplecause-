@@ -5,6 +5,7 @@
 	<% if x.photos.file.nil? == false %>
 		<%= image_tag x.photos.thumb.url%>
 	<% end %>
+
 	<h2><%= x.first_name %> <%= x.last_name %></h2>
 	<h4><%= x.email %></h4>
 

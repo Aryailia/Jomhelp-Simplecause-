@@ -40,6 +40,9 @@ class EventsController < ApplicationController
       errorIfCannotMakeEvent(params[:organisation_id])
       respond_to do |format|
         if @event.save
+
+          @post = current_user.posts.create(content: "#{current_user.name} have created an event that you might want to join" , organisation_id: params[:organisation_id], event_created: true)
+
           format.html { redirect_to @event, notice: 'Event was successfully created.' }
           format.json { render :show, status: :created, location: @event }
         else
