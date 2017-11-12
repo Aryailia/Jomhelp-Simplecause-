@@ -1,49 +1,15 @@
-/*
-  Modulr.css
-  ---------------------
-  @desc: Modular CSS Framework : Example One
-  @author: Decorator.io
-  @twitter: https://www.twitter.com/_uloga
-  @source: http://www.decorator.io/modulr
-\--------------------------------------------*/
+.card {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
 
-/*
-  Extra Theme Edits
-*/
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
 
-body{
-  background: #eee;
-}
-.wrapper{
-  width: 650px;
-}
-.shadow{
-  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
-}
-.form textarea {
-  border: none;
-  height: 40px;
-  min-height: 40px;
-  resize: none;
-  line-height: 28px;
-  transition: height 0.3s ease-in-out;
-}
-.form textarea:hover{
-  box-shadow: none;
-}
-.form textarea:focus{
-  border: 1px solid #ddd;
-  height: 150px;
-  line-height: 21px;
-}
-.form .btn{
-  margin-top: 2px;
-}
-.item{
-  float: left;
-  width: 100%;
-  margin: 15px 0;
-}
-.item .label{
-  margin-top: -1px;
+/* Add some padding inside the card container */
+.container {
+    padding: 2px 16px;
 }
