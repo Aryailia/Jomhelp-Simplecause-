@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171113025125) do
+ActiveRecord::Schema.define(version: 20171113025127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,8 +64,8 @@ ActiveRecord::Schema.define(version: 20171113025125) do
     t.float "longitude"
     t.float "latitude"
     t.string "address", null: false
-    t.string "city", null: false
-    t.string "postcode", null: false
+    t.string "description", null: false
+    t.string "place_id", null: false
     t.bigint "organisation_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -110,9 +110,6 @@ ActiveRecord::Schema.define(version: 20171113025125) do
     t.string "content", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "event_created", default: false
-    t.boolean "event_join", default: false
-    t.boolean "organisation_post", default: false
     t.index ["organisation_id"], name: "index_posts_on_organisation_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
