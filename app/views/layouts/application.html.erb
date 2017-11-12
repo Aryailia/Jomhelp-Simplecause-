@@ -14,7 +14,7 @@
 <body>
   <header>
     <% navbar_id = 'navbarNav' # To conlidate the id %>
-    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <nav class="navbar navbar-toggleable-md">
       <%= link_to('Jomhelp', root_path, class: 'navbar-brand') %>
 
       <div class="collapse navbar-collapse" id="<%= navbar_id %>">
@@ -47,14 +47,14 @@
           </select>-->
           <input type="text" class="form-control col-sm-4" name="q" placeholder="" value="<%= params[:q] %>">
           <span class="input-group-btn">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
           </span>
         </form>
       </div>
       <div class="btn-toolbar">
         <%if signed_in? -%>
-          <!-- Logged in as --> <%#= current_user.first_name %> <%= current_user.last_name %>
-          <%= button_to t(".sign_out"), sign_out_path, method: :delete, class: 'btn btn-warning' %>
+          <!-- Logged in as --> <%#= current_user.first_name %> <%#= current_user.last_name %>
+          <%= button_to("Sign Out", sign_out_path, method: :delete, class: 'btn btn-warning') %>
         <% else -%>
           <% if !current_page?(sign_in_path) -%>
             <%= button_to("Sign In", sign_in_path, method: :get, class: 'btn btn-info') %>

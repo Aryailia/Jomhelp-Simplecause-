@@ -1,3 +1,16 @@
+body {
+  background: url('/background.jpg');
+  background-size: cover;
+}
+
+nav.navbar {
+	background-color: lightblue;
+}
+
+.half-white {
+	background-color: rgba(256, 256, 256, 0.9);
+}
+
 .img-circular{
  width: 100px;
  height: 100px;
