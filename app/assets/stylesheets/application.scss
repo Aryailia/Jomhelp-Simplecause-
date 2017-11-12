@@ -42,3 +42,25 @@ margin-right: auto;
 	height: 80px;
 	border-bottom: 1px solid rgba(192, 192, 192, .4);
 }
+
+#left-title {
+	float: right;
+	display: center;
+	position: relative;
+	top: 20px;
+}
+
+#center-button-group {
+	position: relative;
+	left: 20px;
+}
+
+.bottom-post-box {
+	margin-top: 20px;
+	border-top: 1px solid rgba(192, 192, 192, .4);
+	padding-left: 15px;
+	position: relative;
+	top: 5px;
+}
+
+

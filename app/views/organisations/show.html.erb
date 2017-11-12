@@ -19,45 +19,42 @@
 	</div> -->
 	
 	<div class="row">
-	  <div class="col-2">
-			<h1><%= params[:notice] %></h1>
-			
-			<div class="btn-group-vertical">
-				<%= link_to 'All Organisation', organisations_path %>
+	  <div class="col-3">
+			<div class="align-btn-group">
+				<div class="btn-group-vertical", id="center-button-group">
+					<%= link_to 'All Organisation', organisations_path, :class => "btn btn-secondary btn-lg" %>
 
-				<%= link_to 'Organisation Events', display_organisation_events_path(@organisation) %>
+					<%= link_to 'Organisation Events', display_organisation_events_path(@organisation), :class => "btn btn-secondary btn-lg" %>
 
-				<% if signed_in? %>
-					<% if !contributor?(@organisation) %>
-						<% if !current_user.follow_organisations.exists?(@organisation.id) %>
-							<%= button_to 'Follow', organisation_follow_path(@organisation.id) %>
+					<% if signed_in? %>
+						<% if !contributor?(@organisation) %>
+							<% if !current_user.follow_organisations.exists?(@organisation.id) %>
+								<%= button_to 'Follow', organisation_follow_path(@organisation.id), :class => "btn btn-secondary btn-lg" %>
+							<% else %>
+								<%= button_to 'Unfollow', organisation_unfollow_path(@organisation.id), method: :delete, :class => "btn btn-secondary btn-lg" %>
+							<% end %>
+						<% end %>
+
+						<% if Organisation.find(params[:id]).contributors.find_by(user_id: current_user.id).nil? %>
+							<%= button_to "Contribute", organisation_contributors_path(params[:id]), method: :post, :class => "btn btn-secondary btn-lg" %>
+						<% elsif Organisation.find(params[:id]).contributors.find_by(user_id: current_user.id).admin? %>
 						<% else %>
-							<%= button_to 'Unfollow', organisation_unfollow_path(@organisation.id), method: :delete %>
+							<% @destroy_contributor = Contributor.where(organisation_id: params[:id]). find_by(user_id: current_user.id) %>
+							<%= button_to "Contribute", uncontribute_path(@destroy_contributor), method: :delete, :class => "btn btn-secondary btn-lg" %>
+						<% end %> 
+
+						<% if contributor?(@organisation) %>
+							<%= link_to('Create Event', new_organisation_event_path(@organisation), :class => "btn btn-secondary btn-lg") %>
+							<% if @contributor.admin? %>
+								<%= link_to "Admin Dashboard", admin_dashboard_path(@organisation), :class => "btn btn-secondary btn-lg" %>
+							<% end %>
 						<% end %>
 					<% end %>
-
-					<% if Organisation.find(params[:id]).contributors.find_by(user_id: current_user.id).nil? %>
-						<%= button_to "Contribute", organisation_contributors_path(params[:id]), method: :post %>
-					<% elsif Organisation.find(params[:id]).contributors.find_by(user_id: current_user.id).admin? %>
-					<% else %>
-						<% @destroy_contributor = Contributor.where(organisation_id: params[:id]). find_by(user_id: current_user.id) %>
-						<%= button_to "Contribute", uncontribute_path(@destroy_contributor), method: :delete, class: "btn btn-success" %>
-					<% end %> 
-
-					<% if contributor?(@organisation) %>
-						<%= link_to('Create Event', new_organisation_event_path(@organisation)) %>
-						<% if @contributor.admin? %>
-							<%= link_to "Admin Dashboard", admin_dashboard_path(@organisation) %>
-						<% end %>
-					<% end %>
-				<% end %>
-
+				</div>
 			</div>
-
-			
 	  </div>
 
-	  <div class="col-10">
+	  <div class="col-9">
 	  	<div class="container" id="box">
 	  		<div class="container" id="inner-container">
 					<h5>Make Posts</h5>
@@ -65,9 +62,11 @@
 				<!-- post post_path -->
 			 			<%= f.text_area :content, :rows => "3", :class => "form-control", :id => "block" %>
 			 			<%= f.hidden_field :organisation_id, value: @organisation.id %>
-			 			<%= f.submit 'Submit', :class => 'btn btn-outline-success'%>
-					<% end %>
-				</div>
+			 	</div>
+			 			<div class = "bottom-post-box" >
+			 				<%= f.submit 'Submit', :class => 'btn btn-outline-success btn-sm'%>
+		 				</div>
+					<% end %>	
 			</div>
 
 			<% @posts.each do |o| %>
@@ -76,14 +75,17 @@
 		  			<div>
 		  				<h5><%= o.user.first_name %></h5>	
 		  			</div>
+	  			
 						<%= o.content %>
+					</div>
 						<% if contributor?(@organisation) || current_user.id == o.user_id%>
-							<div>
-								<%= button_to "Delete", post_path(o), method: :delete, :class => 'btn btn-outline-success' , data: { confirm: 'Sure ah?'}  %>
-								<%= button_to "Edit", [:edit, o], :class => 'btn btn-outline-success' %>
+							<div class = "bottom-post-box">
+								<div class = "btn-group" >
+									<%= button_to "Delete", post_path(o), method: :delete, :class => 'btn btn-outline-success btn-sm' , data: { confirm: 'Sure ah?'} %>
+									<%= button_to "Edit", [:edit, o], :class => 'btn btn-outline-success btn-sm' %>
+								</div>
 							</div>
 						<% end %>
-					</div>
 				</div>
 			<% end %>
 			<%= will_paginate @posts %>

@@ -1,10 +1,12 @@
 <div class = 'container '>
   <p id="notice"><%= notice %></p>
-
-  <h1>Organisations</h1>
+  
   <% if signed_in? %>
-    <%= link_to 'New Organisation', new_organisation_path %>
+    <%= link_to 'New Organisation', new_organisation_path, :class => "btn btn-outline-success", :id => "left-title" %>
   <% end %>
+
+  <h1 class = "title" >Organisations</h1>
+  
 
   <% @organisations.each_slice(3) do |organisation| %>
     <div class ="row" >
@@ -28,6 +30,6 @@
   <% end %>
 
 
-  <%= will_paginate @posts %>
+  <%= will_paginate(@posts, :renderer => WillPaginate::ActionView::LinkRenderer) %>
 
 </div>
