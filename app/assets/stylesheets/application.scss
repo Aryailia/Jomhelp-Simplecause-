@@ -1,6 +1,7 @@
 body {
   background: url('/background.jpg');
-  background-size: cover;
+	background-size: cover;
+	padding-top: 90px;
 }
 
 nav.navbar {
@@ -9,6 +10,13 @@ nav.navbar {
 
 .half-white {
 	background-color: rgba(256, 256, 256, 0.9);
+}
+
+.grey {
+	background-color: lavender;
+}
+.white {
+	background-color: white;
 }
 
 .img-circular{

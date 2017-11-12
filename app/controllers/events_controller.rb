@@ -40,8 +40,6 @@ class EventsController < ApplicationController
   # GET /events/new
   def new
     @event = Event.new
-    @event.voucher = SecureRandom.hex(4)
-    @event.save
     begin
       errorIfNoPermission(params[:organisation_id])
       

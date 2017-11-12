@@ -14,10 +14,10 @@
 <body>
   <header>
     <% navbar_id = 'navbarNav' # To conlidate the id %>
-    <nav class="navbar navbar-toggleable-md">
+    <nav class="navbar fixed-top navbar-toggleable-md">
       <%= link_to('Jomhelp', root_path, class: 'navbar-brand') %>
 
-      <div class="collapse navbar-collapse" id="<%= navbar_id %>">
+      <div class="navbar-collapse" id="<%= navbar_id %>">
         <ul class="navbar-nav mr-auto">
           <% if signed_in? %>
             <% links = {
