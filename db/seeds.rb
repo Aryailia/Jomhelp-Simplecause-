@@ -25,27 +25,27 @@ listing = {}
 uids = []
 User.all.each { |u| uids << u.id }
 
-"name", "address", "city", "postcode", "description", "email",
-ActiveRecord::Base.transaction do
-  40.times do 
-    listing['listing_name'] = Faker::App.name
-    listing['place_type'] = rand(1..3)
-    listing['accomodation_type'] = ["House", "Entire Floor", "Condominium", "Villa", "Townhouse", "Castle", "Treehouse", "Igloo", "Yurt", "Cave", "Chalet", "Hut", "Tent", "Other"].sample
+# "name", "address", "city", "postcode", "description", "email",
+# ActiveRecord::Base.transaction do
+#   40.times do 
+#     listing['listing_name'] = Faker::App.name
+#     listing['place_type'] = rand(1..3)
+#     listing['accomodation_type'] = ["House", "Entire Floor", "Condominium", "Villa", "Townhouse", "Castle", "Treehouse", "Igloo", "Yurt", "Cave", "Chalet", "Hut", "Tent", "Other"].sample
 
-    listing['capacity'] = rand(1..10)
+#     listing['capacity'] = rand(1..10)
 
-    listing['country'] = Faker::Address.country
-    listing['city'] = Faker::Address.city
-    listing['zipcode'] = Faker::Address.zip_code
-    listing['address'] = Faker::Address.street_address
+#     listing['country'] = Faker::Address.country
+#     listing['city'] = Faker::Address.city
+#     listing['zipcode'] = Faker::Address.zip_code
+#     listing['address'] = Faker::Address.street_address
 
-    listing['price'] = rand(80..500)
-    listing['description'] = Faker::Hipster.sentence
-    listing['approval_status'] = Faker::Boolean.boolean(0.5)
+#     listing['price'] = rand(80..500)
+#     listing['description'] = Faker::Hipster.sentence
+#     listing['approval_status'] = Faker::Boolean.boolean(0.5)
 
 
-    listing['user_id'] = uids.sample
+#     listing['user_id'] = uids.sample
 
-    Listing.create(listing)
-  end
-end
+#     Listing.create(listing)
+#   end
+# end

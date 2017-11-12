@@ -34,25 +34,25 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    @event = Event.new(event_params)
-
     begin 
+      @event = Event.new(event_params)
       errorIfNoPermission(params[:organisation_id])
+      test = @event.save
+      raise(ErrorWithRedirect.new(@event.errors),
+        organisation_path(params[:organisation_id])) if !test
       respond_to do |format|
-        if @event.save
-
-          @post = current_user.posts.create(content: "#{current_user.name} have created an event that you might want to join" , organisation_id: params[:organisation_id], event_created: true)
-
-          format.html { redirect_to @event, notice: 'Event was successfully created.' }
-          format.json { render :show, status: :created, location: @event }
-        else
-          format.html { render :new }
-          format.json { render json: @event.errors, status: :unprocessable_entity }
-        end
+        @post = current_user.posts.new(content: "#{current_user.first_name} #{current_user.last_name} have created an event that you might want to join" , organisation_id: params[:organisation_id], event_created: true)
+        format.html { redirect_to @event, notice: 'Event was successfully created.' }
+        format.json { render :show, status: :created, location: @event }
+        # respond_to do |format| on error
+          # format.html { render :new }
+          # format.json { render json: @event.errors, status: :unprocessable_entity }
+        # end
       end
       
     rescue ErrorWithRedirect => err
-      ErrorWithRedirect.defaultHandler(err)
+      redirect_to(err.path)
+      flash[:error] = err.message
     rescue Exception => err
       redirect_to(root_path)
       flash[:error] = err.message
@@ -64,19 +64,25 @@ class EventsController < ApplicationController
   def update
 
     begin
-      errorIfNoPermission(@event.organisation_id)
+      orgId = @event.organisation_id
+      errorIfNoPermission(orgId)
+      @post = current_user.posts.new(content: "#{current_user.first_name} #{current_user.last_name} have created an event that you might want to join" , organisation_id: params[:organisation_id], event_created: true)
+      test = @event.update(event_params)
+      raise(ErrorWithRedirect.new(
+        @event.errors.messages.map { |k, value| "#{k}: #{value}" }.join(''),
+        organisation_path(orgId))) if !test
       respond_to do |format|
-        if @event.update(event_params)
-          format.html { redirect_to @event, notice: 'Event was successfully updated.' }
-          format.json { render :show, status: :ok, location: @event }
-        else
-          format.html { render :edit }
-          format.json { render json: @event.errors, status: :unprocessable_entity }
-        end
+        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
+        format.json { render :show, status: :ok, location: @event }
       end
+      # respond_to do |format|
+        # format.html { render :edit }
+        # format.json { render json: @event.errors, status: :unprocessable_entity }
+      # end
       
     rescue ErrorWithRedirect => err
-      ErrorWithRedirect.defaultHandler(err, @event)
+      redirect_to(err.path)
+      flash[:error] = err.message
     end
   end
 
@@ -91,7 +97,8 @@ class EventsController < ApplicationController
         format.json { head :no_content }
       end
     rescue ErrorWithRedirect => err
-      ErrorWithRedirect.defaultHandler(err)
+      redirect_to(err.path)
+      flash[:error] = err.message
     end
   end
 
@@ -103,9 +110,12 @@ class EventsController < ApplicationController
 
     def errorIfNoPermission(organisation_id)
       org = Organisation.find_by(id: organisation_id)
+      raise(ErrorWithRedirect.new('Organisation not found',
+        root_path)) if org.nil?
       raise(ErrorWithRedirect.new('Not a contributor for this organisation',
         root_path)) if !contributor?(org)
-      raise(ErrorWithRedirect.new('Not an admin',root_path)) if !@contributor.admin?
+      raise(ErrorWithRedirect.new('Not an admin',
+        organisation_path(organisation_id))) if !@contributor.admin?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
