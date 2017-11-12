@@ -96,9 +96,9 @@ ActiveRecord::Schema.define(version: 20171110104905) do
   create_table "posts", force: :cascade do |t|
     t.bigint "organisation_id", null: false
     t.bigint "user_id", null: false
-    t.string "content", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "content"
     t.boolean "event_created", default: false
     t.boolean "event_join", default: false
     t.boolean "organisation_post", default: false
