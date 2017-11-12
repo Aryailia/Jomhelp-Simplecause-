@@ -50,13 +50,13 @@
         </form>
       </div>
       <div class="navbar-nav">
-      <%if signed_in? -%>
-        <!-- Logged in as --> <%#= current_user.first_name %> <%#= current_user.last_name %>
-        <%= button_to t(".sign_out"), sign_out_path, method: :delete, class: 'btn btn-warning' %>
-      <% elsif !current_page?(sign_in_path) -%>
-        <%= button_to t(".sign_in"), sign_in_path, method: :get, class: 'btn btn-info' %>
-        <%= link_to t(".sign_up"), sign_up_path %>
-      <% end -%>
+        <%if signed_in? -%>
+          <!-- Logged in as --> <%#= current_user.first_name %> <%#= current_user.last_name %>
+          <%= button_to t(".sign_out"), sign_out_path, method: :delete, class: 'btn btn-warning' %>
+        <% elsif !current_page?(sign_in_path) -%>
+          <%= button_to t(".sign_in"), sign_in_path, method: :get, class: 'btn btn-info' %>
+          <%= link_to t(".sign_up"), sign_up_path %>
+        <% end -%>
       </div>
     </nav>
 
