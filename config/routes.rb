@@ -77,8 +77,6 @@ Rails.application.routes.draw do
 
   
   # User actions with organisations
-
-  # resources :follows
-
+  resources :searches, only: [:index]
 end
 
