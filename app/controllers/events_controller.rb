@@ -84,6 +84,13 @@ class EventsController < ApplicationController
     end
   end
 
+  def display_organisation_events
+    @organisation = Organisation.find(params[:organisation_id])
+    events(@organisation)
+    @past_events = @past_events.order(start_date: :desc).paginate(:page => params[:page], :per_page => 3)
+    @upcoming_events = @upcoming_events.order(start_date: :asc).paginate(:page => params[:page], :per_page => 3)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event

@@ -1,33 +1,35 @@
 <div class = 'container '>
   <p id="notice"><%= notice %></p>
+  
+  <% if signed_in? %>
+    <%= link_to 'New Organisation', new_organisation_path, :class => "btn btn-outline-success", :id => "left-title" %>
+  <% end %>
 
-  <h1>Organisations</h1>
+  <h1 class = "title" >Organisations</h1>
+  
 
   <% @organisations.each_slice(3) do |organisation| %>
     <div class ="row" >
       <% organisation.each do |t| %>
-        <div class = "col" >
-          <div class="card" style="width: 300px;">
+        <div class = "col-4" >
+          <div class="card" style="width: 350px;">
             <% if t.photos.length == 0 %>
-              <%= image_tag "/assets/no-img.png", :class => "card-img-top" %>
+              <%= image_tag "/assets/no-img.png", :class => "card-img-top" , :height => 300, :width => 350%>
             <% else %>
               <%= image_tag t.photos[0].thumb, :class => "card-img-top" %>
             <% end %>
             <div class="card-block">
-              <h4 class="card-title"><%= link_to t.name.capitalize, organisation %></h4>
+              <h4 class="card-title"><%= link_to t.name.capitalize, t %></h4>
               <p class="card-text"><%= t.description.capitalize %></p>
             </div>
           </div>
         </div>
       <% end %>
     </div>
+    <br>  
   <% end %>
 
-  <%= will_paginate @posts %>
 
+  <%= will_paginate(@posts, :renderer => WillPaginate::ActionView::LinkRenderer) %>
 
-  <% if signed_in? %>
-    <%= link_to 'New Organisation', new_organisation_path %>
-  <% end %>
-  
 </div>
