@@ -1,0 +1,50 @@
+<div class = "container">
+	<h1 class = "title" > Upcoming Events </h1>
+
+	<% @upcoming_events.order(start_date: :asc).each_slice(3) do |t| %>
+		<div class = "row" >
+			<% t.each do |y| %>
+				<div class = "col-4" >
+        	<div class="card" style="width: 350px;">
+            <% if y.photos.length == 0 %>
+              <%= image_tag "/assets/no-img.png", :class => "card-img-top" , :height => 300, :width => 350%>
+            <% else %>
+              <%= image_tag y.photos[0].thumb, :class => "card-img-top" %>
+            <% end %>
+            <div class="card-block">
+              <h4 class="card-title"><%= link_to y.name.capitalize, y %></h4>
+              <p class="card-text">Start: <%= y.start_date %></p>
+              <p class="card-text">End: <%= y.end_date %></p>
+            </div>
+          </div>
+        </div>
+			<% end %>
+		</div>
+		<%= will_paginate @upcoming_events %>
+	<% end %>
+
+	<h1 class = "title" > Past Events </h1>
+
+	<% @past_events.order(start_date: :desc).each_slice(3) do |t|%>
+		<div class = "row" >
+			<% t.each do |y| %>
+				<div class = "col-4" >
+        	<div class="card" style="width: 350px;">
+            <% if y.photos.length == 0 %>
+              <%= image_tag "/assets/no-img.png", :class => "card-img-top" , :height => 300, :width => 350%>
+            <% else %>
+              <%= image_tag y.photos[0].thumb, :class => "card-img-top" %>
+            <% end %>
+            <div class="card-block">
+              <h4 class="card-title"><%= link_to y.name.capitalize, y %></h4>
+              <p class="card-text">Start: <%= y.start_date %></p>
+              <p class="card-text">End: <%= y.end_date %></p>
+            </div>
+          </div>
+        </div>
+			<% end %>
+		</div>
+	<%= will_paginate @past_events %>
+	<% end %>
+
+</div>	
