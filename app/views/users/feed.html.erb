@@ -4,7 +4,7 @@
 <br>
 <br>
 
- <div id="container">
+<div id="container">
 
 	<% posts = Post.where('organisation_id IN (?) OR user_id IN (?)', current_user.follows.pluck(:organisation_id), current_user.friends.pluck(:id)).order(created_at: :desc)%>
 	<% posts.each do |p| %>
