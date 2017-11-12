@@ -6,6 +6,7 @@
   <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash" rel="stylesheet">
   <%= stylesheet_link_tag 'application' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tag %>
@@ -51,7 +52,7 @@
       </div>
       <div class="navbar-nav">
         <%if signed_in? -%>
-          <!-- Logged in as --> <%#= current_user.first_name %> <%#= current_user.last_name %>
+          <!-- Logged in as --> <%#= current_user.first_name %> <%= current_user.last_name %>
           <%= button_to t(".sign_out"), sign_out_path, method: :delete, class: 'btn btn-warning' %>
         <% elsif !current_page?(sign_in_path) -%>
           <%= button_to t(".sign_in"), sign_in_path, method: :get, class: 'btn btn-info' %>

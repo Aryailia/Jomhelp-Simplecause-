@@ -29,7 +29,7 @@ Rails.application.routes.draw do
 
   post "/friendships/:friend_id" => "friendships#create", as: "create_friendships"
 
-  get "/profile" => "users#profile", as: "profile"
+  get "/profile2e" => "users#profile", as: "profile"
 
 
 
@@ -48,7 +48,11 @@ Rails.application.routes.draw do
     resources :contributors, only: [:create, :destroy, :index]
   end
 
-  resources :posts
+  #people can posts to organisation
+  resources :posts do 
+    resources :comment, only: [:create, :edit, :destroy, :index, :update]
+  end
+
 
   get "/organisations/:id/admin_dashboard" => "organisations#admin_dashboard", as: :admin_dashboard 
 

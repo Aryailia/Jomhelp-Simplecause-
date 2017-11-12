@@ -1,17 +1,19 @@
-
+<div id="container">
 <br>
 <% x = User.find_by(id: params[:id]) %>
 <br>
-<% if x.photos.file.nil? == false %>
-	<%= image_tag x.photos.url%>
-<% end %>
+<h3 align="center"><%= x.first_name %> <%= x.last_name %>'s Profile</h3>
 <br>
-<h3><%= x.first_name %> <%= x.last_name %>'s Profile</h3>
+<% if x.photos.file.nil? == false %>
+<div class="circular-image1">
+	<%= image_tag x.photos.url%>
+	</div>
+<% end %>
+<hr>
+<h4> Info </h4>
 Email: <%= x.email %>
 <hr>
 <hr>
-
-
 <% if (current_user.friendships.find_by(friend_id: x.id).nil?) %>
 	<%= link_to "Add Friend", create_friendships_path(x), method: :post  %>
 <%elsif current_user.friendships.find_by(friend_id: x.id).approved == false%>
@@ -31,4 +33,6 @@ Email: <%= x.email %>
 	<% end %>
 <%else%>
 	This User has no friends
-<% end -%>
+<% end%>
+
+</div>

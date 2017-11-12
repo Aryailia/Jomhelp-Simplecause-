@@ -12,6 +12,7 @@ class OrganisationsController < ApplicationController
   def show
     @post = Post.new
     @posts= Post.where(organisation_id: @organisation.id).order('created_at DESC').paginate(:page => params[:page], :per_page => 5)
+    @comment = Comment.new
     @admin = Organisation.find(params[:id])
      @organisation  = Organisation.find(params[:id])
     if signed_in?
@@ -95,6 +96,8 @@ class OrganisationsController < ApplicationController
     if !contributor?(@organisation)
       redirect_to organisation_path(@organisation)
     end
+    @followers = @organisation.follows
+    events(@organisation)
   end
 
   private
