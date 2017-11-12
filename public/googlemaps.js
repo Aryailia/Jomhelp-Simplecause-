@@ -80,7 +80,7 @@ function processOutput(place) {
   document.getElementById('address').value = address;
   document.getElementById('postcode').value = place.place_id;
   // document.getElementById('city').value = $fullAddress.filter('.locality').html();
-  document.getElementById('postcode').value = $fullAddress.filter('.postal-code').html();
+  // document.getElementById('postcode').value = $fullAddress.filter('.postal-code').html();
   document.getElementById('longitude').value = place.geometry.location.lat();
   document.getElementById('latitude').value = place.geometry.location.lng();
 }
