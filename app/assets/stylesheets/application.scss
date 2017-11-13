@@ -1,3 +1,24 @@
+body {
+  background: url('/background.jpg');
+	background-size: cover;
+	padding-top: 90px;
+}
+
+nav.navbar {
+	background-color: lightblue;
+}
+
+.half-white {
+	background-color: rgba(256, 256, 256, 0.9);
+}
+
+.grey {
+	background-color: lavender;
+}
+.white {
+	background-color: white;
+}
+
 .img-circular{
  width: 100px;
  height: 100px;
@@ -57,9 +78,22 @@ margin-right: auto;
 	
 }
 
+/*css for the news feed page*/
+.newsfeed-sidebar {
+	margin: auto;
+	border-radius: 10px;
+	border: 1px solid black;
+	margin-bottom: 20px;
+}
+
 .full-container {
 	height: 100%;
 	padding: 0px 50px 0px 50px;
+}
+
+.sidebar-title	{
+	padding: 20px 0px 20px 20px;
+	font-weight: bold;
 }
 
 .minibox {
@@ -166,24 +200,24 @@ margin-right: auto;
 	border-radius:175px;
 }
 .card-name{display:block;
-float:left;
-width:70%;
-padding:30px 10px;
-color:blue;
-font-size:18px;
-font-weight:bolder;
+	float:left;
+	width:70%;
+	padding:30px 10px;
+	color:blue;
+	font-size:18px;
+	font-weight:bolder;
 }
 .card-small{
-font-size:11px;
-padding-top:5px;
-padding-right:5px;
+	font-size:11px;
+	padding-top:5px;
+	padding-right:5px;
 }
 .card-content{
-		background-color:#D3D3D3;
-		padding:5px 15px;
-		display:inline-block;
-
+	background-color:#D3D3D3;
+	padding:5px 15px;
+	display:inline-block;
 }
+
 .card-date{
 	font-size:12px;
   padding-left:5px;
@@ -206,7 +240,7 @@ padding-right:5px;
 
 
 
-// Until here
+/* Until here*/
 
 .wrapper {
 	  align-items: stretch;
@@ -218,7 +252,7 @@ padding-right:5px;
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-     min-height: 100vh;
+    min-height: 100vh;
 }
 s
 #sidebar.active {

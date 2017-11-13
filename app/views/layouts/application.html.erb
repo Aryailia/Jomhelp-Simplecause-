@@ -14,17 +14,24 @@
 <body>
   <header>
     <% navbar_id = 'navbarNav' # To conlidate the id %>
-    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <nav class="navbar fixed-top navbar-toggleable-md">
       <%= link_to('Jomhelp', root_path, class: 'navbar-brand') %>
 
-      <div class="collapse navbar-collapse" id="<%= navbar_id %>">
+      <div class="navbar-collapse" id="<%= navbar_id %>">
         <ul class="navbar-nav mr-auto">
-          <% {
-            Profile: profile_path,
-            Events: events_path,
-            Organisations: organisations_path,
-          }.each do |body, link|
-          %>
+          <% if signed_in? %>
+            <% links = {
+              Profile: profile_path,
+              Events: events_path,
+              Organisations: organisations_path,
+            } %>
+          <% else %>
+            <% links = {
+              Events: events_path,
+              Organisations: organisations_path,
+            } %>
+          <% end %>
+          <% links.each do |body, link| %>
             <% isCurrent = current_page?(link) %>
             <li class="<%= (isCurrent) ? 'nav-link active' : 'nav-link' %>">
               <%= link_to(link, class: 'nav-link') do -%>
@@ -32,31 +39,29 @@
               <% end %>
             </li>
           <% end %>
-          <li class="nav-link">
-              <%= button_to "Browse all Users", users_index_path, method: :get %>
-          </li>
-          <li class="nav-link">
-           
-          </li>
         </ul>
         <form class="input-group form-inline" action="<%= searches_path %>" method="get">
           <!--<select class="selectpicker form-control" name="type">
             <option>General</option>
             <option>Location</option>
           </select>-->
-          <input type="text" class="form-control col-sm-4" name="q" placeholder="Recipient's username" value="<%= params[:q] %>">
+          <input type="text" class="form-control col-sm-4" name="q" placeholder="" value="<%= params[:q] %>">
           <span class="input-group-btn">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
           </span>
         </form>
       </div>
-      <div class="navbar-nav">
+      <div class="btn-toolbar">
         <%if signed_in? -%>
-          <!-- Logged in as --> <%#= current_user.first_name %> <%= current_user.last_name %>
-          <%= button_to t(".sign_out"), sign_out_path, method: :delete, class: 'btn btn-warning' %>
-        <% elsif !current_page?(sign_in_path) -%>
-          <%= button_to t(".sign_in"), sign_in_path, method: :get, class: 'btn btn-info' %>
-          <%= link_to t(".sign_up"), sign_up_path %>
+          <!-- Logged in as --> <%#= current_user.first_name %> <%#= current_user.last_name %>
+          <%= button_to("Sign Out", sign_out_path, method: :delete, class: 'btn btn-warning') %>
+        <% else -%>
+          <% if !current_page?(sign_in_path) -%>
+            <%= button_to("Sign In", sign_in_path, method: :get, class: 'btn btn-info') %>
+          <% end -%>
+          <% if !current_page?(sign_up_path) -%>
+            <%= button_to("Sign up", sign_up_path, method: :get, class: 'btn btn-primary') %>
+          <% end -%>
         <% end -%>
       </div>
     </nav>

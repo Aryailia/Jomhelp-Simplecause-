@@ -1,5 +1,5 @@
-<div class = "container">
-	<div class="jumbotron jumbotron-fluid">
+<div class = "container half-white" >
+	<div class="jumbotron jumbotron-fluid" style="background: url(<%= @organisation.photos.first.url %>); background-size: cover;">
 	  <div class="container">
 	    <h1 class="display-3"><%= @organisation.name %></h1>
 	    <p class="lead"><%= @organisation.description %></p>
@@ -55,7 +55,7 @@
 	  </div>
 
 	  <div class="col-9">
-	  	<div class="container" id="box">
+	  	<div class="container grey" id="box">
 	  		<div class="container" id="inner-container">
 					<h5>Make Posts</h5>
 					<%= form_for @post do |f| %>
@@ -64,7 +64,7 @@
 			 			<%= f.hidden_field :organisation_id, value: @organisation.id %>
 			 	</div>
 			 			<div class = "bottom-post-box" >
-			 				<%= f.submit 'Submit', :class => 'btn btn-outline-success btn-sm'%>
+			 				<%= f.submit 'Submit', :class => 'btn btn-success btn-sm'%>
 		 				</div>
 					<% end %>	
 			</div>
