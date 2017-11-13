@@ -1,24 +1,21 @@
 <div class="text-field">
-  <%= form.label :first_name %>
-  <%= form.text_field :first_name, type: 'first_name' %>
+  <%= form.text_field :first_name, type: 'first_name', placeholder: "What's your first name", class: 'sign-up-input' %>
 </div>
 
 <div class="text-field">
-  <%= form.label :last_name %>
-  <%= form.text_field :last_name, type: 'last_name' %>
+  <%= form.text_field :last_name, type: 'last_name', placeholder: "What's your last name", class: 'sign-up-input' %>
 </div>
 
 <div class="text-field">
-  <%= form.label :email %>
-  <%= form.text_field :email, type: 'email' %>
+  <%= form.text_field :email, type: 'email', placeholder: "What's your email", class: 'sign-up-input' %>
 </div>
 
 <div class="password-field">
-  <%= form.label :password %>
-  <%= form.password_field :password %>
+  <%= form.password_field :password, placeholder: "What's your password", class: 'sign-up-input' %>
 </div>
 
 <div class="photos-field">
   <%= form.label :photos %>
   <%= form.file_field :photos, multiple: false %>
 </div>
+<br>
