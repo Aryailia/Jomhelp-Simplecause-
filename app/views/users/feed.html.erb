@@ -7,23 +7,23 @@
 		<div class = "col-3" >
 			<div id  ="box ">
 
-				<div class = "newsfeed-sidebar" >
+				<div class = "newsfeed-sidebar" style="background-color:powderblue;">
 					<h5 class = "sidebar-title">Organisation Followed</h5>
 					<div class ="list-group">
 						<% @follows.each do |t| %>
-							<%= link_to t.name, t , :class => "list-group-item" %>
+							<%= link_to t.name, t, :class => "list-group-item" %>
 						<% end %>
 					</div>
 				</div>
 
 				<div class = "newsfeed-sidebar">
 					<h5 class = "sidebar-title">Upcoming Events</h5>
-					<div class ="btn-group-vertical">
+					<div class ="list-group">
 						<% if @events.length == 0 %>
 							<p>no upcoming events</p>
 						<% else %> 
 							<% @events.each do |t|%>
-								<%= link_to t.name, t %>
+								<%= link_to t.name, t, :class => "list-group-item" %>
 							<% end %>
 						<% end %>
 					</div>
