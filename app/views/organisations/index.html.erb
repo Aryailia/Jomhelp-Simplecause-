@@ -19,7 +19,9 @@
               <%= image_tag t.photos[0].thumb, :class => "card-img-top" %>
             <% end %>
             <div class="card-block">
-              <h4 class="card-title"><%= link_to t.name.capitalize, t %></h4>
+
+              <h4 class="card-title"><%= link_to t.name.capitalize, organisations_path %></h4>
+
               <p class="card-text"><%= t.description.capitalize %></p>
             </div>
           </div>

@@ -1,9 +1,61 @@
 
+
 <br>
+
+<div id="container"> 
+	<br>
+
+
 <h2 align="center"> My Profile</h2>
 <br>
 
-<div id= "container">
+<%if signed_in?%>
+	
+	<div class="level_indicator">
+		<%= current_user.level %>
+	</div>
+	<% if current_user.photos.file.nil? == false %>
+		<%= image_tag current_user.photos.petite.url, :class=>"img-circular"%>
+	<% end %>
+<br>
+	<div class="name_indicator">
+		<%= current_user.first_name %> <%= current_user.last_name %>
+	</div>
+<br>
+<br>
+	<%if current_user.level == 1%>
+		
+		<div class="container">
+		  <div class="progress">
+		    <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="<%current_user.points%>" aria-valuemin="0" aria-valuemax="100" style="width:<%=current_user.points%>%">
+		      <%=current_user.points%>% Complete
+		    </div>
+		  </div>
+		</div>
+
+	<%elsif current_user.level == 2%>
+
+		<div class="container">
+		  <div class="progress">
+		    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="<%current_user.points%>" aria-valuemin="100" aria-valuemax="200" style="width:<%(current_user.points)-100%>%">
+		      <%=current_user.points-100%>% Complete
+		    </div>
+		  </div>
+		</div>
+
+	<% elsif current_user.level == 3%>
+		
+		<div class="container">
+		  <div class="progress">
+		    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="<%current_user.points%>" aria-valuemin="200" aria-valuemax="300" style="width:<%(current_user.points)-200%>%">
+		      <%=current_user.points-200%>% Complete
+		    </div>
+		  </div>
+		</div>
+
+	<%end%>
+<%end%>
+	
 
 <% if current_user.photos.file.nil? == false %>
 <div class="circular-image">
@@ -12,6 +64,8 @@
 <% end %>
 <hr>
 <h4> Info </h4>
+
+
 
 <br>
 Name:<%= current_user.first_name %> <%= current_user.last_name%>
@@ -87,6 +141,7 @@ You have no friends request
 <hr>
 <hr>
 
+
 <%#f !current_user.follows.organisation.empty? %>
 <%#current_user.follows.organisation.each do |o| %>
  
@@ -100,3 +155,7 @@ You have not followed any organisation
 <hr>
 	<%#end%> -->
 </div>
+
+</div>
+</div>
+
