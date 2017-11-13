@@ -64,7 +64,6 @@
 			 			<%= f.hidden_field :organisation_id, value: @organisation.id %>
 			 	</div>
 			 			<div class = "bottom-post-box" >
-			 				<% f.hidden_field :created_time , value:Time.now.utc %>
 			 				<%= f.submit 'Submit', :class => 'btn btn-outline-success btn-sm'%>
 		 				</div>
 					<% end %>	

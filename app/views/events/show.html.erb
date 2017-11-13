@@ -1,11 +1,28 @@
 <p id="notice"><%= notice %></p>
 
 <!-- Put any carousel stuff here -->
-  <% @event.photos.each do |photo| %>
+<!--
+  <%# <% @event.photos.each do |photo| %> %>
     <div>
-      <%= image_tag photo %>
+      <%#= image_tag photo %>
     </div>
+  <%# <% end %> %>
+-->
+
+<% if signed_in? %>
+  <%= form_for @event, url: verify_voucher_path(@event), method: :get do |form| %>
+
+
+<%= render partial: 'voucher', locals: {form: form} %>
+    
+
+    <div class="submit-field">
+      <%= form.submit "Submit Voucher" %>
+    </div>
+  
   <% end %>
+<%end%>
+
 
 
 <p>
@@ -44,6 +61,20 @@
   <strong>Latitude:</strong>
   <%= @event.latitude %>
 </p>
+<div id="map" style="width: 500px; height: 500px;"></div>
+<script>
+  function initMap() {
+    new google.maps.Map(document.getElementById('map'),
+      { center:
+        { lat: <%= @event.latitude.nil? ? '-34.42' : "#{@event.longitude}" %>
+        , lng: <%= @event.longitude.nil? ? '150.9' : "#{@event.longitude}" %>
+        }
+      , zoom: 17
+      }
+    );
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&libraries=places&callback=initMap" async defer></script>
 
 <div>
   <% if signed_in? %>
