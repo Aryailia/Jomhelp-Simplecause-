@@ -29,6 +29,7 @@ margin-right: auto;
 
 .btn {
 	margin: 5px 0px 5px 0px;
+	display: inline;
 }
 
 #inner-container {
@@ -63,4 +64,20 @@ margin-right: auto;
 	top: 5px;
 }
 
+.admin-sidebar {
+	border: 1px solid rgba(192, 192, 192, .4);
+	background-color: rgba(192, 192, 192, .4);
+	border-radius: 10px;
+	padding: 0px;
+	margin: 30px 0px 30px 0px; 
+}
+
+#text-center {
+	height: 150px;
+	text-align: center;
+	vertical-align: middle;
+	position: relative;
+	top: 25%;
+	bottom: 50%;
+}
 

@@ -95,6 +95,8 @@ class OrganisationsController < ApplicationController
     if !contributor?(@organisation)
       redirect_to organisation_path(@organisation)
     end
+    @followers = @organisation.follows
+    events(@organisation)
   end
 
   private
