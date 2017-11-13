@@ -1,5 +1,5 @@
 <div class = "container half-white" >
-	<div class="jumbotron jumbotron-fluid" style="background: url(<%= @organisation.photos.first.url %>); background-size: cover;">
+	<div class="jumbotron jumbotron-fluid" style="background: url(<%= (@organisation.photos.length > 0) ? @organisation.photos.first.url : '' %>); background-size: cover;">
 	  <div class="container">
 	    <h1 class="display-3"><%= @organisation.name %></h1>
 	    <p class="lead"><%= @organisation.description %></p>
