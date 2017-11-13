@@ -44,9 +44,11 @@ class UsersController < Clearance::UsersController
 
 
   def feed
-      if !signed_in?
-        redirect_to sign_in_path
-      end 
-   end 
+    if !signed_in?
+      redirect_to sign_in_path
+    end 
+    @follows = current_user.follow_organisations.limit(8).order('created_at DESC')
+    @events = current_user.events.limit(5).order('created_at DESC')
+  end 
 
 end
