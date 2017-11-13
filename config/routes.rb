@@ -38,8 +38,9 @@ Rails.application.routes.draw do
 
 
   post "/friendships/destroy_friendship/:friend_id" => "friendships#destroy", as: :destroy_friendship
-  
- 
+
+  get "/events/:event_id/verify" => "events#verify_voucher", as: :verify_voucher
+
 
 
   #the routes for organisations 

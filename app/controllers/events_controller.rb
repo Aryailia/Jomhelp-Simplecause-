@@ -1,11 +1,36 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
+  def verify_voucher
+    x = Event.find_by(id: params[:event_id])
+    byebug
+    if params[:event][:voucher] ==  x.voucher
+      a = current_user
+      a.points += 10
+
+      if a.points < 100
+        a.level = 1        
+      elsif a.points >= 100 && a.points <200
+        a.level = 2
+      elsif a.points >= 200
+        a.level = 3
+      end
+      a.save
+      redirect_to(root_path)
+    else
+      redirect_to(profile_path)
+    end
+   
+  end
+
   # GET /events
   # GET /events.json
   def index
     @events = Event.all
   end
+
+
+
 
   # GET /events/1
   # GET /events/1.json
@@ -15,6 +40,8 @@ class EventsController < ApplicationController
   # GET /events/new
   def new
     @event = Event.new
+    @event.voucher = SecureRandom.hex(4)
+    @event.save
     begin
       errorIfNoPermission(params[:organisation_id])
       
@@ -34,8 +61,14 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
+
+
+    
+
     begin 
       @event = Event.new(event_params)
+      @event.voucher = SecureRandom.hex(4)
+      @event.save
       errorIfNoPermission(params[:organisation_id])
       test = @event.save
       raise(ErrorWithRedirect.new(@event.errors),

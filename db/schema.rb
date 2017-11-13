@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171110104905) do
+
+ActiveRecord::Schema.define(version: 20171113024000) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +62,7 @@ ActiveRecord::Schema.define(version: 20171110104905) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.json "photos"
+    t.string "voucher"
     t.index ["organisation_id"], name: "index_events_on_organisation_id"
   end
 
@@ -118,6 +121,8 @@ ActiveRecord::Schema.define(version: 20171110104905) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.json "photos"
+    t.integer "points"
+    t.integer "level"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
