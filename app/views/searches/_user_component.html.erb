@@ -3,7 +3,7 @@
   <div class="card-row">
     <div class="card-image"><img src="<%= user.photos %>"/></div>
     <div class="card-name"><strong>
-      <%= link_to(users_path(user.id)) do -%>
+      <%= link_to("/users/#{user.id}") do -%>
         <%= user.first_name %> <%= user.last_name -%> 
       <% end -%>
     </strong></div>

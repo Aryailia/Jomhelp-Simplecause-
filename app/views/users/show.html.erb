@@ -32,12 +32,14 @@
 			  </div>
 			  <h5 style="padding-top:5px;">Email: <%= @user.email %></h5>
 				<h5>Name:<%= @user.first_name %> <%= @user.last_name%></h5>
-				<% if (@user.friendships.find_by(friend_id: @user.id).nil?) %>
-					<%= link_to "Add Friend", create_friendships_path(@user), method: :post, :class=> "btn btn-outline-success" %>
-				<%elsif @user.friendships.find_by(friend_id: @user.id).approved == false%>
-					Your friend request has been sent
-				<%elsif @user.friends.includes(@user)%>
-					You are already friends with this person
+				<% if @user.id != current_user.id %>
+					<% if (@user.friendships.find_by(friend_id: @user.id).nil?) %>
+						<%= link_to "Add Friend", create_friendships_path(@user), method: :post, :class=> "btn btn-outline-success" %>
+					<%elsif @user.friendships.find_by(friend_id: @user.id).approved == false%>
+						Your friend request has been sent
+					<%elsif @user.friends.includes(@user)%>
+						You are already friends with this person
+					<% end %>
 				<% end %>
 			</div>
 		</div>
