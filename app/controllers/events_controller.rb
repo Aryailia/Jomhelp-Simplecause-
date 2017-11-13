@@ -3,15 +3,19 @@ class EventsController < ApplicationController
 
   def verify_voucher
     x = Event.find_by(id: params[:event_id])
+    byebug
     if params[:event][:voucher] ==  x.voucher
-      current_user.points += 10
+      a = current_user
+      a.points += 10
 
-      if current_user.points >= 100 && current_user.points <200
-        current_user.level = 2        
-      elsif current_user.points >= 200 && current_user.points <300
-        current_user.level = 3 
+      if a.points < 100
+        a.level = 1        
+      elsif a.points >= 100 && a.points <200
+        a.level = 2
+      elsif a.points >= 200
+        a.level = 3
       end
-
+      a.save
       redirect_to(root_path)
     else
       redirect_to(profile_path)
