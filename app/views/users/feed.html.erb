@@ -6,19 +6,21 @@
 	<div class = "row" >
 		<div class = "col-3" >
 			<div id  ="box ">
-				<div >
-					<h5 class = "title">Organisation Followed</h5>
-					<div class ="btn-group-vertical">
+
+				<div class = "newsfeed-sidebar" >
+					<h5 class = "sidebar-title">Organisation Followed</h5>
+					<div class ="list-group">
 						<% @follows.each do |t| %>
-							<%= link_to t.name, t %>
+							<%= link_to t.name, t , :class => "list-group-item" %>
 						<% end %>
 					</div>
 				</div>
-				<div >
-					<h5 class = "title">Upcoming Events</h5>
+
+				<div class = "newsfeed-sidebar">
+					<h5 class = "sidebar-title">Upcoming Events</h5>
 					<div class ="btn-group-vertical">
 						<% if @events.length == 0 %>
-							<p>hello</p>
+							<p>no upcoming events</p>
 						<% else %> 
 							<% @events.each do |t|%>
 								<%= link_to t.name, t %>
@@ -26,6 +28,7 @@
 						<% end %>
 					</div>
 				</div>
+
 			</div>
 		</div>
 
