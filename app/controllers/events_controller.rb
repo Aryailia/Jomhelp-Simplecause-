@@ -3,7 +3,7 @@ class EventsController < ApplicationController
 
   def verify_voucher
     x = Event.find_by(id: params[:event_id])
-    byebug
+
     if params[:event][:voucher] ==  x.voucher
       a = current_user
       a.points += 10
