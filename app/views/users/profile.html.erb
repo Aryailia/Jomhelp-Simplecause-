@@ -1,5 +1,10 @@
-<h2>My Profile</h2>
+
 <br>
+
+<h2 align="center"> My Profile</h2>
+
+<br>
+
 
 
 <%if signed_in?%>
@@ -51,8 +56,10 @@
 	
 
 
+
 <br>
-Name: <%= current_user.first_name %> <%= current_user.last_name %>
+Name:<%= current_user.first_name %> <%= current_user.last_name%>
+
 <br>
 Email: <%= current_user.email %>
 
@@ -60,6 +67,7 @@ Email: <%= current_user.email %>
 <hr>
 <br>
 <br>
+
 <h4>Friends</h4>
 <% if !current_user.friends.empty? %>
 	<% current_user.friends.each do |x| %>
@@ -122,3 +130,5 @@ Email: <%= current_user.email %>
 
 <hr>
 <hr>
+
+</div>
