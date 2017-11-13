@@ -1,12 +1,9 @@
 
 <br>
-
 <h2 align="center"> My Profile</h2>
-
 <br>
 
 <div id= "container">
-
 
 <% if current_user.photos.file.nil? == false %>
 <div class="circular-image">
@@ -82,12 +79,24 @@ Email: <%= current_user.email %>
 
 <% else %>
 
-	No one new wants to be friends with you
-
-
+You have no friends request
 <%end%>
 
+<br>
+<br>
 <hr>
 <hr>
 
+<%#f !current_user.follows.organisation.empty? %>
+<%#current_user.follows.organisation.each do |o| %>
+ 
+<%#= link_to o.organisation.name , o.organisation %>
+
+<!-- <br>
+	<else>
+	<%#end%>
+You have not followed any organisation	
+<hr>
+<hr>
+	<%#end%> -->
 </div>
