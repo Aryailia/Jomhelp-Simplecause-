@@ -48,7 +48,11 @@ Rails.application.routes.draw do
     resources :contributors, only: [:create, :destroy, :index]
   end
 
-  resources :posts
+  #people can posts to organisation
+  resources :posts do 
+    resources :comment, only: [:create, :edit, :destroy, :index, :update]
+  end
+
 
   get "/organisations/:id/admin_dashboard" => "organisations#admin_dashboard", as: :admin_dashboard 
 
@@ -77,8 +81,6 @@ Rails.application.routes.draw do
 
   
   # User actions with organisations
-
-  # resources :follows
-
+  resources :searches, only: [:index]
 end
 

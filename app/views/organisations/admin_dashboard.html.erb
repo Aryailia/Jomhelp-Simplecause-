@@ -19,9 +19,54 @@
   <% end %>
 </ul>
 
-<div class = "container" >	
-	<h1> There are no events yet </h1>
-	<h1> Insert Number of Followers </h1>
-	<h1> Insert Posts and number of posts </h1>
+	
+<div class = "row" >
+	<div class = "col-4" height = "100%">
+		<div class = "container">
+
+			<div class = "row admin-sidebar">
+				<div class = "col-8">
+					<h3 id = "text-center">Total Number of Followers</h3>
+				</div>
+				<div class = "col-4" style = "background-color:#696969; border-radius:10px; " >
+					<h2 id = "text-center" ><%= @followers.count %></h2>
+				</div>
+			</div>
+
+			<div class = "row admin-sidebar">
+				<div class = "col-8">
+					<h3 id = "text-center">Number of Successful Events</h3>
+				</div>
+				<div class = "col-4" style = "background-color:#696969; border-radius:10px; " >
+					<% if !@pastevents.nil? %>
+						<h2 id = "text-center" ><%= @pastevents.count %></h2>
+					<% else %>
+						<h2 id = "text-center" >0</h2>
+					<% end %>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class = "col-8" >
+		<h1 class="title">Upcoming Events Status</h1>
+		<% @upcoming_events.each do |t| %>
+			<div class="progress">
+  			<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+    			40% Complete
+		  	</div>
+			</div>
+		<% end %>
+
+		<h1 class="title">Past Events Report</h1>
+	</div>
 </div>
+
+
+	
+	
+	
+	
+
 	

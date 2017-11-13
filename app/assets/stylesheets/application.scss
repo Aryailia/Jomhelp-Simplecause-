@@ -44,6 +44,7 @@ width: 400px;
 margin-left: auto;
 margin-right: auto;
 }
+
 #container1
 {
 width: 650px;
@@ -54,6 +55,16 @@ margin-right: auto;
 .container {
 	padding-top: 15px ;
 	
+}
+
+.full-container {
+	height: 100%;
+	padding: 0px 50px 0px 50px;
+}
+
+.minibox {
+	width: 90%;
+	margin: auto;
 }
 
 /*css for the posting box*/
@@ -72,6 +83,7 @@ margin-right: auto;
 
 .btn {
 	margin: 5px 0px 5px 0px;
+	display: inline;
 }
 
 #inner-container {
@@ -80,10 +92,13 @@ margin-right: auto;
 
 .title {
 	padding: 20px 0px 0px 0px;
+	margin-left: auto;
+	margin-right: auto;
 	margin-bottom: 30px;
 	margin-top: 10px;
 	height: 80px;
 	border-bottom: 1px solid rgba(192, 192, 192, .4);
+
 }
 
 #left-title {
@@ -106,7 +121,23 @@ margin-right: auto;
 	top: 5px;
 }
 
-// CSS for feed start here
+.admin-sidebar {
+	border: 1px solid rgba(192, 192, 192, .4);
+	background-color: rgba(192, 192, 192, .4);
+	border-radius: 10px;
+	padding: 0px;
+	margin: 30px 0px 30px 0px; 
+}
+
+#text-center {
+	height: 150px;
+	text-align: center;
+	vertical-align: middle;
+	position: relative;
+	top: 25%;
+	bottom: 50%;
+}
+
 .card {
     /* Add shadows to create the "card" effect */
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -172,6 +203,7 @@ padding-right:5px;
 
 .circular-image1 img{
 	border-radius:300px;}	
+
 
 
 // Until here

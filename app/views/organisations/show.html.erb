@@ -75,17 +75,18 @@
 		  			<div>
 		  				<h5><%= o.user.first_name %></h5>	
 		  			</div>
-	  			
 						<%= o.content %>
 					</div>
-						<% if contributor?(@organisation) || current_user.id == o.user_id%>
-							<div class = "bottom-post-box">
-								<div class = "btn-group" >
-									<%= button_to "Delete", post_path(o), method: :delete, :class => 'btn btn-outline-success btn-sm' , data: { confirm: 'Sure ah?'} %>
-									<%= button_to "Edit", [:edit, o], :class => 'btn btn-outline-success btn-sm' %>
-								</div>
+						
+					<% if contributor?(@organisation) || current_user.id == o.user_id%>
+						<div class = "bottom-post-box">
+							<div class = "btn-group" >
+								<%= button_to "Delete", post_path(o), method: :delete, :class => 'btn btn-outline-success btn-sm' , data: { confirm: 'Sure ah?'} %>
+								<%= button_to "Edit", [:edit, o], :class => 'btn btn-outline-success btn-sm' %>
 							</div>
-						<% end %>
+						</div>
+					<% end %>
+
 				</div>
 			<% end %>
 			<%= will_paginate @posts %>

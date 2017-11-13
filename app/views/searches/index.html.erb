@@ -1,0 +1,27 @@
+<% query = "%#{params[:q]}%" %>
+<% type = params[:type] %>
+
+<%# User %>
+<% userEntries = User.where("CONCAT(first_name, ' ', last_name) LIKE ?", query)
+  .map { |row| { type: :user, value: row } } %>
+<%# Events %>
+<% eventEntries = Event.where("name LIKE ?", query)
+  .map { |row| { type: :event, value: row }  } %>
+<%# Organisations %>
+<% organisationEntries = Organisation.where("name LIKE ? OR description LIKE ?", query, query)
+  .map { |row| { type: :organisation, value: row } } %>
+<%# Posts %>
+<% postEntries = Post.where("content LIKE ?", query)
+  .map { |row| { type: :post, value: row } } %>
+
+
+<% result = [userEntries, eventEntries, organisationEntries, postEntries]
+  .flatten
+  .sort_by { |entry| entry[:value][:created_at] }
+ %>
+
+<div id="container1">
+  <% result.each do |entry| %>
+    <%= render partial: "#{entry[:type]}_component", locals: { arg: entry[:value] } %>
+  <% end %>
+</div>
