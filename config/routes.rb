@@ -29,9 +29,6 @@ Rails.application.routes.draw do
 
   post "/friendships/:friend_id" => "friendships#create", as: "create_friendships"
 
-  get "/profile2e" => "users#profile", as: "profile"
-
-
 
 
   post "/friendships/approve_friendship/:friend_id" => "friendships#approve", as: :approve_friendship

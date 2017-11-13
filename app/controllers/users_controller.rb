@@ -2,7 +2,13 @@ class UsersController < Clearance::UsersController
   
   before_action :require_login, only:[:show]
   def show
-
+    @user = User.find_by(id: params[:id])
+    @points = @user.points.to_i % 100
+    if current_user == @user
+      @status = true
+    else
+      @status = false
+    end
   end
 
   def create
@@ -15,10 +21,6 @@ class UsersController < Clearance::UsersController
     else
       render template: "users/new"
     end
-  end
-
-  def profile
-
   end
 
   def user_from_params

@@ -20,7 +20,7 @@
       <div class="collapse navbar-collapse" id="<%= navbar_id %>">
         <ul class="navbar-nav mr-auto">
           <% {
-            Profile: profile_path,
+            Profile: users_show_path(current_user),
             Events: events_path,
             Organisations: organisations_path,
           }.each do |body, link|
