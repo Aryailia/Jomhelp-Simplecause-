@@ -141,19 +141,21 @@ You have no friends request
 <hr>
 <hr>
 
+<h4> Organisation I followed </h4>
+<br>
+<% if !current_user.follow_organisations.empty? %>
+	<% current_user.follow_organisations.each_with_index do |o , number| %>
+		<%= number + 1 %>. <%= link_to o.name , o %>
+		<br>
+	<% end %>
+	<br>
+	<br>
+<% else %>
+	You have not followed any organisation	
+	<hr>
+	<hr>
+<% end %> 
 
-<%#f !current_user.follows.organisation.empty? %>
-<%#current_user.follows.organisation.each do |o| %>
- 
-<%#= link_to o.organisation.name , o.organisation %>
-
-<!-- <br>
-	<else>
-	<%#end%>
-You have not followed any organisation	
-<hr>
-<hr>
-	<%#end%> -->
 </div>
 
 </div>
