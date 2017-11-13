@@ -30,9 +30,8 @@ class UsersController < Clearance::UsersController
 
 
   def feed
-
       if !signed_in?
-        redirect_to Clearance.configuration.redirect_url
+        redirect_to sign_in_path
       end 
    end 
 

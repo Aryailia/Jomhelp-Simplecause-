@@ -84,6 +84,13 @@ class EventsController < ApplicationController
     end
   end
 
+  def display_organisation_events
+    @organisation = Organisation.find(params[:organisation_id])
+    events(@organisation)
+    @past_events = @past_events.order(start_date: :desc).paginate(:page => params[:page], :per_page => 3)
+    @upcoming_events = @upcoming_events.order(start_date: :asc).paginate(:page => params[:page], :per_page => 3)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event
@@ -99,6 +106,6 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:name, :start_date, :end_date, :address, :city, :postcode, :longitude, :latitude, :organisation_id, :photos [])
+      params.require(:event).permit(:name, :start_date, :end_date, :address, :city, :postcode, :longitude, :latitude, :organisation_id, {photos: []})
     end
 end

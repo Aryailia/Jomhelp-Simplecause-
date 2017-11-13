@@ -1,12 +1,12 @@
 <div class = "container">
 	<div class="jumbotron jumbotron-fluid">
 	  <div class="container">
-	    <h1 class="display-3">Fluid jumbotron</h1>
-	    <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+	    <h1 class="display-3"><%= @organisation.name %></h1>
+	    <p class="lead"><%= @organisation.description %></p>
 	  </div>
 	</div>
 	
-	<h3>Past Events</h3>
+	<!-- <h3>Past Events</h3>
 	<div class = "row">
 		<div class="card" style="width: 20rem;">
 		  <img class="card-img-top" src="..." alt="Card image cap">
@@ -16,66 +16,81 @@
 		    <a href="#" class="btn btn-primary">Go somewhere</a>
 		  </div>
 		</div>
-	</div>
-
-	<h1><%= @organisation.name %></h1>
-	<h1><%= @organisation.description %></h1>
-	<h1><%= params[:notice] %></h1>
-	<% if signed_in? %>
-		<% if Organisation.find(params[:id]).contributors.find_by(user_id: current_user.id).nil? %>
-			<%= button_to "Contribute", organisation_contributors_path(params[:id]), method: :post %>
-		<% elsif Organisation.find(params[:id]).contributors.find_by(user_id: current_user.id).admin? %>
-			<h1> You are Admin </h1>
-		<% else %>
-			<% @destroy_contributor = Contributor.where(organisation_id: params[:id]). find_by(user_id: current_user.id) %>
-			<%= button_to "Contribute", uncontribute_path(@destroy_contributor), method: :delete, class: "btn btn-success" %>
-		<% end %> 
-
-		<% if contributor?(@organisation) %>
-			<% if true || @contributor.member? -%>
-				<div>
-					<%= link_to('Create Event', new_organisation_event_path(@organisation)) %>
-				</div>
-			<% end -%>
-			<%= link_to "Admin Dashboard", admin_dashboard_path(@organisation) %>
-		<% end %>
-	<% end %>
-
-	<%= link_to 'All Organisation', organisations_path %>
-
-	<% if signed_in? %>
-		<% if !contributor?(@organisation) %>
-			<% if !current_user.follow_organisations.exists?(@organisation.id) %>
-				<%= button_to 'Follow', organisation_follow_path(@organisation.id) %>
-			<% else %>
-				<%= button_to 'Unfollow', organisation_unfollow_path(@organisation.id), method: :delete %>
-			<% end %>
-		<% end %>
-	<% end %>
-
-
-	<%= form_for @post do |f| %>
-		<!-- post post_path -->
-	 	<h4>Status:</h4>
-	 	<%= f.text_area :content %><br>
-	 	<%= f.hidden_field :organisation_id, value: @organisation.id %>
-	 	<br>
-		<br>
-		<%= f.submit %></br>
-
-		<% @organisation.posts.each do |o| %>
-			<%= o.content %>
-
-			<% if contributor?(@organisation) %>
-
-				<%= link_to "Delete post", post_path(o), method: :delete , data: { confirm: 'Sure ah?'}  %>
-				<%= link_to "Edit post", [:edit, o] %>
-					<% end %>
-				<br>	
-
-
-			<% end %>
-	<% end %>
+	</div> -->
 	
+	<div class="row">
+	  <div class="col-3">
+			<div class="align-btn-group">
+				<div class="btn-group-vertical", id="center-button-group">
+					<%= link_to 'All Organisation', organisations_path, :class => "btn btn-secondary btn-lg" %>
+
+					<%= link_to 'Organisation Events', display_organisation_events_path(@organisation), :class => "btn btn-secondary btn-lg" %>
+
+					<% if signed_in? %>
+						<% if !contributor?(@organisation) %>
+							<% if !current_user.follow_organisations.exists?(@organisation.id) %>
+								<%= button_to 'Follow', organisation_follow_path(@organisation.id), :class => "btn btn-secondary btn-lg" %>
+							<% else %>
+								<%= button_to 'Unfollow', organisation_unfollow_path(@organisation.id), method: :delete, :class => "btn btn-secondary btn-lg" %>
+							<% end %>
+						<% end %>
+
+						<% if Organisation.find(params[:id]).contributors.find_by(user_id: current_user.id).nil? %>
+							<%= button_to "Contribute", organisation_contributors_path(params[:id]), method: :post, :class => "btn btn-secondary btn-lg" %>
+						<% elsif Organisation.find(params[:id]).contributors.find_by(user_id: current_user.id).admin? %>
+						<% else %>
+							<% @destroy_contributor = Contributor.where(organisation_id: params[:id]). find_by(user_id: current_user.id) %>
+							<%= button_to "Contribute", uncontribute_path(@destroy_contributor), method: :delete, :class => "btn btn-secondary btn-lg" %>
+						<% end %> 
+
+						<% if contributor?(@organisation) %>
+							<%= link_to('Create Event', new_organisation_event_path(@organisation), :class => "btn btn-secondary btn-lg") %>
+							<% if @contributor.admin? %>
+								<%= link_to "Admin Dashboard", admin_dashboard_path(@organisation), :class => "btn btn-secondary btn-lg" %>
+							<% end %>
+						<% end %>
+					<% end %>
+				</div>
+			</div>
+	  </div>
+
+	  <div class="col-9">
+	  	<div class="container" id="box">
+	  		<div class="container" id="inner-container">
+					<h5>Make Posts</h5>
+					<%= form_for @post do |f| %>
+				<!-- post post_path -->
+			 			<%= f.text_area :content, :rows => "3", :class => "form-control", :id => "block" %>
+			 			<%= f.hidden_field :organisation_id, value: @organisation.id %>
+			 	</div>
+			 			<div class = "bottom-post-box" >
+			 				<% f.hidden_field :created_time , value:Time.now.utc %>
+			 				<%= f.submit 'Submit', :class => 'btn btn-outline-success btn-sm'%>
+		 				</div>
+					<% end %>	
+			</div>
+
+			<% @posts.each do |o| %>
+				<div class="container" id="box">
+		  		<div class="container" id="inner-container">
+		  			<div>
+		  				<h5><%= o.user.first_name %></h5>	
+		  			</div>
+	  			
+						<%= o.content %>
+					</div>
+						<% if contributor?(@organisation) || current_user.id == o.user_id%>
+							<div class = "bottom-post-box">
+								<div class = "btn-group" >
+									<%= button_to "Delete", post_path(o), method: :delete, :class => 'btn btn-outline-success btn-sm' , data: { confirm: 'Sure ah?'} %>
+									<%= button_to "Edit", [:edit, o], :class => 'btn btn-outline-success btn-sm' %>
+								</div>
+							</div>
+						<% end %>
+				</div>
+			<% end %>
+			<%= will_paginate @posts %>
+	  </div>
+	</div>
 </div>
 
