@@ -1,49 +1,50 @@
-<ul class="nav nav-tabs">
-	<li class="nav-item">
-    <%= link_to 'Home Page', organisation_path(@organisation), :class => "nav-link" %>
-  </li>
-  <li class="nav-item">
-    <%= link_to 'Admin Dashboard', admin_dashboard_path(@organisation), :class => "nav-link" %>
-  </li>
-  <li class="nav-item">
-    <%= link_to 'Contributors Request', unapproved_contributors_path(@organisation), :class => "nav-link" %> 
-  </li>
-  <% if @contributor.admin?%>
-	  <li class="nav-item">
-	    <%= link_to 'Edit', edit_organisation_path(@organisation), :class => "nav-link" %> 
-	  </li>
-	  <li class="nav-item">
-	    <%= link_to 'View Contributors', organisation_contributors_path(@organisation), :class => "nav-link active" %>
-	  </li>
-  <% end %>
-</ul>
+<div class="half-white" style="height:100%;">
+	<ul class="nav nav-tabs">
+		<li class="nav-item">
+			<%= link_to 'Home Page', organisation_path(@organisation), :class => "nav-link" %>
+		</li>
+		<li class="nav-item">
+			<%= link_to 'Admin Dashboard', admin_dashboard_path(@organisation), :class => "nav-link" %>
+		</li>
+		<li class="nav-item">
+			<%= link_to 'Contributors Request', unapproved_contributors_path(@organisation), :class => "nav-link" %> 
+		</li>
+		<% if @contributor.admin?%>
+			<li class="nav-item">
+				<%= link_to 'Edit', edit_organisation_path(@organisation), :class => "nav-link" %> 
+			</li>
+			<li class="nav-item">
+				<%= link_to 'View Contributors', organisation_contributors_path(@organisation), :class => "nav-link active" %>
+			</li>
+		<% end %>
+	</ul>
 
-<div class = "container">
-	<table class="table">
-	  <thead>
-	    <tr>
-	      <th>First name</th>
-	      <th>Last name</th>
-	      <th>Email</th>
-	      <th>Role</th>
-	    </tr>
-	  </thead>
-		
-		<tbody>
-		  <% @contributors.each do |t| %>
-		  	<% @destroy_contributor = t%>
-		  	<% user = @contributor.user %>
-		    <tr>
-		      <td><%= user.first_name %></td>
-		      <td><%= user.last_name %></td>
-		      <td><%= user.email %></td>
-		      <td><%= t.role %></td>
-		      <% if !t.admin? %>
-		      	<td><%= button_to "Delete Contributor", uncontribute_path(@destroy_contributor), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-	      	<% end %>
-		    </tr>
-	    <% end %>
-	  </tbody>
-	</table>
+	<div class = "container">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>First name</th>
+					<th>Last name</th>
+					<th>Email</th>
+					<th>Role</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<% @contributors.each do |t| %>
+					<% @destroy_contributor = t%>
+					<% user = @contributor.user %>
+					<tr>
+						<td><%= user.first_name %></td>
+						<td><%= user.last_name %></td>
+						<td><%= user.email %></td>
+						<td><%= t.role %></td>
+						<% if !t.admin? %>
+							<td><%= button_to "Delete Contributor", uncontribute_path(@destroy_contributor), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+						<% end %>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
 </div>
-

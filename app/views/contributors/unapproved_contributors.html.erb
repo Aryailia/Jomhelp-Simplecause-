@@ -1,50 +1,52 @@
-<ul class="nav nav-tabs">
-	<li class="nav-item">
-    <%= link_to 'Home Page', organisation_path(@organisation), :class => "nav-link" %>
-  </li>
-  <li class="nav-item">
-    <%= link_to 'Admin Dashboard', admin_dashboard_path(@organisation), :class => "nav-link" %>
-  </li>
-  <li class="nav-item">
-    <%= link_to 'Contributors Request', unapproved_contributors_path(@organisation), :class => "nav-link active" %> 
-  </li>
-  <% if @contributor.admin?%>
-	  <li class="nav-item">
-	    <%= link_to 'Edit', edit_organisation_path(@organisation), :class => "nav-link" %> 
-	  </li>
-	  <li class="nav-item">
-	    <%= link_to 'View Contributors', organisation_contributors_path(@organisation), :class => "nav-link" %>
-	  </li>
-  <% end %>
-</ul>
+<div class="half-white">
+	<ul class="nav nav-tabs">
+		<li class="nav-item">
+			<%= link_to 'Home Page', organisation_path(@organisation), :class => "nav-link" %>
+		</li>
+		<li class="nav-item">
+			<%= link_to 'Admin Dashboard', admin_dashboard_path(@organisation), :class => "nav-link" %>
+		</li>
+		<li class="nav-item">
+			<%= link_to 'Contributors Request', unapproved_contributors_path(@organisation), :class => "nav-link active" %> 
+		</li>
+		<% if @contributor.admin?%>
+			<li class="nav-item">
+				<%= link_to 'Edit', edit_organisation_path(@organisation), :class => "nav-link" %> 
+			</li>
+			<li class="nav-item">
+				<%= link_to 'View Contributors', organisation_contributors_path(@organisation), :class => "nav-link" %>
+			</li>
+		<% end %>
+	</ul>
 
-<div class = "container" >
-	<% if @unapproved_contributors.length == 0 %>
-		<h3>You have no requests</h3>
-	<% else%>
-		<table class="table">
-		  <thead>
-		    <tr>
-		      <th>First name</th>
-		      <th>Last name</th>
-		      <th>Email</th>
-		    </tr>
-		  </thead>
-			
-			<tbody>
-			  <% @unapproved_contributors.each do |t| %>
-  	  	<% user = t.user %>
-			    <tr>
-			      <td><%= user.first_name %></td>
-			      <td><%= user.last_name %></td>
-			      <td><%= user.email %></td>
-			      <td><%= t.role %></td>
-			      <td><%= button_to "approve", approve_contributor_path(params[:organisation_id], t) %></td>
-			    </tr>
-		    <% end %>
-		  </tbody>
-		</table>
+	<div class = "container" >
+		<% if @unapproved_contributors.length == 0 %>
+			<h3>You have no requests</h3>
+		<% else%>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>First name</th>
+						<th>Last name</th>
+						<th>Email</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<% @unapproved_contributors.each do |t| %>
+					<% user = t.user %>
+						<tr>
+							<td><%= user.first_name %></td>
+							<td><%= user.last_name %></td>
+							<td><%= user.email %></td>
+							<td><%= t.role %></td>
+							<td><%= button_to "approve", approve_contributor_path(params[:organisation_id], t) %></td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
 
-	<% end %>
+		<% end %>
+	</div>
 </div>
 
