@@ -1,141 +1,143 @@
-<div class = "minibox">
-	<h2 class="title" > Your News feed </h2>
-</div>
+<div class="half-white">
+	<div class = "minibox">
+		<h2 class="title" > Your News feed </h2>
+	</div>
 
-<div class="full-container" >
-	<div class = "row" >
-		<div class = "col-3" >
-			<div id  ="box ">
+	<div class="full-container" >
+		<div class = "row" >
+			<div class = "col-3" >
+				<div id  ="box ">
 
-				<div class = "newsfeed-sidebar" style="background-color:powderblue;">
-					<h5 class = "sidebar-title">Organisation Followed</h5>
-					<div class ="list-group">
-						<% @follows.each do |t| %>
-							<%= link_to t.name, t, :class => "list-group-item" %>
-						<% end %>
-					</div>
-				</div>
-
-				<div class = "newsfeed-sidebar">
-					<h5 class = "sidebar-title">Upcoming Events</h5>
-					<div class ="list-group">
-						<% if @events.length == 0 %>
-							<p>no upcoming events</p>
-						<% else %> 
-							<% @events.each do |t|%>
+					<div class = "newsfeed-sidebar" style="background-color:powderblue;">
+						<h5 class = "sidebar-title">Organisation Followed</h5>
+						<div class ="list-group">
+							<% @follows.each do |t| %>
 								<%= link_to t.name, t, :class => "list-group-item" %>
 							<% end %>
-						<% end %>
+						</div>
 					</div>
-				</div>
 
+					<div class = "newsfeed-sidebar">
+						<h5 class = "sidebar-title">Upcoming Events</h5>
+						<div class ="list-group">
+							<% if @events.length == 0 %>
+								<p>no upcoming events</p>
+							<% else %> 
+								<% @events.each do |t|%>
+									<%= link_to t.name, t, :class => "list-group-item" %>
+								<% end %>
+							<% end %>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			
+			<div class = "col-9" >
+				<% posts = Post.where('organisation_id IN (?) OR organisation_id IN (?) OR user_id IN (?)',
+						current_user.contributors.pluck(:organisation_id),
+						current_user.follows.pluck(:organisation_id),
+						current_user.friends.pluck(:id)
+					).order(created_at: :desc) %>
+
+				<% if current_user.follows.empty? && current_user.friends.empty? %>
+					You have not added any friends yet 
+				<% end %>
+
+				<% posts.each do |p| %>
+					<% if p.organisation_post == true %>
+
+						<div class="card">
+							<div class="card-row">
+								<div class="card-image">
+									<img src="<%= p.user.photos%>"/>
+								</div>
+								<div class="card-name">
+									<strong><a href="users/<%= p.user_id %>"><%=  p.user.first_name%><%= p.user.last_name %></a> </strong>
+								</div>
+							</div>
+							<div class="card-content">
+								<span class="card-small">posted </span> 
+								<%= p.content %><span class="card-small">in</span> <strong><%= link_to p.organisation.name, p.organisation%></strong>
+							</div>
+							<div class="card-date">
+								<%= p.created_at.strftime("%B %d %Y, %l:%M%P") %>
+							</div>
+						</div>
+
+						<!-- --> 
+
+						<%if p.event_created == true %>
+							<div class="card">
+								<div class="card-row">
+									<div class="card-image"><img src="<%= p.user.photos%>"/></div>
+									<div class="card-name"> <strong> <a href="users/<%= p.user_id %>"> <%= p.user.first_name %><%= p.user.last_name %> </a> </strong> </div>
+								</div>
+								<div class="card-content">
+									has created an event that you might be interested called
+									<%= link_to p.organisation.events.name, p.organisation.events %>
+									<span class="card-small"> in </span>
+									<strong><%= link_to p.organisation.name , p.organisation%></strong> 
+								</div>
+								<div class="card-date">
+									<%=p.created_at.strftime("%B %d %Y, %l:%M%P") %>
+								</div>
+							</div>
+							<!-- --> 
+
+							<%if p.event_join == true %>
+								<div class="card">
+									<div class="card-image"><img src="<%= p.user.photos%>"/></div>
+									<div class="card-name"> <strong> <a href="users/<%= p.user_id %>"> <%= p.user.first_name %><%= p.user.last_name %> </a></strong> </div>
+									<div class="card-content">has joined an even called
+									<%= link_to p.organisation.events.name, p.organisation.events %>
+									<span class="card-small"> in </span>
+									<strong> <%= link_to p.organisation.name , p.organisation %> </strong>
+									</div>
+									<div class="card-date">
+										<%=p.created_at.strftime("%B %d %Y, %l:%M%P") %>
+									</div>
+								</div>
+
+							<% end %>
+						<% end %>
+					<% end %>
+				<% end %>
 			</div>
 		</div>
-
-		
-		<div class = "col-9" >
-			<% posts = Post.where('organisation_id IN (?) OR organisation_id IN (?) OR user_id IN (?)',
-			    current_user.contributors.pluck(:organisation_id),
-			    current_user.follows.pluck(:organisation_id),
-			    current_user.friends.pluck(:id)
-			  ).order(created_at: :desc) %>
-
-			<% if current_user.follows.empty? && current_user.friends.empty? %>
-			  You have not added any friends yet 
-			<% end %>
-
-			<% posts.each do |p| %>
-			  <% if p.organisation_post == true %>
-
-			    <div class="card">
-			      <div class="card-row">
-			        <div class="card-image">
-			          <img src="<%= p.user.photos%>"/>
-			        </div>
-			        <div class="card-name">
-			          <strong><a href="users/<%= p.user_id %>"><%=  p.user.first_name%><%= p.user.last_name %></a> </strong>
-			        </div>
-			      </div>
-			      <div class="card-content">
-			        <span class="card-small">posted </span> 
-			        <%= p.content %><span class="card-small">in</span> <strong><%= link_to p.organisation.name, p.organisation%></strong>
-			      </div>
-			      <div class="card-date">
-			        <%= p.created_at.strftime("%B %d %Y, %l:%M%P") %>
-			      </div>
-			    </div>
-
-			    <!-- --> 
-
-			    <%if p.event_created == true %>
-			      <div class="card">
-			        <div class="card-row">
-			          <div class="card-image"><img src="<%= p.user.photos%>"/></div>
-			          <div class="card-name"> <strong> <a href="users/<%= p.user_id %>"> <%= p.user.first_name %><%= p.user.last_name %> </a> </strong> </div>
-			        </div>
-			        <div class="card-content">
-			          has created an event that you might be interested called
-			          <%= link_to p.organisation.events.name, p.organisation.events %>
-			          <span class="card-small"> in </span>
-			          <strong><%= link_to p.organisation.name , p.organisation%></strong> 
-			        </div>
-			        <div class="card-date">
-			          <%=p.created_at.strftime("%B %d %Y, %l:%M%P") %>
-			        </div>
-			      </div>
-			      <!-- --> 
-
-			      <%if p.event_join == true %>
-			        <div class="card">
-			          <div class="card-image"><img src="<%= p.user.photos%>"/></div>
-			          <div class="card-name"> <strong> <a href="users/<%= p.user_id %>"> <%= p.user.first_name %><%= p.user.last_name %> </a></strong> </div>
-			          <div class="card-content">has joined an even called
-			          <%= link_to p.organisation.events.name, p.organisation.events %>
-			          <span class="card-small"> in </span>
-			          <strong> <%= link_to p.organisation.name , p.organisation %> </strong>
-			          </div>
-			          <div class="card-date">
-			            <%=p.created_at.strftime("%B %d %Y, %l:%M%P") %>
-			          </div>
-			        </div>
-
-			      <% end %>
-			    <% end %>
-			  <% end %>
-			<% end %>
-		</div>
 	</div>
+
+
+	<script type="text/javascript">$(document).ready(function () {
+		var trigger = $('.hamburger'),
+				overlay = $('.overlay'),
+			isClosed = false;
+
+			trigger.click(function () {
+				hamburger_cross();      
+			});
+
+			function hamburger_cross() {
+
+				if (isClosed == true) {          
+					overlay.hide();
+					trigger.removeClass('is-open');
+					trigger.addClass('is-closed');
+					isClosed = false;
+				} else {   
+					overlay.show();
+					trigger.removeClass('is-closed');
+					trigger.addClass('is-open');
+					isClosed = true;
+				}
+		}
+		
+		$('[data-toggle="offcanvas"]').click(function () {
+					$('#wrapper').toggleClass('toggled');
+		});  
+	});
+
+	</script>
+
 </div>
-
-
- <script type="text/javascript">$(document).ready(function () {
-  var trigger = $('.hamburger'),
-      overlay = $('.overlay'),
-     isClosed = false;
-
-    trigger.click(function () {
-      hamburger_cross();      
-    });
-
-    function hamburger_cross() {
-
-      if (isClosed == true) {          
-        overlay.hide();
-        trigger.removeClass('is-open');
-        trigger.addClass('is-closed');
-        isClosed = false;
-      } else {   
-        overlay.show();
-        trigger.removeClass('is-closed');
-        trigger.addClass('is-open');
-        isClosed = true;
-      }
-  }
-  
-  $('[data-toggle="offcanvas"]').click(function () {
-        $('#wrapper').toggleClass('toggled');
-  });  
-});
-
-</script>
-

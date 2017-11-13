@@ -1,41 +1,42 @@
-<div id="clearance" class="sign-up">
+<div class="half-white">
+  <div id="clearance" class="sign-up">
 
-  <%= form_for @user do |form| %>
+    <%= form_for @user do |form| %>
 
-    <h1 class="sign-up-title">Sign up in seconds</h1>
+      <h1 class="sign-up-title">Sign up in seconds</h1>
 
-    <%= render partial: '/users/form', object: form , :class =>"sign-up-title"%>
+      <%= render partial: '/users/form', object: form , :class =>"sign-up-title"%>
 
-    <div class="submit-field">
-      <%= form.submit class: 'sign-up-button' %>
-    </div>
+      <div class="submit-field">
+        <%= form.submit class: 'sign-up-button' %>
+      </div>
 
-    <div class="other-links">
-      <%#= link_to t(".sign_in"), sign_in_path %>
-    </div>
+      <div class="other-links">
+        <%#= link_to t(".sign_in"), sign_in_path %>
+      </div>
 
-    <br>
-    
-    <br>
-    <%= link_to "Sign Up with Facebook", "/auth/facebook" %>
-  <% end %>
+      <br>
+      
+      <br>
+      <%= link_to "Sign Up with Facebook", "/auth/facebook" %>
+    <% end %>
+  </div>
+
+
+  <!-- <form action= "/sign_up" class="sign-up">
+      <h1 class="sign-up-title">Sign up in seconds</h1>
+
+      <input type="text" class="sign-up-input" placeholder="What's your username?" autofocus>
+
+      <input type="password" class="sign-up-input" placeholder="Choose a password">
+
+      <input type="password" class="sign-up-input" placeholder="Choose a password">
+
+
+      <input type="submit" value="Sign me up!" class="sign-up-button">
+
+    </form> -->
 </div>
-
-
-<!-- <form action= "/sign_up" class="sign-up">
-    <h1 class="sign-up-title">Sign up in seconds</h1>
-
-    <input type="text" class="sign-up-input" placeholder="What's your username?" autofocus>
-
-    <input type="password" class="sign-up-input" placeholder="Choose a password">
-
-     <input type="password" class="sign-up-input" placeholder="Choose a password">
-
-
-    <input type="submit" value="Sign me up!" class="sign-up-button">
-
-  </form> -->
-
 
 
 
