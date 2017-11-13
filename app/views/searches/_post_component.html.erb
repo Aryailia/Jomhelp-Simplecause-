@@ -1,0 +1,19 @@
+<% post = arg %>
+<% user = post.user %>
+<div classs="card">
+  <div class="card-row">
+    <div class="card-image">
+      <img src="<%= user.photos %>">
+    </div>
+    <div class="card-date">
+      <%= post.created_at.strftime("%B %d %Y, %l:%M%P") %>
+    </div>
+    <div class="card-name"><strong>
+      <%= user.first_name -%> <%= user.last_name -%>
+    </strong></div>
+  </div>
+  <div class="card-content">
+    <%= post.content -%>
+  </div>
+
+</div>

@@ -88,6 +88,10 @@
     <%= form.text_field :name, type: "text" %>
   </div>
 
+  <div class="text_field">
+    <%= form.text_area :description %>
+  </div>
+
   <div class="field">
     <%= form.label :start_date %>
     <%= form.datetime_select :start_date, id: :event_start_date %>
@@ -104,8 +108,7 @@
   </div>
 
   <%= form.hidden_field :address, id: "address" %>
-  <%= form.hidden_field :city, id: "city" %>
-  <%= form.hidden_field :postcode, id: "postcode" %>
+  <%= form.hidden_field :place_id, id: "place_id" %>
   <%= form.hidden_field :longitude, id: "longitude" %>
   <%= form.hidden_field :latitude, id: "latitude" %>
   

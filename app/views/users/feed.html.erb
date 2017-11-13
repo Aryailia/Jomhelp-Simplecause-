@@ -32,6 +32,7 @@
 			</div>
 		</div>
 
+		
 		<div class = "col-9" >
 			<% posts = Post.where('organisation_id IN (?) OR organisation_id IN (?) OR user_id IN (?)',
 			    current_user.contributors.pluck(:organisation_id),
@@ -85,7 +86,7 @@
 			      <!-- --> 
 
 			      <%if p.event_join == true %>
-			        <div class="card" ">
+			        <div class="card">
 			          <div class="card-image"><img src="<%= p.user.photos%>"/></div>
 			          <div class="card-name"> <strong> <a href="users/<%= p.user_id %>"> <%= p.user.first_name %><%= p.user.last_name %> </a></strong> </div>
 			          <div class="card-content">has joined an even called
