@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171110104905) do
+ActiveRecord::Schema.define(version: 20171113025125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,16 @@ ActiveRecord::Schema.define(version: 20171110104905) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_authentications_on_user_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.bigint "post_id", null: false
+    t.bigint "user_id", null: false
+    t.string "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_comments_on_post_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "contributors", force: :cascade do |t|
@@ -96,9 +106,9 @@ ActiveRecord::Schema.define(version: 20171110104905) do
   create_table "posts", force: :cascade do |t|
     t.bigint "organisation_id", null: false
     t.bigint "user_id", null: false
+    t.string "content", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "content"
     t.boolean "event_created", default: false
     t.boolean "event_join", default: false
     t.boolean "organisation_post", default: false
@@ -125,6 +135,8 @@ ActiveRecord::Schema.define(version: 20171110104905) do
   add_foreign_key "attendees", "events"
   add_foreign_key "attendees", "users"
   add_foreign_key "authentications", "users"
+  add_foreign_key "comments", "posts"
+  add_foreign_key "comments", "users"
   add_foreign_key "contributors", "organisations"
   add_foreign_key "contributors", "users"
   add_foreign_key "events", "organisations"
