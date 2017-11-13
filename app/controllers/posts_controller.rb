@@ -3,11 +3,8 @@ class PostsController < ApplicationController
 	def create 
 		@post = current_user.posts.new(content: posts_params[:content], organisation_id: posts_params[:organisation_id],organisation_post: true)
 
-		if @post.save
-			
+		if @post.save			
 			redirect_to @post.organisation
-
-
 		else 
 			flash[:danger] = 'Error posting status'
 			render template: "organisations/failed"

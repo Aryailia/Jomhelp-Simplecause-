@@ -19,6 +19,7 @@
 
       <div class="navbar-collapse" id="<%= navbar_id %>">
         <ul class="navbar-nav mr-auto">
+
           <% if signed_in? %>
             <% links = {
               Profile: profile_path,
@@ -32,6 +33,7 @@
             } %>
           <% end %>
           <% links.each do |body, link| %>
+
             <% isCurrent = current_page?(link) %>
             <li class="<%= (isCurrent) ? 'nav-link active' : 'nav-link' %>">
               <%= link_to(link, class: 'nav-link') do -%>

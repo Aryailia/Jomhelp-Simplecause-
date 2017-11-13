@@ -1,38 +1,105 @@
-<div id="container">
-<br>
-<% x = User.find_by(id: params[:id]) %>
-<br>
-<h3 align="center"><%= x.first_name %> <%= x.last_name %>'s Profile</h3>
-<br>
-<% if x.photos.file.nil? == false %>
-<div class="circular-image1">
-	<%= image_tag x.photos.url%>
+<div class="container">
+	<h1 class="title">Profile</h1>
+	<div class="row">		
+		<div class = "col-4">
+			<% if @user.photos.url.nil? %>
+				<div class="circular-image">
+					<%= image_tag "/assets/no-img.png" %>
+				</div>
+			<% else %>
+				<div class="circular-image">
+					<%= image_tag @user.photos.thumb.url  %>
+				</div>
+			<% end %>	
+			<% if @user.photos.file.nil? == false %>
+				<%= image_tag @user.photos.petite.url, :class=>"img-circular"%>
+			<% end %>	
+		</div>
+		
+		<div class = "col-8">
+			<div class="name_indicator">
+				<%= @user.first_name %> <%= @user.last_name %>
+			</div>
+			
+			<div class="level_indicator">
+				<%= @user.level %>
+			</div>
+			
+			<div class="container">
+			  <div class="progress">
+			    <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="<%@points%>" aria-valuemin="0" aria-valuemax="100" style="width:<%=@user.points%>%">
+			      <%=@points%>% Complete
+			    </div>
+			  </div>
+			</div>
+		</div>
 	</div>
-<% end %>
-<hr>
-<h4> Info </h4>
-Email: <%= x.email %>
-<hr>
-<hr>
-<% if (current_user.friendships.find_by(friend_id: x.id).nil?) %>
-	<%= link_to "Add Friend", create_friendships_path(x), method: :post  %>
-<%elsif current_user.friendships.find_by(friend_id: x.id).approved == false%>
-	Your friend request has been sent
-<%elsif current_user.friends.includes(x)%>
-	You are already friends with this person
-<% end %>
-<hr>
-<hr>
+
+	<h4> Info </h4>
+			Email: <%= @user.email %>
+			Name:<%= @user.first_name %> <%= @user.last_name%>
+			<% if (@user.friendships.find_by(friend_id: @user.id).nil?) %>
+				<%= link_to "Add Friend", create_friendships_path(@user), method: :post  %>
+			<%elsif @user.friendships.find_by(friend_id: @user.id).approved == false%>
+				Your friend request has been sent
+			<%elsif @user.friends.includes(@user)%>
+				You are already friends with this person
+			<% end %>
+	
+
+	<h4>Friends</h4>
+	<% if !@user.friends.empty? %>
+		<% @user.friends.each do |t| %>
+			Name: <%= t.first_name %> <%= t.last_name %>
+		<% end %>
+	<%else%>
+		This User has no friends
+	<% end%>
+	
+	<% if @status %>
+		<h4>Pending Friend Requests</h4>
+
+		<% @user.friendships.each do |t| %>
+
+			<% if t.approved == false %>
+				<% a = User.find_by(id: t.friend_id) %>
+				<strong>Name:</strong> <%= a.first_name %> <%= a.last_name %>
+				
+				Request sent at: <%= a.created_at.to_date %>
+			<% end %>
+		<% end %>
+	 
 
 
-<h4>Friends</h4>
-<% if !x.friends.empty? %>
-	<% x.friends.each do |friend| %>
-		Name: <%= friend.first_name %> <%= friend.last_name %>
-		<br>
-	<% end %>
-<%else%>
-	This User has no friends
-<% end%>
+		<h4>Be-Friend Requests</h4>
 
+		<% if !@user.inverse_friendships.empty? %>
+
+				<% @user.inverse_friendships.each do |t| %>
+					<% if t.approved == false%>
+					<% @c = @user.inverse_friends.find_by(id: t.user_id) %>
+					<%= @c.first_name %> <%= @c.last_name %>
+					
+					Requested on: <%= @c.created_at.to_date %>
+
+					
+					<%= link_to "Approve Friendship", approve_friendship_path(@c.id), method: :post %>
+						
+					<%= link_to "Deny Friendship", destroy_friendship_path(@c.id), method: :post %>
+					<%end%>
+
+				<%end%>
+
+			<% else %>
+		You have no friends request
+		<%end%>
+	<%end%>
 </div>
+
+
+
+
+
+
+
+
