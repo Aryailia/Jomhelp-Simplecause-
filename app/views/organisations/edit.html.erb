@@ -19,9 +19,8 @@
 </ul>
 
 <div class = "container">
-  <h1>Editing Organisation</h1>
+  <h1 class = "title" >Editing Organisation</h1>
 
   <%= render 'form', organisation: @organisation %>
-  <br>
-  <%= button_to 'Dissolve the Organisation', @organisation, method: :delete, data: { confirm: 'Are you sure? You are deleting the whole organisation' }, :class => "btn btn-outline-success" %>
+  <%= button_to 'Dissolve the Organisation', @organisation, method: :delete, data: { confirm: 'Are you sure? You are deleting the whole organisation' }, :class => "btn btn-outline-success", :display => "inline" %>
 </div>
