@@ -1,5 +1,5 @@
 Rails.application.routes.draw do  
-  root 'organisations#index'
+  root 'users#feed'
 
   # For sessions
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
@@ -39,8 +39,8 @@ Rails.application.routes.draw do
 
   post "/friendships/destroy_friendship/:friend_id" => "friendships#destroy", as: :destroy_friendship
 
-
   get "/events/:event_id/verify" => "events#verify_voucher", as: :verify_voucher
+
 
 
   #the routes for organisations 
@@ -61,7 +61,7 @@ Rails.application.routes.draw do
   #routes for events
   resources :organisations, only: [] do 
     # For creating events and listing them only, creation is dependent on organisation
-    resources :events, only: [:index, :create, :new]
+    resources :events, only: [ :create, :new]
 
     # For Follows
     post 'follow' => 'follows#create'
@@ -71,6 +71,9 @@ Rails.application.routes.draw do
   # Other stuff related to events
   resources :events, only: [:index, :show, :edit, :update, :destroy]
   resources :attendees, only: [:create, :destroy]
+
+  # routes for each individual organisation events
+  get "/organisations/:organisation_id/events" => "events#display_organisation_events", as: :display_organisation_events
 
   
   # User actions with organisations

@@ -41,4 +41,12 @@ class UsersController < Clearance::UsersController
       user.level = level
     end
   end
+
+
+  def feed
+      if !signed_in?
+        redirect_to sign_in_path
+      end 
+   end 
+
 end

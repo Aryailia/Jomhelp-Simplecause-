@@ -1,5 +1,6 @@
  class ApplicationController < ActionController::Base
   include Clearance::Controller
+  include ApplicationHelper
   include ContributorsHelper
   
   protect_from_forgery with: :exception
