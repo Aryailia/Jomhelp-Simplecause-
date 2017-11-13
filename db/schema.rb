@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20171113025125) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.json "photos"
+    t.string "voucher"
     t.index ["organisation_id"], name: "index_events_on_organisation_id"
   end
 
@@ -128,6 +129,8 @@ ActiveRecord::Schema.define(version: 20171113025125) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.json "photos"
+    t.integer "points"
+    t.integer "level"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end

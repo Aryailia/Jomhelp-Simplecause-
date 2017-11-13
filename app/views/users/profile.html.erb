@@ -1,10 +1,24 @@
-<h2>My Profile</h2>
+
 <br>
+
+<h2 align="center"> My Profile</h2>
+
+<br>
+
+<div id= "container">
+
+
 <% if current_user.photos.file.nil? == false %>
-	<%= image_tag current_user.photos.thumb.url%>
+<div class="circular-image">
+ <%=image_tag current_user.photos.thumb.url%> 
+</div>
 <% end %>
+<hr>
+<h4> Info </h4>
+
 <br>
-Name: <%= current_user.first_name %> <%= current_user.last_name %>
+Name:<%= current_user.first_name %> <%= current_user.last_name%>
+
 <br>
 Email: <%= current_user.email %>
 
@@ -12,6 +26,7 @@ Email: <%= current_user.email %>
 <hr>
 <br>
 <br>
+
 <h4>Friends</h4>
 <% if !current_user.friends.empty? %>
 	<% current_user.friends.each do |x| %>
@@ -74,3 +89,5 @@ Email: <%= current_user.email %>
 
 <hr>
 <hr>
+
+</div>

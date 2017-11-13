@@ -9,6 +9,22 @@
   <%# <% end %> %>
 -->
 
+<% if signed_in? %>
+  <%= form_for @event, url: verify_voucher_path(@event), method: :get do |form| %>
+
+
+<%= render partial: 'voucher', locals: {form: form} %>
+    
+
+    <div class="submit-field">
+      <%= form.submit "Submit Voucher" %>
+    </div>
+  
+  <% end %>
+<%end%>
+
+
+
 <p>
   <strong>Name:</strong>
   <%= @event.name %>

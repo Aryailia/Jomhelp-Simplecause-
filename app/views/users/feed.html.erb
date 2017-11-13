@@ -3,59 +3,74 @@
 <br>
 <br>
 
-<div id="container">
-
-	<% posts = Post.where('organisation_id IN (?) OR user_id IN (?)', current_user.follows.pluck(:organisation_id), current_user.friends.pluck(:id)).order(created_at: :desc)%>
+<div id="container1">
+<% posts = Post.where('organisation_id IN (?) OR organisation_id IN (?) OR user_id IN (?)',
+    current_user.contributors.pluck(:organisation_id),
+    current_user.follows.pluck(:organisation_id),
+    current_user.friends.pluck(:id)
+  ).order(created_at: :desc) %>
 
 <% if current_user.follows.empty? && current_user.friends.empty? %>
-
-You have not followed an organisation or added any friends yet 
-
+  You have not added any friends yet 
 <% end %>
+<% posts.each do |p| %>
+  <% if p.organisation_post == true %>
 
-<% else %>
+    <div class="card">
+      <div class="card-row">
+        <div class="card-image">
+          <img src="<%= p.user.photos%>"/>
+        </div>
+        <div class="card-name">
+          <strong><a href="users/<%= p.user_id %>"><%=  p.user.first_name%><%= p.user.last_name %></a> </strong>
+        </div>
+      </div>
+      <div class="card-content">
+        <span class="card-small">posted </span> 
+        <%= p.content %><span class="card-small">in</span> <strong><%= link_to p.organisation.name, p.organisation%></strong>
+      </div>
+      <div class="card-date">
+        <%= p.created_at.strftime("%B %d %Y, %l:%M%P") %>
+      </div>
+    </div>
 
-	<% posts.each do |p| %>
+    <!-- --> 
 
+    <%if p.event_created == true %>
+      <div class="card">
+        <div class="card-row">
+          <div class="card-image"><img src="<%= p.user.photos%>"/></div>
+          <div class="card-name"> <strong> <a href="users/<%= p.user_id %>"> <%= p.user.first_name %><%= p.user.last_name %> </a> </strong> </div>
+        </div>
+        <div class="card-content">
+          has created an event that you might be interested called
+          <%= link_to p.organisation.events.name, p.organisation.events %>
+          <span class="card-small"> in </span>
+          <strong><%= link_to p.organisation.name , p.organisation%></strong> 
+        </div>
+        <div class="card-date">
+          <%=p.created_at.strftime("%B %d %Y, %l:%M%P") %>
+        </div>
+      </div>
+      <!-- --> 
 
-<% if p.organisation_post == true %>
+      <%if p.event_join == true %>
+        <div class="card" ">
+          <div class="card-image"><img src="<%= p.user.photos%>"/></div>
+          <div class="card-name"> <strong> <a href="users/<%= p.user_id %>"> <%= p.user.first_name %><%= p.user.last_name %> </a></strong> </div>
+          <div class="card-content">has joined an even called
+          <%= link_to p.organisation.events.name, p.organisation.events %>
+          <span class="card-small"> in </span>
+          <strong> <%= link_to p.organisation.name , p.organisation %> </strong>
+          </div>
+          <div class="card-date">
+            <%=p.created_at.strftime("%B %d %Y, %l:%M%P") %>
+          </div>
+        </div>
 
-<div class="card" style="width:100%">
-   <p><strong> <% p.user.first_name %><% p.user.last_name %> </strong> posted  
- <%= p.content %> in <strong> <%= link_to p.organisation.name, p.organisation%> </strong></p> 
-
-  <div class="container">
-    <p><%=p.created_at.strftime("%B %d %Y, %l:%M%P") %></p> 
-  </div>
-
-
-<br>
-<br>
-
-<!-- --> 
-
- <%if p.event_created == true %>
- <strong> <% p.user.first_name %><% p.user.last_name %> </strong> 
-has created an event that you might be interested called
-<%= link_to p.organisation.events.name, p.organisation.events %>
-in 
-  <strong> <%= link_to p.organisation.name , p.organisation%> </strong> 
-<br>
-<br>
-<!-- --> 
-
- <%if p.event_join == true %>
- <strong> <% p.user.first_name %><% p.user.last_name %> </strong> 
-has joined an event that you might be interested called
-<%= link_to p.organisation.events.name, p.organisation.events %>
-in
- <strong> <%= link_to p.organisation.name , p.organisation %> </strong>
-<br>
-<br>
-
-<% end %>
-<% end %>
-<% end %>
+      <% end %>
+    <% end %>
+  <% end %>
 <% end %>
 
  </div>
