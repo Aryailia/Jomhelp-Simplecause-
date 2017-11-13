@@ -28,7 +28,7 @@ class User < ApplicationRecord
       first_name: auth_hash["extra"]["raw_info"]["first_name"],
       last_name: auth_hash["extra"]["raw_info"]["last_name"],
       email: auth_hash["extra"]["raw_info"]["email"],
-
+      points: 0,
       #Just putting a random password to fill the column in the database because they're signing in with Facebook 
       password: SecureRandom.hex(6)
     )

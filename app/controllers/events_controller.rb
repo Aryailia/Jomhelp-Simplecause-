@@ -1,11 +1,32 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
+  def verify_voucher
+    x = Event.find_by(id: params[:event_id])
+    if params[:event][:voucher] ==  x.voucher
+      current_user.points += 10
+
+      if current_user.points >= 100 && current_user.points <200
+        current_user.level = 2        
+      elsif current_user.points >= 200 && current_user.points <300
+        current_user.level = 3 
+      end
+
+      redirect_to(root_path)
+    else
+      redirect_to(profile_path)
+    end
+   
+  end
+
   # GET /events
   # GET /events.json
   def index
     @events = Event.all
   end
+
+
+
 
   # GET /events/1
   # GET /events/1.json
@@ -15,6 +36,8 @@ class EventsController < ApplicationController
   # GET /events/new
   def new
     @event = Event.new
+    @event.voucher = SecureRandom.hex(4)
+    @event.save
     begin
       errorIfCannotMakeEvent(params[:organisation_id])
       
@@ -35,7 +58,8 @@ class EventsController < ApplicationController
   # POST /events.json
   def create
     @event = Event.new(event_params)
-
+    @event.voucher = SecureRandom.hex(4)
+    @event.save
     begin 
       errorIfCannotMakeEvent(params[:organisation_id])
       respond_to do |format|
