@@ -26,7 +26,10 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
+		@past_events = Event.where("end_date <= ?", Time.now)
+		@upcoming_events = Event.where("end_date >= ?", Time.now)    
+    @past_events = @past_events.order(start_date: :desc).paginate(:page => params[:page], :per_page => 3)
+    @upcoming_events = @upcoming_events.order(start_date: :asc).paginate(:page => params[:page], :per_page => 3)
   end
 
 
@@ -59,10 +62,7 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-
-
-    
-
+    byebug
     begin 
       @event = Event.new(event_params)
       @event.voucher = SecureRandom.hex(4)
@@ -158,6 +158,6 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:name, :start_date, :end_date, :address, :city, :postcode, :longitude, :latitude, :organisation_id, {photos: []})
+      params.require(:event).permit(:name, :start_date, :end_date, :address, :description, :place_id, :longitude, :latitude, :organisation_id, {photos: []})
     end
 end
