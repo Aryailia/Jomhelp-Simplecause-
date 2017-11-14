@@ -10,10 +10,7 @@
 				<div class="circular-image">
 					<%= image_tag @user.photos.thumb.url  %>
 				</div>
-			<% end %>	
-			<% if @user.photos.file.nil? == false %>
-				<%= image_tag @user.photos.petite.url, :class=>"img-circular"%>
-			<% end %>	
+			<% end %>		
 		</div>
 		
 		<div class = "col-8">
