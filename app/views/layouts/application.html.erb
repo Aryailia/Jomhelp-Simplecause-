@@ -22,7 +22,7 @@
 
           <% if signed_in? %>
             <% links = {
-              Profile: profile_path,
+              Profile: users_show_path(current_user),
               Events: events_path,
               Organisations: organisations_path,
             } %>

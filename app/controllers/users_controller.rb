@@ -9,6 +9,11 @@ class UsersController < Clearance::UsersController
     else
       @status = false
     end
+    # if !current_user.friends.find_by(friend_id:@user.id).nil? 
+    #   @friend = true
+    # else
+    #   @friend = false
+    # end
   end
 
   def create
