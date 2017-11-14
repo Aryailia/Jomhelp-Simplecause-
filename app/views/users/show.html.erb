@@ -75,32 +75,28 @@
 		
 
 		<% if @status %>
-			<% if !@user.friendships.length == 0 %>
+			<% if @user.friendships.length != 0 %>
 				<h1 class ="title">Pending Friend Requests</h1>
-
 				<% @user.friendships.each do |t| %>
-
 					<% if t.approved == false %>
 						<% a = User.find_by(id: t.friend_id) %>
 						<strong>Name:</strong> <%= a.first_name %> <%= a.last_name %>
-						
 						Request sent at: <%= a.created_at.to_date %>
 					<% end %>
 				<% end %>
 			<% end %>
 		 
 
-			<% if @user.inverse_friendships.empty? %>
+			
 				<h1 class="title">Be-Friend Requests</h1>
-
-				<% if !@user.inverse_friendships.empty? %>
-					<% @user.inverse_friendships.each do |t| %>
+				
+				<% if !current_user.inverse_friendships.empty? %>
+					<% current_user.inverse_friendships.each do |t| %>
 						<% if t.approved == false%>
-						<% @c = @user.inverse_friends.find_by(id: t.user_id) %>
+						<% @c = current_user.inverse_friends.find_by(id: t.user_id) %>
 						<%= @c.first_name %> <%= @c.last_name %>
 						
 						Requested on: <%= @c.created_at.to_date %>
-
 						
 						<%= link_to "Approve Friendship", approve_friendship_path(@c.id), method: :post %>
 							
@@ -110,7 +106,7 @@
 				<% else %>
 				You have no friends request
 				<%end%>
-			<% end %>
+		
 		<%end%>
 	</div>
 </div>
