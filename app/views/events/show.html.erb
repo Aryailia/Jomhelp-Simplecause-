@@ -1,97 +1,70 @@
-<p id="notice"><%= notice %></p>
+<div class="half-white">
+  <div class="container">
+    <p id="notice"><%= notice %></p>
 
-<!-- Put any carousel stuff here -->
-<!--
-  <%# <% @event.photos.each do |photo| %> %>
-    <div>
-      <%#= image_tag photo %>
-    </div>
-  <%# <% end %> %>
--->
+    <!-- Put any carousel stuff here -->
+    <!--
+      <%# <% @event.photos.each do |photo| %> %>
+        <div>
+          <%#= image_tag photo %>
+        </div>
+      <%# <% end %> %>
+    -->
 
-<% if signed_in? %>
-  <%= form_for @event, url: verify_voucher_path(@event), method: :get do |form| %>
-
-
-<%= render partial: 'voucher', locals: {form: form} %>
-    
-
-    <div class="submit-field">
-      <%= form.submit "Submit Voucher" %>
-    </div>
-  
-  <% end %>
-<%end%>
-
-
-
-<p>
-  <strong>Name:</strong>
-  <%= @event.name %>
-</p>
-<p>
-  <strong>Start date:</strong>
-  <%= @event.start_date %>
-</p>
-
-<p>
-  <strong>End date:</strong>
-  <%= @event.end_date %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @event.address %>
-</p>
-<p>
-  <strong>City:</strong>
-  <%= @event.city %>
-</p>
-<p>
-  <strong>Postal Code:</strong>
-  <%= @event.postcode %>
-</p>
-
-<p>
-  <strong>Longitude:</strong>
-  <%= @event.longitude %>
-</p>
-
-<p>
-  <strong>Latitude:</strong>
-  <%= @event.latitude %>
-</p>
-<div id="map" style="width: 500px; height: 500px;"></div>
-<script>
-  function initMap() {
-    new google.maps.Map(document.getElementById('map'),
-      { center:
-        { lat: <%= @event.latitude.nil? ? '-34.42' : "#{@event.longitude}" %>
-        , lng: <%= @event.longitude.nil? ? '150.9' : "#{@event.longitude}" %>
-        }
-      , zoom: 17
-      }
-    );
-  }
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&libraries=places&callback=initMap" async defer></script>
-
-<div>
-  <% if signed_in? %>
-    <% if @event.attendees.exists?(user_id: current_user.id) %>
-      <%= form_with(model: Attendee, method: :delete, url: attendee_path ) do |form| %>
-        <%= form.hidden_field(:event_id, :value => @event.id) %>
-        <%= form.hidden_field(:user_id, :value => current_user.id) %>
-        <%= form.submit('Leave') %>
-      <% end %>    
-    <% else %>
-      <%= form_with(model: Attendee) do |form| %>
-        <%= form.hidden_field(:event_id, :value => @event.id) %>
-        <%= form.hidden_field(:user_id, :value => current_user.id) %>
-        <%= form.submit('Attend') %>
+    <% if signed_in? %>
+      <%= form_for @event, class: "input-group form-inline", url: verify_voucher_path(@event), method: :get do |form| %>
+        <%= render partial: 'voucher', locals: { form: form } %>
+        <%= form.submit "Submit Voucher", class: 'btn btn-primary' %>
       <% end %>
-    <% end %>  
-  <% end %>
-  Maybe include way to view events
+    <%end%>
+
+
+
+    <h1><%= @event.name %></h1>
+	  <p>
+      <strong>Address:</strong>
+      <%= @event.address %>
+    </p>
+    <div class="card-date">
+      <%= @event.created_at.strftime("%B %d %Y, %l:%M%P") %> - <%= @event.created_at.strftime("%B %d %Y, %l:%M%P") %>
+    </div>
+
+      <%= @event.start_date %> - <%= @event.end_date %>
+    
+    <div><%= @event.description %></div>
+    <div id="map" style="width: 500px; height: 500px;"></div>
+    <script>
+      function initMap() {
+        new google.maps.Map(document.getElementById('map'),
+          { center:
+            { lat: <%= @event.latitude.nil? ? '-34.42' : "#{@event.longitude}" %>
+            , lng: <%= @event.longitude.nil? ? '150.9' : "#{@event.longitude}" %>
+            }
+          , zoom: 17
+          }
+        );
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&libraries=places&callback=initMap" async defer></script>
+
+    <div>
+      <% if signed_in? %>
+        <% if @event.attendees.exists?(user_id: current_user.id) %>
+          <%= form_with(model: Attendee, method: :delete, url: attendee_path ) do |form| %>
+            <%= form.hidden_field(:event_id, :value => @event.id) %>
+            <%= form.hidden_field(:user_id, :value => current_user.id) %>
+            <%= form.submit('Leave') %>
+          <% end %>    
+        <% else %>
+          <%= form_with(model: Attendee) do |form| %>
+            <%= form.hidden_field(:event_id, :value => @event.id) %>
+            <%= form.hidden_field(:user_id, :value => current_user.id) %>
+            <%= form.submit('Attend') %>
+          <% end %>
+        <% end %>  
+      <% end %>
+      Maybe include way to view events
+    </div>
+    <%= link_to('Edit', edit_event_path(@event)) %> | <%= link_to('Back', events_path) %>
+  </div>
 </div>
-<%= link_to('Edit', edit_event_path(@event)) %> | <%= link_to('Back', events_path) %>
