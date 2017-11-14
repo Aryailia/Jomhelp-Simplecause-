@@ -34,7 +34,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'will_paginate', '~> 3.1.0'
 
 gem 'faker'
-
+gem 'fog'
 gem 'will_paginate-bootstrap'
 
 
