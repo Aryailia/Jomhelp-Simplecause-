@@ -4,7 +4,7 @@ class UsersController < Clearance::UsersController
   def show
     @user = User.find_by(id: params[:id])
     @points = @user.points.to_i % 100
-    if current_user == @user
+    if current_user.id == @user.id
       @status = true
     else
       @status = false
