@@ -9,7 +9,7 @@ class FriendshipsController < ApplicationController
   def destroy   
     @friendship = current_user.inverse_friendships.find_by(user_id: params[:friend_id])
     @friendship.destroy
-    redirect_to profile_path
+    redirect_to users_show_path(current_user)
   end
 
   def approve
@@ -19,7 +19,7 @@ class FriendshipsController < ApplicationController
     @new_friendship = current_user.friendships.new(:friend_id => params[:friend_id])
     @new_friendship.approved = true
     @new_friendship.save
-    redirect_to profile_path
+    redirect_to users_show_path(current_user)
   end
 
   # def deny
