@@ -11,9 +11,12 @@
       <%# <% end %> %>
     -->
 
+    
+  
+    <h1><%= @event.name %></h1>
     <% if signed_in? %>
       <% if contributor?(@event.organisation) %>
-        <p>The voucher code is <%= @event.voucher %></p>
+        <strong>The voucher code is <%= @event.voucher %></strong>
       <% else %>
         <%= form_for @event, class: "input-group form-inline", url: verify_voucher_path(@event), method: :get do |form| %>
           <%= render partial: 'voucher', locals: { form: form } %>
@@ -21,8 +24,6 @@
         <% end %>
       <% end %>
     <%end%>
-  
-    <h1><%= @event.name %></h1>
 	  <p>
       <strong>Address:</strong>
       <%= @event.address %>
