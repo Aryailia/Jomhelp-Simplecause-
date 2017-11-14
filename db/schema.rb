@@ -113,7 +113,6 @@ ActiveRecord::Schema.define(version: 20171113025126) do
     t.boolean "event_created", default: false
     t.boolean "event_join", default: false
     t.boolean "organisation_post", default: false
-
     t.index ["organisation_id"], name: "index_posts_on_organisation_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
@@ -144,7 +143,6 @@ ActiveRecord::Schema.define(version: 20171113025126) do
   add_foreign_key "events", "organisations"
   add_foreign_key "follows", "organisations"
   add_foreign_key "follows", "users"
-  add_foreign_key "posts", "events", column: "events_id"
   add_foreign_key "posts", "organisations"
   add_foreign_key "posts", "users"
 end
