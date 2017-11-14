@@ -62,7 +62,6 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    byebug
     begin 
       @event = Event.new(event_params)
       @event.voucher = SecureRandom.hex(4)
